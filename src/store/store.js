@@ -4,8 +4,10 @@ import thunk from "redux-thunk";
 
 import authReducer from "./reducers/authReducer";
 import alertReducer from "./reducers/alertReducer";
+import { companyReducer } from "./reducers/mycompanyReducer";
 
 const rootReducer = combineReducers({
+  myCompany: companyReducer,
   auth: authReducer,
   alert: alertReducer,
 });

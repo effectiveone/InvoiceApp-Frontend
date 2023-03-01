@@ -8,6 +8,8 @@ import {
 import LoginPage from "./authPages/LoginPage/LoginPage";
 import RegisterPage from "./authPages/RegisterPage/RegisterPage";
 import Dashboard from "./Dashboard/Dashboard";
+import MyCompany from "./Dashboard/MyCompany";
+
 import AlertNotification from "./shared/components/AlertNotification";
 
 import "./App.css";
@@ -25,6 +27,9 @@ function App() {
           </Route>
           <Route exact path="/dashboard">
             <Dashboard />
+          </Route>
+          <Route exact path="/mycompany">
+            <MyCompany />
           </Route>
           <Route path="/">
             <Redirect to="/dashboard" />
