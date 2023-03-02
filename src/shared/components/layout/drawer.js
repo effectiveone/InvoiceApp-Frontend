@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { sanitizedUrl } from "../../../shared/utils/api";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -45,25 +47,25 @@ const PermanentDrawer = ({ children }) => {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button component={Link} to={sanitizedUrl.Dashboard}>
             <ListItemIcon>
               <AddCircleOutlineIcon />
             </ListItemIcon>
             <ListItemText primary="Nowa faktura" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to={sanitizedUrl.AllInvoices}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary="Wszystkie faktury" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to={sanitizedUrl.MyCompany}>
             <ListItemIcon>
               <BusinessIcon />
             </ListItemIcon>
             <ListItemText primary="Moja firma" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to={sanitizedUrl.Kontrahent}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
@@ -72,7 +74,7 @@ const PermanentDrawer = ({ children }) => {
         </List>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button component={Link} to={sanitizedUrl.Settings}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>

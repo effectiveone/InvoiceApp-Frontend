@@ -66,15 +66,15 @@ export const deleteCompanyData = (user) => {
 };
 
 export const addCompanyData = (newData, user) => {
+  console.log("newData", newData);
+  console.log("user", user);
+
   if (!user) return;
-  const { mail, token } = user;
+  const { token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
     axios
-      .post("http://localhost:5002/api/auth/dane-firmy", {
-        mail,
-        ...newData,
-      })
+      .post("http://localhost:5002/api/auth/dane-firmy", newData)
       .then((response) => {
         dispatch({
           type: ADD_COMPANY_DATA,

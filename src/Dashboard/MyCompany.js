@@ -17,6 +17,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const MyCompany = () => {
+  const dispatch = useDispatch();
+  const companyData = useSelector((state) => state.mycompany);
+  const user = useSelector((state) => state.auth.user);
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const currentUser = user ?? localUser;
+
   const [updatedCompanyDate, setCompanyData] = useState({
     nip: "",
     regon: "",
@@ -25,24 +31,24 @@ const MyCompany = () => {
     zipCode: "",
     companyName: "",
     legalForm: "",
+    userEmail: currentUser?.mail,
   });
 
   const handleChange = (event) => {
     setCompanyData({
-      ...companyData,
+      ...updatedCompanyDate,
       [event.target.name]: event.target.value,
     });
   };
 
-  const dispatch = useDispatch();
-  const companyData = useSelector((state) => state.mycompany);
-
   useEffect(() => {
-    dispatch(getCompanyData());
-  }, [dispatch]);
+    if (!companyData?.length) {
+      dispatch(getCompanyData({ userEmail: currentUser?.mail }));
+    }
+  }, [dispatch, companyData]);
 
   const handleSubmit = () => {
-    dispatch(addCompanyData(companyData));
+    dispatch(addCompanyData(updatedCompanyDate, currentUser));
   };
 
   return (
@@ -60,7 +66,7 @@ const MyCompany = () => {
               labelId="legalFormLabel"
               id="legalForm"
               name="legalForm"
-              value={companyData.legalForm}
+              value={companyData?.legalForm}
               onChange={handleChange}
               label="Forma prawna"
             >
@@ -79,7 +85,7 @@ const MyCompany = () => {
             name="companyName"
             label="Nazwa firmy"
             variant="outlined"
-            value={companyData.companyName}
+            value={companyData?.companyName}
             onChange={handleChange}
           />
         </Grid>
@@ -90,7 +96,7 @@ const MyCompany = () => {
             name="nip"
             label="NIP"
             variant="outlined"
-            value={companyData.nip}
+            value={companyData?.nip}
             onChange={handleChange}
           />
         </Grid>
@@ -101,7 +107,7 @@ const MyCompany = () => {
             name="regon"
             label="REGON"
             variant="outlined"
-            value={companyData.regon}
+            value={companyData?.regon}
             onChange={handleChange}
           />
         </Grid>
@@ -112,7 +118,7 @@ const MyCompany = () => {
             name="street"
             label="Ulica"
             variant="outlined"
-            value={companyData.street}
+            value={companyData?.street}
             onChange={handleChange}
           />
         </Grid>
@@ -123,7 +129,7 @@ const MyCompany = () => {
             name="city"
             label="Miasto"
             variant="outlined"
-            value={companyData.city}
+            value={companyData?.city}
             onChange={handleChange}
           />
         </Grid>
@@ -134,10 +140,11 @@ const MyCompany = () => {
             name="zipCode"
             label="Kod pocztowy"
             variant="outlined"
-            value={companyData.zipCode}
+            value={companyData?.zipCode}
             onChange={handleChange}
           />
         </Grid>
+        <button onClick={handleSubmit}>Submit</button>
       </Grid>
     </>
   );

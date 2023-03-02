@@ -1,5 +1,6 @@
 import axios from "axios";
-import { logout } from "./shared/utils/auth";
+import { logout } from "./auth";
+import { inHTMLData } from "xss-filters";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:5002/api",
@@ -54,4 +55,13 @@ const checkResponseCode = (exception) => {
   if (responseCode) {
     (responseCode === 401 || responseCode === 403) && logout();
   }
+};
+
+//sanitaze links:
+export const sanitizedUrl = {
+  AllInvoices: inHTMLData("/allinvoices"),
+  Kontrahent: inHTMLData("/kontrahent"),
+  Settings: inHTMLData("/settings"),
+  Dashboard: inHTMLData("/dashboard"),
+  MyCompany: inHTMLData("/mycompany"),
 };
