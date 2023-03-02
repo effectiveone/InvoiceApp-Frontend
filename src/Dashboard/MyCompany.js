@@ -44,7 +44,7 @@ const MyCompany = () => {
 
   useEffect(() => {
     if (!companyData?.length) {
-      dispatch(getCompanyData({ userEmail: currentUser?.mail }));
+      dispatch(getCompanyData(currentUser));
       setCompanyData(companyData);
     }
   }, [dispatch, companyData]);
