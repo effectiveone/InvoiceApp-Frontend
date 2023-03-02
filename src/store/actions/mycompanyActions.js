@@ -1,4 +1,5 @@
 import axios from "axios";
+import { openAlertMessage } from "./alertActions";
 
 export const GET_COMPANY_DATA = "GET_COMPANY_DATA";
 export const UPDATE_COMPANY_DATA = "UPDATE_COMPANY_DATA";
@@ -11,7 +12,7 @@ export const getCompanyData = (user) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
     axios
-      .patch("http://localhost:5002/api/auth/dane-firmy", mail)
+      .get("http://localhost:5002/api/auth/dane-firmy", mail)
       .then((response) => {
         dispatch({
           type: GET_COMPANY_DATA,
@@ -22,6 +23,28 @@ export const getCompanyData = (user) => {
         console.log(error);
       });
   };
+};
+
+export const addCompanyData = (newData, user) => async (dispatch) => {
+  console.log("newData", newData);
+  console.log("user", user);
+
+  if (!user) return;
+  const { token } = user;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  try {
+    const res = await axios.put(
+      "http://localhost:5002/api/auth/dane-firmy",
+      newData
+    );
+    dispatch({
+      type: ADD_COMPANY_DATA,
+      payload: res.data,
+    });
+    dispatch(openAlertMessage("Task added successfully!"));
+  } catch (err) {
+    dispatch(openAlertMessage("Error adding task: " + err));
+  }
 };
 
 export const updateCompanyData = (updatedData, user) => {
@@ -57,28 +80,6 @@ export const deleteCompanyData = (user) => {
       .then(() => {
         dispatch({
           type: DELETE_COMPANY_DATA,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-export const addCompanyData = (newData, user) => {
-  console.log("newData", newData);
-  console.log("user", user);
-
-  if (!user) return;
-  const { token } = user;
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  return (dispatch) => {
-    axios
-      .post("http://localhost:5002/api/auth/dane-firmy", newData)
-      .then((response) => {
-        dispatch({
-          type: ADD_COMPANY_DATA,
-          payload: response.data,
         });
       })
       .catch((error) => {

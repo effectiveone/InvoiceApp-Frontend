@@ -18,7 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const MyCompany = () => {
   const dispatch = useDispatch();
-  const companyData = useSelector((state) => state.mycompany);
+  const companyData = useSelector((state) => state.myCompany.companyData);
+
   const user = useSelector((state) => state.auth.user);
   const localUser = JSON.parse(localStorage.getItem("user"));
   const currentUser = user ?? localUser;
@@ -44,6 +45,7 @@ const MyCompany = () => {
   useEffect(() => {
     if (!companyData?.length) {
       dispatch(getCompanyData({ userEmail: currentUser?.mail }));
+      setCompanyData(companyData);
     }
   }, [dispatch, companyData]);
 
@@ -66,7 +68,7 @@ const MyCompany = () => {
               labelId="legalFormLabel"
               id="legalForm"
               name="legalForm"
-              value={companyData?.legalForm}
+              value={updatedCompanyDate?.legalForm}
               onChange={handleChange}
               label="Forma prawna"
             >
@@ -85,7 +87,7 @@ const MyCompany = () => {
             name="companyName"
             label="Nazwa firmy"
             variant="outlined"
-            value={companyData?.companyName}
+            value={updatedCompanyDate?.companyName}
             onChange={handleChange}
           />
         </Grid>
@@ -96,7 +98,7 @@ const MyCompany = () => {
             name="nip"
             label="NIP"
             variant="outlined"
-            value={companyData?.nip}
+            value={updatedCompanyDate?.nip}
             onChange={handleChange}
           />
         </Grid>
@@ -107,7 +109,7 @@ const MyCompany = () => {
             name="regon"
             label="REGON"
             variant="outlined"
-            value={companyData?.regon}
+            value={updatedCompanyDate?.regon}
             onChange={handleChange}
           />
         </Grid>
@@ -118,7 +120,7 @@ const MyCompany = () => {
             name="street"
             label="Ulica"
             variant="outlined"
-            value={companyData?.street}
+            value={updatedCompanyDate?.street}
             onChange={handleChange}
           />
         </Grid>
@@ -129,7 +131,7 @@ const MyCompany = () => {
             name="city"
             label="Miasto"
             variant="outlined"
-            value={companyData?.city}
+            value={updatedCompanyDate?.city}
             onChange={handleChange}
           />
         </Grid>
@@ -140,7 +142,7 @@ const MyCompany = () => {
             name="zipCode"
             label="Kod pocztowy"
             variant="outlined"
-            value={companyData?.zipCode}
+            value={updatedCompanyDate?.zipCode}
             onChange={handleChange}
           />
         </Grid>
