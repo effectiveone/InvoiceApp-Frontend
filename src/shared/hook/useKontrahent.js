@@ -25,7 +25,7 @@ export const useKontrahent = (handleClose) => {
     if (!kontrahent?.length) {
       dispatch(getContractorData(currentUser));
     }
-  }, [dispatch, kontrahent]);
+  }, [dispatch, kontrahent, currentUser]);
 
   const handleChange = (event) => {
     setCompanyData({

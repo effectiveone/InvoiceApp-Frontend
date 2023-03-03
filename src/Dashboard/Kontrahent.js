@@ -1,5 +1,5 @@
 import Layout from "../shared/components/layout/layout";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Button,
   Box,
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Kontrahent = () => {
   const classes = useStyles();
-  const { open, setOpen, handleOpen, handleClose } = useModal();
+  const { open, handleOpen, handleClose } = useModal();
   const {
     handleEdit,
     handleDelete,

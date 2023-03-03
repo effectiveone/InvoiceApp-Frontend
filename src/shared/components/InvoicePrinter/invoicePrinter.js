@@ -1,11 +1,33 @@
 import React, { useRef } from "react";
 import ReactToPrint from "react-to-print";
+// import MainDetails from "./MainDetails"
+import Header from "./Header";
+import Dates from "./Dates";
+// import ClientDetails from "./ClientDetails"
+import Table from "./Table";
+import Notes from "./Notes";
+// import Footer from "./Footer"
 
-const InvoicePrinter = () => {
+const InvoicePrinter = ({
+  handlePrint,
+  invoiceNumber,
+  invoiceDate,
+  dueDate,
+  selectedKontrahent,
+  companyData,
+  description,
+  quantity,
+  price,
+  amount,
+  list,
+  setList,
+  total,
+  setTotal,
+  setNotes,
+  notes,
+}) => {
   const componentRef = useRef();
-  const handlePrint = () => {
-    window.print();
-  };
+
   return (
     <>
       <div className="invoice__preview bg-white p-5 rounded">
@@ -20,12 +42,12 @@ const InvoicePrinter = () => {
         <div ref={componentRef} className="p-5">
           <Header handlePrint={handlePrint} />
 
-          <MainDetails name={name} address={address} />
+          {/* <MainDetails name={name} address={address} />
 
           <ClientDetails
             clientName={clientName}
             clientAddress={clientAddress}
-          />
+          /> */}
 
           <Dates
             invoiceNumber={invoiceNumber}
@@ -46,7 +68,7 @@ const InvoicePrinter = () => {
 
           <Notes notes={notes} />
 
-          <Footer
+          {/* <Footer
             name={name}
             address={address}
             website={website}
@@ -54,7 +76,7 @@ const InvoicePrinter = () => {
             phone={phone}
             bankAccount={bankAccount}
             bankName={bankName}
-          />
+          /> */}
         </div>
       </div>
     </>

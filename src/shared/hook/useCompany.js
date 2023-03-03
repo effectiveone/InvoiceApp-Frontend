@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   getCompanyData,
   addCompanyData,
@@ -35,7 +35,7 @@ export const useCompany = () => {
       dispatch(getCompanyData(currentUser));
       setCompanyData(companyData);
     }
-  }, [dispatch, companyData]);
+  }, [dispatch, companyData, currentUser]);
 
   const handleSubmit = () => {
     dispatch(addCompanyData(updatedCompanyDate, currentUser));

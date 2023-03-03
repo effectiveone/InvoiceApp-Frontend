@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   TextField,
   Grid,
@@ -13,13 +13,7 @@ import { legalForms } from "../shared/utils/forms";
 import { useCompany } from "../shared/hook/useCompany";
 
 const MyCompany = () => {
-  const {
-    updatedCompanyDate,
-    setCompanyData,
-    companyData,
-    handleChange,
-    handleSubmit,
-  } = useCompany();
+  const { updatedCompanyDate, handleChange, handleSubmit } = useCompany();
 
   return (
     <>
