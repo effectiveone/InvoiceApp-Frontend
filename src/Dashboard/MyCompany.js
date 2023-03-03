@@ -10,48 +10,16 @@ import {
 } from "@material-ui/core";
 import Layout from "../shared/components/layout/layout";
 import { legalForms } from "../shared/utils/forms";
-import {
-  getCompanyData,
-  addCompanyData,
-} from "../store/actions/mycompanyActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useCompany } from "../shared/hook/useCompany";
 
 const MyCompany = () => {
-  const dispatch = useDispatch();
-  const companyData = useSelector((state) => state.myCompany.companyData);
-
-  const user = useSelector((state) => state.auth.user);
-  const localUser = JSON.parse(localStorage.getItem("user"));
-  const currentUser = user ?? localUser;
-
-  const [updatedCompanyDate, setCompanyData] = useState({
-    nip: "",
-    regon: "",
-    street: "",
-    city: "",
-    zipCode: "",
-    companyName: "",
-    legalForm: "",
-    userEmail: currentUser?.mail,
-  });
-
-  const handleChange = (event) => {
-    setCompanyData({
-      ...updatedCompanyDate,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  useEffect(() => {
-    if (!companyData?.length) {
-      dispatch(getCompanyData(currentUser));
-      setCompanyData(companyData);
-    }
-  }, [dispatch, companyData]);
-
-  const handleSubmit = () => {
-    dispatch(addCompanyData(updatedCompanyDate, currentUser));
-  };
+  const {
+    updatedCompanyDate,
+    setCompanyData,
+    companyData,
+    handleChange,
+    handleSubmit,
+  } = useCompany();
 
   return (
     <>

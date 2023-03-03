@@ -47,13 +47,13 @@ const PermanentDrawer = ({ children }) => {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button component={Link} to={sanitizedUrl.Dashboard}>
+          <ListItem button component={Link} to={sanitizedUrl.AllInvoices}>
             <ListItemIcon>
               <AddCircleOutlineIcon />
             </ListItemIcon>
             <ListItemText primary="Nowa faktura" />
           </ListItem>
-          <ListItem button component={Link} to={sanitizedUrl.AllInvoices}>
+          <ListItem button component={Link} to={sanitizedUrl.Dashboard}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>

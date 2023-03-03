@@ -15,11 +15,8 @@ import {
 import { Divider } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { legalForms } from "../shared/utils/forms";
-import {
-  addContractorData,
-  getContractorData,
-} from "../store/actions/kontrahenciActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useKontrahent } from "../shared/hook/useKontrahent";
+import { useModal } from "../shared/hook/useModal";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -49,61 +46,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Kontrahent = () => {
-  const dispatch = useDispatch();
-  const kontrahent = useSelector((state) => state.kontrahenci?.contractorData);
-  console.log("kontrahent", kontrahent);
-  const user = useSelector((state) => state.auth.user);
-  const localUser = JSON.parse(localStorage.getItem("user"));
-  const currentUser = user ?? localUser;
   const classes = useStyles();
-
-  const [open, setOpen] = useState(false);
-
-  const [updatedCompanyData, setCompanyData] = useState({
-    nip: "",
-    regon: "",
-    street: "",
-    city: "",
-    zipCode: "",
-    companyName: "",
-    legalForm: "",
-    userEmail: currentUser?.mail,
-  });
-  useEffect(() => {
-    if (!kontrahent?.length) {
-      dispatch(getContractorData(currentUser));
-    }
-  }, [dispatch, kontrahent]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleChange = (event) => {
-    setCompanyData({
-      ...updatedCompanyData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = () => {
-    dispatch(addContractorData(updatedCompanyData, currentUser));
-    handleClose();
-  };
-
-  const handleEdit = (id) => {
-    // funkcja obsługująca przycisk Edytuj
-    console.log(`Edit button clicked for contractor with id: ${id}`);
-  };
-
-  const handleDelete = (id) => {
-    // funkcja obsługująca przycisk Usuń
-    console.log(`Delete button clicked for contractor with id: ${id}`);
-  };
+  const { open, setOpen, handleOpen, handleClose } = useModal();
+  const {
+    handleEdit,
+    handleDelete,
+    updatedCompanyData,
+    kontrahent,
+    handleSubmit,
+    handleChange,
+  } = useKontrahent(handleClose);
 
   return (
     <>
