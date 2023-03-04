@@ -23,6 +23,7 @@ const AllInvoices = () => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   const [notes, setNotes] = useState("");
+
   const handleSelectChange = (event) => {
     const selectedCompany = kontrahent.find(
       (k) => k.nip === event.target.value

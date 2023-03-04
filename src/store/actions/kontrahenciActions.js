@@ -12,8 +12,8 @@ export const getContractorData = (user) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
     axios
-      .get("http://localhost:5002/api/auth/kontrahenci", {
-        params: { userEmail: mail },
+      .post("http://localhost:5002/api/auth/get-kontrahenci", {
+        userEmail: mail,
       })
       .then((response) => {
         dispatch({

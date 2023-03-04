@@ -1,36 +1,65 @@
-import React from "react"
+import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
 
-export default function Table({ list, total }) {
+export default function InvoiceTable({ list, total }) {
   return (
     <>
-      <table width="100%" className="mb-10">
-        <thead>
-          <tr className="bg-gray-100 p-1">
-            <td className="font-bold">Description</td>
-            <td className="font-bold">Quantity</td>
-            <td className="font-bold">Price</td>
-            <td className="font-bold">Amount</td>
-          </tr>
-        </thead>
-        {list.map(({ id, description, quantity, price, amount }) => (
-          <React.Fragment key={id}>
-            <tbody>
-              <tr className="h-10">
-                <td>{description}</td>
-                <td>{quantity}</td>
-                <td>{price}</td>
-                <td>{amount}</td>
-              </tr>
-            </tbody>
-          </React.Fragment>
-        ))}
-      </table>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#f0f0f0" }}>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Description
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Quantity
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Price
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Amount
+                </Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {list.map(({ id, description, quantity, price, amount }) => (
+              <TableRow key={id}>
+                <TableCell>{description}</TableCell>
+                <TableCell>{quantity}</TableCell>
+                <TableCell>{price}</TableCell>
+                <TableCell>{amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      <div>
-        <h2 className="flex items-end justify-end text-gray-800 text-4xl font-bold">
+      <div style={{ textAlign: "end" }}>
+        <Typography
+          variant="h4"
+          component="h2"
+          sx={{ fontWeight: "bold", color: "#333333" }}
+        >
           Kshs. {total.toLocaleString()}
-        </h2>
+        </Typography>
       </div>
     </>
-  )
+  );
 }

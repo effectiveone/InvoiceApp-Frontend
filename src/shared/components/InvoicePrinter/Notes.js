@@ -1,10 +1,19 @@
+import React from "react";
+import { Box, Typography } from "@material-ui/core";
+
 export default function Notes({ notes }) {
   return (
-    <>
-      <section className="mt-10 mb-5">
-        <h3>Additional notes</h3>
-        <p className="lg:w-1/2 text-justify">{notes}</p>
-      </section>
-    </>
-  )
+    <Box sx={{ marginTop: 10, marginBottom: 5 }} component="section">
+      <Typography variant="h3" component="h3">
+        Additional notes
+      </Typography>
+      <Typography
+        variant="body1"
+        component="p"
+        sx={{ maxWidth: "50ch", textAlign: "justify" }}
+      >
+        {notes}
+      </Typography>
+    </Box>
+  );
 }
