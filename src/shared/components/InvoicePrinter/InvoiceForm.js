@@ -75,10 +75,19 @@ const InvoiceForm = ({
 
   return (
     <>
-      <Box style={{ display: "flex", flexDirection: "row", gap: "150px" }}>
-        <Grid style={{ display: "flex", flexDirection: "column" }}>
+      <Box style={{ display: "flex", flexDirection: "row" }}>
+        <Grid
+          style={{ display: "flex", flexDirection: "column" }}
+          item
+          xs={12}
+          md={6}
+        >
           <Typography>Wybierz kontrahenta</Typography>
-          <select name="companyName" onChange={handleSelectChange}>
+          <select
+            style={{ width: "300px" }}
+            name="companyName"
+            onChange={handleSelectChange}
+          >
             {kontrahent.map((k, index) => (
               <option key={index} value={k.nip}>
                 {k.companyName}
@@ -86,8 +95,22 @@ const InvoiceForm = ({
             ))}
           </select>
         </Grid>
-        <Box style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-          <Grid style={{ display: "flex", flexDirection: "column" }}>
+        <Box
+          item
+          xs={12}
+          md={6}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "20px",
+          }}
+        >
+          <Grid
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <label htmlFor="invoiceDate">Invoice Date</label>
             <input
               type="date"
@@ -126,7 +149,7 @@ const InvoiceForm = ({
         </Box>
       </Box>
       <form>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ paddingTop: "50px" }}>
           <Grid item xs={12}>
             <Button
               variant="contained"
@@ -151,7 +174,11 @@ const InvoiceForm = ({
             item
             xs={12}
             md={6}
-            style={{ display: "flex", flexDirection: "column" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              paddingTop: "50px",
+            }}
           >
             <Button onClick={changeVisibility}>Additional Notes</Button>
             {isNotesVisibility && (
@@ -169,7 +196,7 @@ const InvoiceForm = ({
               </>
             )}
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość netto"
               value={totalNetValue.toFixed(2)}
@@ -177,7 +204,7 @@ const InvoiceForm = ({
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość brutto"
               value={totalGrossValue.toFixed(2)}
@@ -185,7 +212,7 @@ const InvoiceForm = ({
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Vat"
               value={(totalNetValue - totalGrossValue).toFixed(2)}
@@ -226,7 +253,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
           )}
         </Typography>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={6}>
         <TextField
           label="Nazwa"
           name="name"

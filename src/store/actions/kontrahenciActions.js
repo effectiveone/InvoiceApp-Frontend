@@ -28,9 +28,6 @@ export const getContractorData = (user) => {
 };
 
 export const addContractorData = (newData, user) => async (dispatch) => {
-  console.log("newData", newData);
-  console.log("user", user);
-
   if (!user) return;
   const { token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

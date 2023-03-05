@@ -1,13 +1,20 @@
 import { Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Layout from "../shared/components/layout/layout";
 import { useKontrahent } from "../shared/hook/useKontrahent";
 import { useCompany } from "../shared/hook/useCompany";
 import InvoicePrinter from "../shared/components/InvoicePrinter/invoicePrinter";
-// import TableForm from "../shared/components/InvoicePrinter/TableForm";
 import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
 import { TAX_RATES } from "../shared/utils/tax";
+import ReactToPrint from "react-to-print";
+import { useDispatch, useSelector } from "react-redux";
+import { readFaktura, createFaktura } from "../store/actions/fakturaActions";
+
 const AllInvoices = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const currentUser = user ?? localUser;
   const { companyData } = useCompany();
   const { kontrahent } = useKontrahent();
 
@@ -37,6 +44,18 @@ const AllInvoices = () => {
   const [totalNetValue, setTotalNetValue] = useState(0);
   const [totalGrossValue, setTotalGrossValue] = useState(0);
 
+  const invoiceProductor = {
+    companyData,
+    selectedKontrahent,
+    invoiceSaleDate,
+    invoiceDate,
+    invoicePaymentDate,
+    items,
+    totalNetValue,
+    totalGrossValue,
+    notes,
+  };
+
   const handleSelectChange = (event) => {
     const selectedCompany = kontrahent.find(
       (k) => k.nip === event.target.value
@@ -51,9 +70,21 @@ const AllInvoices = () => {
   const handlePrint = () => {
     window.print();
   };
+  const componentRef = useRef();
+  const handleSubmit = () => {
+    dispatch(createFaktura(invoiceProductor, currentUser));
+  };
   return (
     <>
       <Button onClick={() => setIsVisible(!isVisible)}>Podgląd</Button>
+      {!isVisible && (
+        <ReactToPrint
+          trigger={() => <Button>Print / Download</Button>}
+          content={() => componentRef.current}
+        />
+      )}
+      <Button onClick={handleSubmit}>Zapisz fakture</Button>
+
       {isVisible ? (
         <>
           <InvoiceForm
@@ -79,6 +110,7 @@ const AllInvoices = () => {
       ) : (
         <>
           <InvoicePrinter
+            ref={componentRef}
             invoiceNumber={invoiceNumber}
             invoiceDate={invoiceDate}
             dueDate={invoiceSaleDate}
