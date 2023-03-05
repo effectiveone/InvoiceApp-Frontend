@@ -3,6 +3,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 import {
   Box,
+  Grid,
   TextField,
   Button,
   TableContainer,
@@ -135,9 +136,9 @@ export default function TableForm({
 
   return (
     <>
-      <Box className={classes.containerInputs}>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col md:mt-16">
+      <form onSubmit={handleSubmit}>
+        <Box className={classes.containerInputs}>
+          <Grid>
             <TextField
               label="Item description"
               value={description}
@@ -146,54 +147,52 @@ export default function TableForm({
               variant="outlined"
               margin="normal"
             />
-          </div>
+          </Grid>
 
-          <div className="md:grid grid-cols-3 gap-10">
-            <div className="flex flex-col">
-              <TextField
-                label="Quantity"
-                type="text"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                placeholder="Quantity"
-                variant="outlined"
-                margin="normal"
-              />
-            </div>
+          <Grid>
+            <TextField
+              label="Quantity"
+              type="text"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder="Quantity"
+              variant="outlined"
+              margin="normal"
+            />
+          </Grid>
 
-            <div className="flex flex-col">
-              <TextField
-                label="Price"
-                type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="Price"
-                variant="outlined"
-                margin="normal"
-              />
-            </div>
+          <Grid>
+            <TextField
+              label="Price"
+              type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price"
+              variant="outlined"
+              margin="normal"
+            />
+          </Grid>
+        </Box>
 
-            <div className="flex flex-col">
-              <TextField
-                label="Amount"
-                type="text"
-                value={amount}
-                disabled
-                variant="outlined"
-                margin="normal"
-              />
-            </div>
-          </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            className={classes.submitButton}
-          >
-            {isEditing ? "Editing Row Item" : "Add Table Item"}
-          </Button>
-        </form>
-      </Box>
+        <div className="flex flex-col">
+          <TextField
+            label="Amount"
+            type="text"
+            value={amount}
+            disabled
+            variant="outlined"
+            margin="normal"
+          />
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          className={classes.submitButton}
+        >
+          {isEditing ? "Editing Row Item" : "Add Table Item"}
+        </Button>
+      </form>
       {/* Table items */}
 
       <TableContainer component={Paper} className={classes.tableContainer}>

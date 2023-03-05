@@ -4,7 +4,6 @@ import { Divider } from "@mui/material";
 
 import ReactToPrint from "react-to-print";
 // import MainDetails from "./MainDetails";
-import Header from "./Header";
 import Dates from "./Dates";
 import ClientDetails from "./ClientDetails";
 import Table from "./Table";
@@ -34,7 +33,6 @@ const InvoicePrinter = ({
   useEffect(() => {
     setPreselectedKontrahent(selectedKontrahent);
   }, [selectedKontrahent]);
-  console.log("preselectedKontrahent?.companyName", preselectedKontrahent);
   return (
     <>
       <div className="invoice__preview bg-white p-5 rounded">
@@ -47,7 +45,6 @@ const InvoicePrinter = ({
           content={() => componentRef.current}
         />
         <div ref={componentRef} className="p-5">
-          <Header handlePrint={handlePrint} />
           <ClientDetails
             title={null}
             companyName={companyData.companyName}

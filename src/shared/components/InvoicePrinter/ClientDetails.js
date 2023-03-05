@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 
 const CompanyDetails = ({
@@ -10,16 +10,18 @@ const CompanyDetails = ({
   street,
   nip,
 }) => {
+  const [state, setState] = useState();
   useEffect(() => {
-    console.log(
-      "props changed:",
-      companyName,
-      legalForm,
-      zip,
-      city,
-      street,
-      nip
-    );
+    if (companyName) {
+      setState({
+        companyName,
+        legalForm,
+        zip,
+        city,
+        street,
+        nip,
+      });
+    }
   }, [companyName, legalForm, zip, city, street, nip]);
   return (
     <Grid
@@ -41,23 +43,23 @@ const CompanyDetails = ({
             flexDirection: "row",
           }}
         >
-          {companyName}
-          {legalForm}
+          {state?.companyName}
+          {state?.legalForm}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6}>
         <Typography variant="h6" component="h3">
-          {`${zip} ${city}`}
+          {`${state?.zip} ${state?.city}`}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h6" component="h3">
-          {street}
+          {state?.street}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h6" component="h3">
-          {`NIP ${nip}`}
+          {`NIP ${state?.nip}`}
         </Typography>
       </Grid>
     </Grid>

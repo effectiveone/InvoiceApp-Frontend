@@ -1,11 +1,12 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Layout from "../shared/components/layout/layout";
 import { useKontrahent } from "../shared/hook/useKontrahent";
 import { useCompany } from "../shared/hook/useCompany";
 import InvoicePrinter from "../shared/components/InvoicePrinter/invoicePrinter";
-import TableForm from "../shared/components/InvoicePrinter/TableForm";
-
+// import TableForm from "../shared/components/InvoicePrinter/TableForm";
+import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
+import { TAX_RATES } from "../shared/utils/tax";
 const AllInvoices = () => {
   const { companyData } = useCompany();
   const { kontrahent } = useKontrahent();
@@ -13,16 +14,28 @@ const AllInvoices = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [invoicePaymentDate, setInvoicePaymentDate] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [invoiceSaleDate, setInvoiceSaleDate] = useState("");
   const [selectedKontrahent, setSelectedKontrahent] = useState();
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
-  const [list, setList] = useState([]);
-  const [total, setTotal] = useState(0);
   const [notes, setNotes] = useState("");
+  const [items, setItems] = useState([
+    {
+      name: "",
+      quantity: 1,
+      unit: "szt",
+      vat: TAX_RATES[0].value,
+      netPrice: 0,
+      netValue: 0,
+      grossValue: 0,
+    },
+  ]);
+  const [totalNetValue, setTotalNetValue] = useState(0);
+  const [totalGrossValue, setTotalGrossValue] = useState(0);
 
   const handleSelectChange = (event) => {
     const selectedCompany = kontrahent.find(
@@ -43,91 +56,32 @@ const AllInvoices = () => {
       <Button onClick={() => setIsVisible(!isVisible)}>Podgląd</Button>
       {isVisible ? (
         <>
-          {" "}
-          <article className="md:grid grid-cols-3 gap-10">
-            {kontrahent.length > 0 ? (
-              <select name="companyName" onChange={handleSelectChange}>
-                {kontrahent.map((k, index) => (
-                  <option key={index} value={k.nip}>
-                    {k.companyName}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <div>You have to add kontrahent</div>
-            )}
-            <div className="flex flex-col">
-              <label htmlFor="invoiceNumber">Invoice Number</label>
-              <input
-                type="text"
-                name="invoiceNumber"
-                id="invoiceNumber"
-                placeholder="Invoice Number"
-                autoComplete="off"
-                value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="invoiceDate">Invoice Date</label>
-              <input
-                type="date"
-                name="invoiceDate"
-                id="invoiceDate"
-                placeholder="Invoice Date"
-                autoComplete="off"
-                value={invoiceDate}
-                onChange={(e) => setInvoiceDate(e.target.value)}
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="dueDate">Due Date</label>
-              <input
-                type="date"
-                name="dueDate"
-                id="dueDate"
-                placeholder="Invoice Date"
-                autoComplete="off"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-            </div>
-            <article>
-              <TableForm
-                description={description}
-                setDescription={setDescription}
-                quantity={quantity}
-                setQuantity={setQuantity}
-                price={price}
-                setPrice={setPrice}
-                amount={amount}
-                setAmount={setAmount}
-                list={list}
-                setList={setList}
-                total={total}
-                setTotal={setTotal}
-              />
-            </article>
-            <label htmlFor="notes">Additional Notes</label>
-            <textarea
-              name="notes"
-              id="notes"
-              cols="30"
-              rows="10"
-              placeholder="Additional notes to the client"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-            ></textarea>
-          </article>
+          <InvoiceForm
+            items={items}
+            setItems={setItems}
+            totalNetValue={totalNetValue}
+            setTotalNetValue={setTotalNetValue}
+            totalGrossValue={totalGrossValue}
+            setTotalGrossValue={setTotalGrossValue}
+            TAX_RATES={TAX_RATES}
+            kontrahent={kontrahent}
+            invoiceSaleDate={invoiceSaleDate}
+            setInvoiceSaleDate={setInvoiceSaleDate}
+            invoicePaymentDate={invoicePaymentDate}
+            setInvoicePaymentDate={setInvoicePaymentDate}
+            handleSelectChange={handleSelectChange}
+            invoiceDate={invoiceDate}
+            setInvoiceDate={setInvoiceDate}
+            notes={notes}
+            setNotes={setNotes}
+          />
         </>
       ) : (
         <>
           <InvoicePrinter
             invoiceNumber={invoiceNumber}
             invoiceDate={invoiceDate}
-            dueDate={dueDate}
+            dueDate={invoiceSaleDate}
             selectedKontrahent={selectedKontrahent}
             companyData={companyData}
             handlePrint={handlePrint}
@@ -135,10 +89,12 @@ const AllInvoices = () => {
             quantity={quantity}
             price={price}
             amount={amount}
-            list={list}
-            setList={setList}
-            total={total}
-            setTotal={setTotal}
+            list={items}
+            setList={setItems}
+            total={totalNetValue}
+            setTotal={setTotalNetValue}
+            totalGrossValue={totalGrossValue}
+            setTotalGrossValue={setTotalGrossValue}
             notes={notes}
             setNotes={setNotes}
           />
