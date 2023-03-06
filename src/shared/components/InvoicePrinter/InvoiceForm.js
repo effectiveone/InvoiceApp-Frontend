@@ -21,16 +21,52 @@ const InvoiceForm = ({
   setNotes,
   notes,
 }) => {
+  const [myState, setMyState] = useState({
+    items,
+    totalNetValue,
+    totalGrossValue,
+    TAX_RATES,
+    kontrahent,
+    invoiceSaleDate,
+    invoicePaymentDate,
+    invoiceDate,
+    notes,
+  });
+
+  useEffect(() => {
+    setMyState({
+      items,
+      totalNetValue,
+      totalGrossValue,
+      TAX_RATES,
+      kontrahent,
+      invoiceSaleDate,
+      invoicePaymentDate,
+      invoiceDate,
+      notes,
+    });
+  }, [
+    items,
+    totalNetValue,
+    totalGrossValue,
+    TAX_RATES,
+    kontrahent,
+    invoiceSaleDate,
+    invoicePaymentDate,
+    invoiceDate,
+    notes,
+  ]);
+
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
   const changeVisibility = () => {
     setIsNotesVisibility(!isNotesVisibility);
   };
   useEffect(() => {
-    const newTotalNetValue = items.reduce(
+    const newTotalNetValue = items?.reduce(
       (total, item) => total + item.netValue,
       0
     );
-    const newTotalGrossValue = items.reduce(
+    const newTotalGrossValue = items?.reduce(
       (total, item) => total + item.grossValue,
       0
     );
@@ -88,7 +124,7 @@ const InvoiceForm = ({
             name="companyName"
             onChange={handleSelectChange}
           >
-            {kontrahent.map((k, index) => (
+            {kontrahent?.map((k, index) => (
               <option key={index} value={k.nip}>
                 {k.companyName}
               </option>
@@ -118,7 +154,7 @@ const InvoiceForm = ({
               id="invoiceDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={invoiceDate}
+              value={myState.invoiceDate}
               onChange={(e) => setInvoiceDate(e.target.value)}
             />
           </Grid>
@@ -130,7 +166,7 @@ const InvoiceForm = ({
               id="dueDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={invoiceSaleDate}
+              value={myState.invoiceSaleDate}
               onChange={(e) => setInvoiceSaleDate(e.target.value)}
             />
           </Grid>
@@ -142,7 +178,7 @@ const InvoiceForm = ({
               id="dueDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={invoicePaymentDate}
+              value={myState.invoicePaymentDate}
               onChange={(e) => setInvoicePaymentDate(e.target.value)}
             />
           </Grid>
@@ -160,7 +196,7 @@ const InvoiceForm = ({
               Dodaj produkt/usługę
             </Button>
           </Grid>
-          {items.map((item, index) => (
+          {myState.items?.map((item, index) => (
             <InvoiceItem
               key={index}
               index={index}
@@ -190,7 +226,7 @@ const InvoiceForm = ({
                   cols="30"
                   rows="10"
                   placeholder="Additional notes to the client"
-                  value={notes}
+                  value={myState.notes}
                   onChange={(e) => setNotes(e.target.value)}
                 ></textarea>
               </>
@@ -199,7 +235,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość netto"
-              value={totalNetValue.toFixed(2)}
+              value={myState.totalNetValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -207,7 +243,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość brutto"
-              value={totalGrossValue.toFixed(2)}
+              value={myState.totalGrossValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -215,7 +251,9 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Vat"
-              value={(totalNetValue - totalGrossValue).toFixed(2)}
+              value={(myState.totalNetValue - myState.totalGrossValue)?.toFixed(
+                2
+              )}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -290,7 +328,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
           onChange={handleTaxChange}
           fullWidth
         >
-          {taxRates.map((rate) => (
+          {taxRates?.map((rate) => (
             <option key={rate.value} value={rate.value}>
               {rate.label}
             </option>

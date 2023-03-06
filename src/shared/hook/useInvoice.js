@@ -7,38 +7,67 @@ import { useCompany } from "./useCompany";
 import { createFaktura } from "../../store/actions/fakturaActions";
 import { TAX_RATES } from "../utils/tax";
 
-export const useInvoice = () => {
+export const useInvoice = (invoiceNumber) => {
   const { currentUser } = useUser();
   const { companyData } = useCompany();
   const { kontrahent } = useKontrahent();
   const dispatch = useDispatch();
   const invoiceDate = useSelector((state) => state.faktura.fakturaData);
-
+  const [selectedInvoice, setSelectedInvoice] = useState();
   useEffect(() => {
     if (!invoiceDate?.length) {
       dispatch(readFaktury(currentUser));
     }
-  }, [dispatch, invoiceDate, currentUser]);
+    if (invoiceNumber) {
+      // Find the invoice in the store by its number
+      const invoice = invoiceDate.find(
+        (faktura) => faktura.invoiceNumber === invoiceNumber
+      );
 
-  const [invoiceNumber, setInvoiceNumber] = useState("");
-  const [invoicePaymentDate, setInvoicePaymentDate] = useState();
-  const [invoiceDates, setInvoiceDates] = useState();
-  const [invoiceSaleDate, setInvoiceSaleDate] = useState();
-  const [selectedKontrahent, setSelectedKontrahent] = useState();
-  const [notes, setNotes] = useState("");
-  const [items, setItems] = useState([
-    {
-      name: "",
-      quantity: 1,
-      unit: "szt",
-      vat: TAX_RATES[0].value,
-      netPrice: 0,
-      netValue: 0,
-      grossValue: 0,
-    },
-  ]);
-  const [totalNetValue, setTotalNetValue] = useState(0);
-  const [totalGrossValue, setTotalGrossValue] = useState(0);
+      // If the invoice exists, set its data to the invoiceDate state
+      if (invoice) {
+        setSelectedInvoice(invoice);
+      }
+    }
+  }, [dispatch, invoiceDate, currentUser, invoiceNumber]);
+
+  const [invoiceDates, setInvoiceDates] = useState(
+    selectedInvoice?.invoiceDate ?? new Date().toISOString().substr(0, 10)
+  );
+
+  const [invoiceSaleDate, setInvoiceSaleDate] = useState(
+    selectedInvoice?.invoiceSaleDate ?? new Date().toISOString().substr(0, 10)
+  );
+
+  const [invoicePaymentDate, setInvoicePaymentDate] = useState(
+    selectedInvoice?.invoicePaymentDate ??
+      new Date().toISOString().substr(0, 10)
+  );
+
+  const [selectedKontrahent, setSelectedKontrahent] = useState(
+    selectedInvoice?.selectedKontrahent ?? {}
+  );
+  const [notes, setNotes] = useState(selectedInvoice?.notes ?? "");
+  const [items, setItems] = useState(
+    selectedInvoice?.items ?? [
+      {
+        name: "",
+        quantity: 1,
+        unit: "szt",
+        vat: TAX_RATES[0].value,
+        netPrice: 0,
+        netValue: 0,
+        grossValue: 0,
+      },
+    ]
+  );
+  const [totalNetValue, setTotalNetValue] = useState(
+    selectedInvoice?.totalNetValue ?? 0
+  );
+  const [totalGrossValue, setTotalGrossValue] = useState(
+    selectedInvoice?.totalGrossValue ?? 0
+  );
+
   const handleSelectChange = (event) => {
     const selectedCompany = kontrahent.find(
       (k) => k.nip === event.target.value
@@ -48,14 +77,13 @@ export const useInvoice = () => {
       prefixedCompany[`kontrahent_${key}`] = value;
     });
     setSelectedKontrahent(prefixedCompany);
-    console.log("prefixedCompany", prefixedCompany);
   };
 
   const invoiceProductor = {
     companyData,
     selectedKontrahent,
     invoiceSaleDate,
-    invoiceDate,
+    invoiceDate: invoiceDates,
     invoicePaymentDate,
     items,
     totalNetValue,
@@ -67,15 +95,30 @@ export const useInvoice = () => {
   const handlePrint = () => {
     window.print();
   };
+
   const componentRef = useRef();
+
   const handleSubmit = () => {
     dispatch(createFaktura(invoiceProductor, currentUser));
   };
+
+  // Add useEffect hook to update certain state based on changes in invoiceDate
+  useEffect(() => {
+    if (invoiceNumber) {
+      console.log("invoiceNumber", invoiceNumber);
+      setItems(selectedInvoice?.items);
+      setTotalNetValue(selectedInvoice?.totalNetValue);
+      setTotalGrossValue(selectedInvoice?.totalGrossValue);
+      setInvoiceDates(selectedInvoice?.invoiceDates);
+      setSelectedKontrahent(selectedInvoice?.selectedKontrahen);
+      setInvoicePaymentDate(selectedInvoice?.invoicePaymentDate);
+      setNotes(selectedInvoice?.notes);
+      setInvoiceSaleDate(selectedInvoice?.invoiceSaleDate);
+    }
+  }, [invoiceNumber]);
+
   return {
     invoiceDate,
-
-    invoiceNumber,
-    setInvoiceNumber,
     invoicePaymentDate,
     setInvoicePaymentDate,
     invoiceDates,
