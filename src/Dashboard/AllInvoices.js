@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useRef, useState } from "react";
 import Layout from "../shared/components/layout/layout";
 import { useKontrahent } from "../shared/hook/useKontrahent";
@@ -8,7 +8,7 @@ import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
 import { TAX_RATES } from "../shared/utils/tax";
 import ReactToPrint from "react-to-print";
 import { useDispatch, useSelector } from "react-redux";
-import { readFaktura, createFaktura } from "../store/actions/fakturaActions";
+import { createFaktura } from "../store/actions/fakturaActions";
 
 const AllInvoices = () => {
   const dispatch = useDispatch();
@@ -21,9 +21,9 @@ const AllInvoices = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const [invoiceNumber, setInvoiceNumber] = useState("");
-  const [invoicePaymentDate, setInvoicePaymentDate] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState("");
-  const [invoiceSaleDate, setInvoiceSaleDate] = useState("");
+  const [invoicePaymentDate, setInvoicePaymentDate] = useState();
+  const [invoiceDate, setInvoiceDate] = useState();
+  const [invoiceSaleDate, setInvoiceSaleDate] = useState();
   const [selectedKontrahent, setSelectedKontrahent] = useState();
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -54,6 +54,7 @@ const AllInvoices = () => {
     totalNetValue,
     totalGrossValue,
     notes,
+    userEmail: currentUser?.mail,
   };
 
   const handleSelectChange = (event) => {

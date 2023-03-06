@@ -9,12 +9,13 @@ export const READ_FAKTURA_SUCCESS = "READ_FAKTURA_SUCCESS";
 export const READ_FAKTURA_FAILURE = "READ_FAKTURA_FAILURE";
 
 export const createFaktura = (faktura, user) => async (dispatch) => {
+
   if (!user) return;
   const { token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   dispatch({ type: CREATE_FAKTURA_REQUEST });
   try {
-    const res = await axios.post("http://localhost:5002/api/faktury", faktura);
+    const res = await axios.post("http://localhost:5002/api/auth/faktury", faktura);
     dispatch({
       type: CREATE_FAKTURA_SUCCESS,
       payload: res.data,
@@ -35,7 +36,7 @@ export const readFaktura = (id, user) => async (dispatch) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   dispatch({ type: READ_FAKTURA_REQUEST });
   try {
-    const res = await axios.get(`http://localhost:5002/api/faktury/${id}`);
+    const res = await axios.get(`http://localhost:5002/api/auth/faktury/${id}`);
     dispatch({
       type: READ_FAKTURA_SUCCESS,
       payload: res.data,
