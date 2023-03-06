@@ -1,11 +1,10 @@
 import {
-  CREATE_FAKTURA_REQUEST,
   CREATE_FAKTURA_SUCCESS,
-  CREATE_FAKTURA_FAILURE,
+  READ_FAKTURA_SUCCESS,
 } from "../actions/fakturaActions";
 
 const initialState = {
-  fakturaData: null,
+  fakturaData: [],
 };
 
 const fakturaReducer = (state = initialState, action) => {
@@ -13,6 +12,10 @@ const fakturaReducer = (state = initialState, action) => {
     case CREATE_FAKTURA_SUCCESS:
       return {
         ...state,
+        fakturaData: action.payload,
+      };
+    case READ_FAKTURA_SUCCESS:
+      return {
         fakturaData: action.payload,
       };
     default:

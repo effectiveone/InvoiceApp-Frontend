@@ -22,10 +22,7 @@ const InvoicePrinter = React.forwardRef((props, ref) => {
     setList,
     total,
     setTotal,
-    totalGrossValue,
-    setTotalGrossValue,
     notes,
-    setNotes,
   } = props;
 
   const [preselectedKontrahent, setPreselectedKontrahent] =

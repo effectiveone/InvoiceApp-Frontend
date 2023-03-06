@@ -4,14 +4,14 @@ import {
   addCompanyData,
 } from "../../store/actions/mycompanyActions";
 import { useDispatch, useSelector } from "react-redux";
+import { useUser } from "./useUser";
 
 export const useCompany = () => {
+  const { currentUser } = useUser();
+
   const dispatch = useDispatch();
   const companyData = useSelector((state) => state.myCompany.companyData);
 
-  const user = useSelector((state) => state.auth.user);
-  const localUser = JSON.parse(localStorage.getItem("user"));
-  const currentUser = user ?? localUser;
   const [updatedCompanyDate, setCompanyData] = useState({
     nip: "",
     regon: "",

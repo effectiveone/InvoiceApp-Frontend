@@ -4,13 +4,13 @@ import {
 } from "../../store/actions/kontrahenciActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useUser } from "./useUser";
 
 export const useKontrahent = (handleClose) => {
+  const { currentUser } = useUser();
   const dispatch = useDispatch();
   const kontrahent = useSelector((state) => state.kontrahenci?.contractorData);
-  const user = useSelector((state) => state.auth.user);
-  const localUser = JSON.parse(localStorage.getItem("user"));
-  const currentUser = user ?? localUser;
+
   const [updatedCompanyData, setCompanyData] = useState({
     nip: "",
     regon: "",
