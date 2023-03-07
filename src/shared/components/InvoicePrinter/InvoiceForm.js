@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Grid, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-import { useInvoice } from "../../context/useInvoiceContext";
-
-const InvoiceForm = ({ selectedInvoice }) => {
+import {
+  useInvoiceProvider,
+  InvoiceProvider,
+  useInvoiceContext,
+} from "../../context/useInvoiceContext";
+import { convertDate } from "../../utils/dateValidator";
+const InvoiceForm = () => {
   const {
-    handleEditInvoice,
-    invoicePaymentDate,
-    setInvoicePaymentDate,
-    invoiceDates,
-    setInvoiceDates,
-    invoiceSaleDate,
-    setInvoiceSaleDate,
+    TAX_RATES,
     selectedKontrahent,
-    setSelectedKontrahent,
-    notes,
-    setNotes,
     items,
     setItems,
     totalNetValue,
     setTotalNetValue,
     totalGrossValue,
     setTotalGrossValue,
-    handleSelectChange,
-    handlePrint,
-    componentRef,
-    handleSubmit,
     kontrahent,
-    companyData,
-    TAX_RATES,
-  } = useInvoice(selectedInvoice);
+    invoiceSaleDate,
+    setInvoiceSaleDate,
+    invoicePaymentDate,
+    setInvoicePaymentDate,
+    handleSelectChange,
+    invoiceDate,
+    setInvoiceDate,
+    setNotes,
+    notes,
+    invoiceNumber,
+    selectedInvoice,
+  } = useInvoiceContext();
+  useEffect(() => {
+    console.log("invoiceDate__frominvoiceform", invoiceDate);
+  }, [invoiceDate]);
+  useEffect(() => {
+    console.log("selectedInvoicefrominvoiceform", selectedInvoice);
+  }, [selectedInvoice]);
 
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
   const changeVisibility = () => {
@@ -132,8 +138,8 @@ const InvoiceForm = ({ selectedInvoice }) => {
               id="invoiceDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={invoiceDates}
-              onChange={(e) => setInvoiceDates(e.target.value)}
+              value={invoiceDate}
+              onChange={(e) => setInvoiceDate(e.target.value)}
             />
           </Grid>
           <Grid style={{ display: "flex", flexDirection: "column" }}>

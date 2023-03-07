@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../shared/components/layout/layout";
 import {
   useInvoice,
   InvoiceProvider,
+  useInvoiceContext,
 } from "../shared/context/useInvoiceContext";
 
 import { Grid } from "@material-ui/core";
 import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
-const Dashboard = () => {
-  const [selectedInvoice, setSelectdInvoice] = useState();
 
-  const { invoiceDate, handleEditInvoice } = useInvoice(selectedInvoice);
+function Dashboard() {
+  return (
+    <InvoiceProvider>
+      <MyComponent />
+    </InvoiceProvider>
+  );
+}
+
+const MyComponent = () => {
+  const { invoiceDate, handleEditInvoice, setLocalInvoiceNumber } =
+    useInvoiceContext();
+
+  const changeInvoiceNumber = (inv) => {
+    console.log("changeInvoiceNumber__inv__Dashboard", inv);
+    setLocalInvoiceNumber(inv);
+  };
+
   return (
     <>
-      <InvoiceProvider>
-        <button onClick={handleEditInvoice}>Zapisz zmiany</button>
-        {invoiceDate?.map((invoice, index) => (
-          <React.Fragment key={index}>
-            <InvoiceComponent
-              {...invoice}
-              setSelectdInvoice={setSelectdInvoice}
-            />
-          </React.Fragment>
-        ))}
-
-        <InvoiceForm selectedInvoice={selectedInvoice} />
-      </InvoiceProvider>
+      <button onClick={handleEditInvoice}>Zapisz zmiany</button>
+      {invoiceDate?.map((invoice, index) => (
+        <React.Fragment key={index}>
+          <InvoiceComponent
+            {...invoice}
+            changeInvoiceNumber={changeInvoiceNumber}
+          />
+        </React.Fragment>
+      ))}
+      <InvoiceForm />
     </>
   );
 };
@@ -36,9 +48,13 @@ const InvoiceComponent = ({
   selectedKontrahent,
   totalNetValue,
   totalGrossValue,
-  setSelectdInvoice,
+  changeInvoiceNumber,
 }) => {
   const { companyName } = selectedKontrahent;
+  const handleClick = () => {
+    console.log("changeInvoiceNumber__inv", invoiceNumber);
+    changeInvoiceNumber(invoiceNumber);
+  };
   return (
     <Grid
       style={{
@@ -51,7 +67,7 @@ const InvoiceComponent = ({
       <p>{companyName}</p>
       <p>{totalNetValue}</p>
       <p>{(totalGrossValue - totalNetValue)?.toFixed(2)}</p>
-      <button onClick={() => setSelectdInvoice(invoiceNumber)}>Edytuj</button>
+      <button onClick={handleClick}>Edytuj</button>
     </Grid>
   );
 };

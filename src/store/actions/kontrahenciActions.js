@@ -5,10 +5,9 @@ export const GET_CONTRACTOR_DATA = "GET_CONTRACTOR_DATA";
 export const ADD_CONTRACTOR_DATA = "ADD_CONTRACTOR_DATA";
 
 export const getContractorData = (user) => {
-  console.log("getContractorData", user);
   if (!user) return;
   const { mail, token } = user;
-  console.log("getContractorDatamail", mail);
+
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
     axios
