@@ -40,10 +40,36 @@ const AllInvoices = () => {
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
 
+  const printFooter = (
+    <>
+      <InvoicePrinter
+        ref={componentRef}
+        invoiceNumber={invoiceNumber}
+        invoiceDate={invoiceDates}
+        dueDate={invoiceSaleDate}
+        selectedKontrahent={selectedKontrahent}
+        companyData={companyData}
+        handlePrint={handlePrint}
+        description={description}
+        quantity={quantity}
+        price={price}
+        amount={amount}
+        list={items}
+        setList={setItems}
+        total={totalNetValue}
+        setTotal={setTotalNetValue}
+        totalGrossValue={totalGrossValue}
+        setTotalGrossValue={setTotalGrossValue}
+        notes={notes}
+        setNotes={setNotes}
+      />
+    </>
+  );
+
   return (
     <>
       <Button onClick={() => setIsVisible(!isVisible)}>Podgląd</Button>
-      {!isVisible && (
+      {isVisible && (
         <ReactToPrint
           trigger={() => <Button>Print / Download</Button>}
           content={() => componentRef.current}
@@ -74,29 +100,7 @@ const AllInvoices = () => {
           />
         </>
       ) : (
-        <>
-          <InvoicePrinter
-            ref={componentRef}
-            invoiceNumber={invoiceNumber}
-            invoiceDate={invoiceDates}
-            dueDate={invoiceSaleDate}
-            selectedKontrahent={selectedKontrahent}
-            companyData={companyData}
-            handlePrint={handlePrint}
-            description={description}
-            quantity={quantity}
-            price={price}
-            amount={amount}
-            list={items}
-            setList={setItems}
-            total={totalNetValue}
-            setTotal={setTotalNetValue}
-            totalGrossValue={totalGrossValue}
-            setTotalGrossValue={setTotalGrossValue}
-            notes={notes}
-            setNotes={setNotes}
-          />
-        </>
+        <>{printFooter}</>
       )}
     </>
   );

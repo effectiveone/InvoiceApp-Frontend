@@ -32,10 +32,11 @@ const Dashboard = () => {
     handleSelectChange,
     handlePrint,
     componentRef,
-    handleSubmit,
+    handleEditInvoice,
   } = useInvoice(selectedInvoice);
   return (
     <>
+      <button onClick={handleEditInvoice}>Zapisz zmiany</button>
       {invoiceDate?.map((invoice, index) => (
         <React.Fragment key={index}>
           <InvoiceComponent
@@ -44,6 +45,7 @@ const Dashboard = () => {
           />
         </React.Fragment>
       ))}
+
       <InvoiceForm
         items={items}
         setItems={setItems}
@@ -53,13 +55,14 @@ const Dashboard = () => {
         setTotalGrossValue={setTotalGrossValue}
         TAX_RATES={TAX_RATES}
         kontrahent={kontrahent}
-        invoiceSaleDate={invoiceSaleDate}
+        selectedKontrahent={selectedKontrahent}
         setInvoiceSaleDate={setInvoiceSaleDate}
-        invoicePaymentDate={invoicePaymentDate}
-        setInvoicePaymentDate={setInvoicePaymentDate}
-        handleSelectChange={handleSelectChange}
-        invoiceDate={invoiceDates}
         setInvoiceDate={setInvoiceDates}
+        setInvoicePaymentDate={setInvoicePaymentDate}
+        invoiceDate={invoiceDates}
+        invoiceSaleDate={invoiceSaleDate}
+        invoicePaymentDate={invoicePaymentDate}
+        handleSelectChange={handleSelectChange}
         notes={notes}
         setNotes={setNotes}
       />

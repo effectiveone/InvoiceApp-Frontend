@@ -3,6 +3,7 @@ import { TextField, Button, Box, Grid, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 
 const InvoiceForm = ({
+  selectedKontrahent,
   items,
   setItems,
   totalNetValue,
@@ -27,10 +28,11 @@ const InvoiceForm = ({
     totalGrossValue,
     TAX_RATES,
     kontrahent,
+    notes,
     invoiceSaleDate,
     invoicePaymentDate,
     invoiceDate,
-    notes,
+    selectedKontrahent,
   });
 
   useEffect(() => {
@@ -44,6 +46,7 @@ const InvoiceForm = ({
       invoicePaymentDate,
       invoiceDate,
       notes,
+      selectedKontrahent,
     });
   }, [
     items,
@@ -55,6 +58,7 @@ const InvoiceForm = ({
     invoicePaymentDate,
     invoiceDate,
     notes,
+    selectedKontrahent,
   ]);
 
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
@@ -72,7 +76,7 @@ const InvoiceForm = ({
     );
     setTotalNetValue(newTotalNetValue);
     setTotalGrossValue(newTotalGrossValue);
-  }, [items]);
+  }, [items, setTotalGrossValue, setTotalNetValue]);
 
   const handleAddItem = () => {
     setItems([
@@ -122,6 +126,10 @@ const InvoiceForm = ({
           <select
             style={{ width: "300px" }}
             name="companyName"
+            value={
+              myState.selectedKontrahent?.kontrahent_companyName ??
+              kontrahent[0]?.companyName
+            }
             onChange={handleSelectChange}
           >
             {kontrahent?.map((k, index) => (
@@ -251,7 +259,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Vat"
-              value={(myState.totalNetValue - myState.totalGrossValue)?.toFixed(
+              value={(myState.totalGrossValue - myState.totalNetValue)?.toFixed(
                 2
               )}
               InputProps={{ readOnly: true }}

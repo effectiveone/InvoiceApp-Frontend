@@ -7,6 +7,9 @@ export const CREATE_FAKTURA_FAILURE = "CREATE_FAKTURA_FAILURE";
 export const READ_FAKTURA_REQUEST = "READ_FAKTURA_REQUEST";
 export const READ_FAKTURA_SUCCESS = "READ_FAKTURA_SUCCESS";
 export const READ_FAKTURA_FAILURE = "READ_FAKTURA_FAILURE";
+export const EDIT_FAKTURA_REQUEST = "EDIT_FAKTURA_REQUEST";
+export const EDIT_FAKTURA_SUCCESS = "EDIT_FAKTURA_SUCCESS";
+export const EDIT_FAKTURA_FAILURE = "EDIT_FAKTURA_FAILURE";
 
 export const createFaktura = (faktura, user) => async (dispatch) => {
   if (!user) return;
@@ -33,7 +36,6 @@ export const createFaktura = (faktura, user) => async (dispatch) => {
 };
 
 export const readFaktury = (user) => async (dispatch) => {
-  console.log("ususerer", user);
   if (!user) return;
 
   const { mail, token } = user;
@@ -50,6 +52,32 @@ export const readFaktury = (user) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: READ_FAKTURA_FAILURE,
+      error: err.message,
+    });
+    dispatch(openAlertMessage("Error reading faktura: " + err.message));
+  }
+};
+
+export const editFaktury = (faktura, user) => async (dispatch) => {
+  console.log("faktura", faktura.invoiceNumber);
+  if (!user) return;
+
+  const { token } = user;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  dispatch({ type: EDIT_FAKTURA_REQUEST });
+  try {
+    const res = await axios.post(
+      `http://localhost:5002/api/auth/edit-faktura`,
+
+      faktura
+    );
+    dispatch({
+      type: EDIT_FAKTURA_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: EDIT_FAKTURA_FAILURE,
       error: err.message,
     });
     dispatch(openAlertMessage("Error reading faktura: " + err.message));
