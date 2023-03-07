@@ -1,65 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Grid, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
+import { useInvoice } from "../../context/useInvoiceContext";
 
-const InvoiceForm = ({
-  selectedKontrahent,
-  items,
-  setItems,
-  totalNetValue,
-  setTotalNetValue,
-  totalGrossValue,
-  setTotalGrossValue,
-  TAX_RATES,
-  kontrahent,
-  invoiceSaleDate,
-  setInvoiceSaleDate,
-  invoicePaymentDate,
-  setInvoicePaymentDate,
-  handleSelectChange,
-  invoiceDate,
-  setInvoiceDate,
-  setNotes,
-  notes,
-}) => {
-  const [myState, setMyState] = useState({
-    items,
-    totalNetValue,
-    totalGrossValue,
-    TAX_RATES,
-    kontrahent,
-    notes,
-    invoiceSaleDate,
+const InvoiceForm = ({ selectedInvoice }) => {
+  const {
+    handleEditInvoice,
     invoicePaymentDate,
-    invoiceDate,
-    selectedKontrahent,
-  });
-
-  useEffect(() => {
-    setMyState({
-      items,
-      totalNetValue,
-      totalGrossValue,
-      TAX_RATES,
-      kontrahent,
-      invoiceSaleDate,
-      invoicePaymentDate,
-      invoiceDate,
-      notes,
-      selectedKontrahent,
-    });
-  }, [
-    items,
-    totalNetValue,
-    totalGrossValue,
-    TAX_RATES,
-    kontrahent,
+    setInvoicePaymentDate,
+    invoiceDates,
+    setInvoiceDates,
     invoiceSaleDate,
-    invoicePaymentDate,
-    invoiceDate,
-    notes,
+    setInvoiceSaleDate,
     selectedKontrahent,
-  ]);
+    setSelectedKontrahent,
+    notes,
+    setNotes,
+    items,
+    setItems,
+    totalNetValue,
+    setTotalNetValue,
+    totalGrossValue,
+    setTotalGrossValue,
+    handleSelectChange,
+    handlePrint,
+    componentRef,
+    handleSubmit,
+    kontrahent,
+    companyData,
+    TAX_RATES,
+  } = useInvoice(selectedInvoice);
 
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
   const changeVisibility = () => {
@@ -127,7 +97,7 @@ const InvoiceForm = ({
             style={{ width: "300px" }}
             name="companyName"
             value={
-              myState.selectedKontrahent?.kontrahent_companyName ??
+              selectedKontrahent?.kontrahent_companyName ??
               kontrahent[0]?.companyName
             }
             onChange={handleSelectChange}
@@ -162,8 +132,8 @@ const InvoiceForm = ({
               id="invoiceDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={myState.invoiceDate}
-              onChange={(e) => setInvoiceDate(e.target.value)}
+              value={invoiceDates}
+              onChange={(e) => setInvoiceDates(e.target.value)}
             />
           </Grid>
           <Grid style={{ display: "flex", flexDirection: "column" }}>
@@ -174,7 +144,7 @@ const InvoiceForm = ({
               id="dueDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={myState.invoiceSaleDate}
+              value={invoiceSaleDate}
               onChange={(e) => setInvoiceSaleDate(e.target.value)}
             />
           </Grid>
@@ -186,7 +156,7 @@ const InvoiceForm = ({
               id="dueDate"
               placeholder="Invoice Date"
               autoComplete="off"
-              value={myState.invoicePaymentDate}
+              value={invoicePaymentDate}
               onChange={(e) => setInvoicePaymentDate(e.target.value)}
             />
           </Grid>
@@ -204,7 +174,7 @@ const InvoiceForm = ({
               Dodaj produkt/usługę
             </Button>
           </Grid>
-          {myState.items?.map((item, index) => (
+          {items?.map((item, index) => (
             <InvoiceItem
               key={index}
               index={index}
@@ -234,7 +204,7 @@ const InvoiceForm = ({
                   cols="30"
                   rows="10"
                   placeholder="Additional notes to the client"
-                  value={myState.notes}
+                  value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 ></textarea>
               </>
@@ -243,7 +213,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość netto"
-              value={myState.totalNetValue?.toFixed(2)}
+              value={totalNetValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -251,7 +221,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Wartość brutto"
-              value={myState.totalGrossValue?.toFixed(2)}
+              value={totalGrossValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -259,9 +229,7 @@ const InvoiceForm = ({
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
               label="Vat"
-              value={(myState.totalGrossValue - myState.totalNetValue)?.toFixed(
-                2
-              )}
+              value={(totalGrossValue - totalNetValue)?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />

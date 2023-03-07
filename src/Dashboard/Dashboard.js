@@ -1,71 +1,31 @@
 import React, { useState } from "react";
 import Layout from "../shared/components/layout/layout";
-import { useInvoice } from "../shared/hook/useInvoice";
+import {
+  useInvoice,
+  InvoiceProvider,
+} from "../shared/context/useInvoiceContext";
+
 import { Grid } from "@material-ui/core";
 import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
 const Dashboard = () => {
   const [selectedInvoice, setSelectdInvoice] = useState();
 
-  const {
-    invoiceDate,
-    TAX_RATES,
-    kontrahent,
-    companyData,
-    invoiceNumber,
-    setInvoiceNumber,
-    invoicePaymentDate,
-    setInvoicePaymentDate,
-    invoiceDates,
-    setInvoiceDates,
-    invoiceSaleDate,
-    setInvoiceSaleDate,
-    selectedKontrahent,
-    setSelectedKontrahent,
-    notes,
-    setNotes,
-    items,
-    setItems,
-    totalNetValue,
-    setTotalNetValue,
-    totalGrossValue,
-    setTotalGrossValue,
-    handleSelectChange,
-    handlePrint,
-    componentRef,
-    handleEditInvoice,
-  } = useInvoice(selectedInvoice);
+  const { invoiceDate, handleEditInvoice } = useInvoice(selectedInvoice);
   return (
     <>
-      <button onClick={handleEditInvoice}>Zapisz zmiany</button>
-      {invoiceDate?.map((invoice, index) => (
-        <React.Fragment key={index}>
-          <InvoiceComponent
-            {...invoice}
-            setSelectdInvoice={setSelectdInvoice}
-          />
-        </React.Fragment>
-      ))}
+      <InvoiceProvider>
+        <button onClick={handleEditInvoice}>Zapisz zmiany</button>
+        {invoiceDate?.map((invoice, index) => (
+          <React.Fragment key={index}>
+            <InvoiceComponent
+              {...invoice}
+              setSelectdInvoice={setSelectdInvoice}
+            />
+          </React.Fragment>
+        ))}
 
-      <InvoiceForm
-        items={items}
-        setItems={setItems}
-        totalNetValue={totalNetValue}
-        setTotalNetValue={setTotalNetValue}
-        totalGrossValue={totalGrossValue}
-        setTotalGrossValue={setTotalGrossValue}
-        TAX_RATES={TAX_RATES}
-        kontrahent={kontrahent}
-        selectedKontrahent={selectedKontrahent}
-        setInvoiceSaleDate={setInvoiceSaleDate}
-        setInvoiceDate={setInvoiceDates}
-        setInvoicePaymentDate={setInvoicePaymentDate}
-        invoiceDate={invoiceDates}
-        invoiceSaleDate={invoiceSaleDate}
-        invoicePaymentDate={invoicePaymentDate}
-        handleSelectChange={handleSelectChange}
-        notes={notes}
-        setNotes={setNotes}
-      />
+        <InvoiceForm selectedInvoice={selectedInvoice} />
+      </InvoiceProvider>
     </>
   );
 };
