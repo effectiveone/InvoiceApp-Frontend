@@ -1,7 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
+import { useInvoiceContext } from "../../context/useInvoiceContext";
 
-export default function Notes({ notes }) {
+export default function Notes() {
+  const { notes } = useInvoiceContext();
+
   return (
     <Box sx={{ marginTop: 10, marginBottom: 5 }} component="section">
       <Typography variant="h3" component="h3">

@@ -8,8 +8,10 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import { useInvoiceContext } from "../../context/useInvoiceContext";
+export default function InvoiceTable() {
+  const { items, totalGrossValue } = useInvoiceContext();
 
-export default function InvoiceTable({ list, total }) {
   return (
     <>
       <TableContainer>
@@ -18,35 +20,65 @@ export default function InvoiceTable({ list, total }) {
             <TableRow sx={{ backgroundColor: "#f0f0f0" }}>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Description
+                  Nazwa
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Quantity
+                  Ilość
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Price
+                  Jednostka
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Amount
+                  VAT
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Cena netto
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Wartość netto
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h3">
+                  Wartość brutto
                 </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map(({ id, description, quantity, price, amount }) => (
-              <TableRow key={id}>
-                <TableCell>{description}</TableCell>
-                <TableCell>{quantity}</TableCell>
-                <TableCell>{price}</TableCell>
-                <TableCell>{amount}</TableCell>
-              </TableRow>
-            ))}
+            {items.map((item, index) => {
+              const {
+                name,
+                quantity,
+                unit,
+                vat,
+                netPrice,
+                netValue,
+                grossValue,
+              } = item;
+
+              return (
+                <TableRow key={index}>
+                  <TableCell>{name}</TableCell>
+                  <TableCell>{quantity}</TableCell>
+                  <TableCell>{unit}</TableCell>
+                  <TableCell>{vat}</TableCell>
+                  <TableCell>{netPrice}</TableCell>
+                  <TableCell>{netValue}</TableCell>
+                  <TableCell>{grossValue}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -57,7 +89,7 @@ export default function InvoiceTable({ list, total }) {
           component="h2"
           sx={{ fontWeight: "bold", color: "#333333" }}
         >
-          Kshs. {total.toLocaleString()}
+          PLN. {totalGrossValue.toLocaleString()}
         </Typography>
       </div>
     </>
