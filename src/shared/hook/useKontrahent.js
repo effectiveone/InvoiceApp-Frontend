@@ -1,12 +1,14 @@
 import {
   addContractorData,
   getContractorData,
+  updateContractorData,
 } from "../../store/actions/kontrahenciActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useUser } from "./useUser";
-
-export const useKontrahent = (handleClose) => {
+import { useModal } from "./useModal";
+export const useKontrahent = () => {
+  const { open, handleOpen, handleClose } = useModal();
   const { currentUser } = useUser();
   const dispatch = useDispatch();
   const kontrahent = useSelector((state) => state.kontrahenci?.contractorData);
@@ -40,8 +42,20 @@ export const useKontrahent = (handleClose) => {
   };
 
   const handleEdit = (id) => {
-    // funkcja obsługująca przycisk Edytuj
-    console.log(`Edit button clicked for contractor with id: ${id}`);
+    handleOpen();
+
+    const thisKontrahent = kontrahent.find((konta) => konta._id === id);
+    setCompanyData({
+      nip: thisKontrahent.nip,
+      regon: thisKontrahent.regon,
+      street: thisKontrahent.street,
+      city: thisKontrahent.city,
+      zipCode: thisKontrahent.zipCode,
+      companyName: thisKontrahent.companyName,
+      legalForm: thisKontrahent.legalForm,
+      userEmail: currentUser?.mail,
+    });
+    console.log("thisKontrahent", thisKontrahent);
   };
 
   const handleDelete = (id) => {
@@ -50,6 +64,9 @@ export const useKontrahent = (handleClose) => {
   };
 
   return {
+    open,
+    handleOpen,
+    handleClose,
     handleEdit,
     handleDelete,
     updatedCompanyData,

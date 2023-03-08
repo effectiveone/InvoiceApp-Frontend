@@ -108,6 +108,28 @@ const MyCompany = () => {
             onChange={handleChange}
           />
         </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField
+            fullWidth
+            id="bankName"
+            name="bankName"
+            label="bank name"
+            variant="outlined"
+            value={updatedCompanyDate?.bankName}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField
+            fullWidth
+            id="bankAccount"
+            name="bankAccount"
+            label="Konto bankowe"
+            variant="outlined"
+            value={updatedCompanyDate?.bankAccount}
+            onChange={handleChange}
+          />
+        </Grid>
         <button onClick={handleSubmit}>Submit</button>
       </Grid>
     </>

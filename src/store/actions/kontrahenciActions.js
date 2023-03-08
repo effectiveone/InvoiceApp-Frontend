@@ -3,6 +3,9 @@ import { openAlertMessage } from "./alertActions";
 
 export const GET_CONTRACTOR_DATA = "GET_CONTRACTOR_DATA";
 export const ADD_CONTRACTOR_DATA = "ADD_CONTRACTOR_DATA";
+export const UPDATE_CONTRACTOR_DATA = "UPDATE_CONTRACTOR_DATA";
+export const UPDATE_CONTRACTOR_DATA_SUCCESS = "UPDATE_CONTRACTOR_DATA_SUCCESS";
+export const UPDATE_CONTRACTOR_DATA_FAILURE = "UPDATE_CONTRACTOR_DATA_FAILURE";
 
 export const getContractorData = (user) => {
   if (!user) return;
@@ -42,5 +45,26 @@ export const addContractorData = (newData, user) => async (dispatch) => {
     dispatch(openAlertMessage("Task added successfully!"));
   } catch (err) {
     dispatch(openAlertMessage("Error adding task: " + err));
+  }
+};
+
+export const updateContractorData = (updatedData, user) => async (dispatch) => {
+  if (!user) return;
+  const { token } = user;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  dispatch({ type: UPDATE_CONTRACTOR_DATA });
+  try {
+    const res = await axios.patch(
+      `http://localhost:5002/api/auth/kontrahenci/${updatedData.id}`,
+      updatedData
+    );
+    dispatch({
+      type: UPDATE_CONTRACTOR_DATA_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(openAlertMessage("Data updated successfully!"));
+  } catch (err) {
+    dispatch({ type: UPDATE_CONTRACTOR_DATA_FAILURE, payload: err.message });
+    dispatch(openAlertMessage("Error updating data: " + err));
   }
 };

@@ -33,7 +33,7 @@ const MyComponent = () => {
       )}
       <Button onClick={handleSubmit}>Zapisz fakture</Button>
 
-      {isVisible ? (
+      {!isVisible ? (
         <>
           <InvoiceForm />
         </>

@@ -5,13 +5,13 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import LoginPage from "./authPages/LoginPage/LoginPage";
-import RegisterPage from "./authPages/RegisterPage/RegisterPage";
-import Dashboard from "./Dashboard/Dashboard";
-import MyCompany from "./Dashboard/MyCompany";
-import AllInvoices from "./Dashboard/AllInvoices";
-import Kontrahent from "./Dashboard/Kontrahent";
-import Settings from "./Dashboard/Settings";
+import LoginPage from "./Auth/LoginPage/LoginPage";
+import RegisterPage from "./Auth/RegisterPage/RegisterPage";
+import Dashboard from "./Pages/Dashboard";
+import MyCompany from "./Pages/MyCompany";
+import AllInvoices from "./Pages/AllInvoices";
+import Kontrahent from "./Pages/Kontrahent";
+import Settings from "./Pages/Settings";
 
 import AlertNotification from "./shared/components/AlertNotification";
 

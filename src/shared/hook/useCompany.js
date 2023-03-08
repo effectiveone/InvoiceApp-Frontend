@@ -20,13 +20,17 @@ export const useCompany = () => {
     zipCode: "",
     companyName: "",
     legalForm: "",
+    bankName: "",
+    bankAccount: "",
     userEmail: currentUser?.mail,
   });
 
   const handleChange = (event) => {
-    setCompanyData({
-      ...updatedCompanyDate,
-      [event.target.name]: event.target.value,
+    setCompanyData((prevState) => {
+      return {
+        ...prevState,
+        [event.target.name]: event.target.value,
+      };
     });
   };
 
