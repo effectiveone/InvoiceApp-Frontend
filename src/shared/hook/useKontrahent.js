@@ -2,6 +2,7 @@ import {
   addContractorData,
   getContractorData,
   updateContractorData,
+  deleteContractor,
 } from "../../store/actions/kontrahenciActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -43,15 +44,15 @@ export const useKontrahent = () => {
     dispatch(addContractorData(updatedCompanyData, currentUser));
     handleClose();
   };
-
+  const [paramsId, setParamsId] = useState();
   const handleSubmitEdit = () => {
-    dispatch(updateContractorData(updatedCompanyData, currentUser));
+    dispatch(updateContractorData(updatedCompanyData, paramsId, currentUser));
     handleClose();
   };
 
   const handleEdit = (id) => {
     handleOpen();
-
+    setParamsId(id);
     const thisKontrahent = kontrahent.find((konta) => konta._id === id);
     setCompanyData({
       nip: thisKontrahent.nip,
@@ -67,11 +68,14 @@ export const useKontrahent = () => {
   };
 
   const handleDelete = (id) => {
-    // funkcja obsługująca przycisk Usuń
-    console.log(`Delete button clicked for contractor with id: ${id}`);
+    dispatch(deleteContractor(id, currentUser));
   };
 
   const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
+
+  useEffect(() => {
+    dispatch(getContractorData(currentUser));
+  }, [deleteContractor, updateContractorData, addContractorData]);
 
   return {
     button,

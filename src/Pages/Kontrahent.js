@@ -33,9 +33,9 @@ const MyComponent = () => {
           Add Kontrahent
         </Button>
         <ContrahentModal />
-        {kontrahent?.map((contractor) => (
-          <ContrahentGrid {...contractor} />
-        ))}
+        {Array.isArray(kontrahent) &&
+          kontrahent.length > 0 &&
+          kontrahent?.map((contractor) => <ContrahentGrid {...contractor} />)}
       </Box>
     </>
   );

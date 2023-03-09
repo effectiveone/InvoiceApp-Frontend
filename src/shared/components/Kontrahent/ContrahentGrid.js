@@ -3,6 +3,7 @@ import { Button, Box, Grid } from "@material-ui/core";
 import { Divider } from "@mui/material";
 import { useKontrahentContext } from "../../context/useKontrahentContext";
 import { makeStyles } from "@material-ui/core/styles";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {
@@ -28,7 +29,7 @@ function ContrahentGrid(contractor) {
   };
   return (
     <Grid
-      key={contractor._id}
+      key={uuidv4()}
       item
       xs={12}
       sm={6}

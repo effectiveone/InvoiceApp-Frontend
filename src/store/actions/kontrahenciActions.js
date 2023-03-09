@@ -6,6 +6,9 @@ export const ADD_CONTRACTOR_DATA = "ADD_CONTRACTOR_DATA";
 export const UPDATE_CONTRACTOR_DATA = "UPDATE_CONTRACTOR_DATA";
 export const UPDATE_CONTRACTOR_DATA_SUCCESS = "UPDATE_CONTRACTOR_DATA_SUCCESS";
 export const UPDATE_CONTRACTOR_DATA_FAILURE = "UPDATE_CONTRACTOR_DATA_FAILURE";
+export const DELETE_CONTRACTOR_REQUEST = "DELETE_CONTRACTOR_REQUEST";
+export const DELETE_CONTRACTOR_SUCCESS = "DELETE_CONTRACTOR_SUCCESS";
+export const DELETE_CONTRACTOR_FAILURE = "DELETE_CONTRACTOR_FAILURE";
 
 export const getContractorData = (user) => {
   if (!user) return;
@@ -48,23 +51,41 @@ export const addContractorData = (newData, user) => async (dispatch) => {
   }
 };
 
-export const updateContractorData = (updatedData, user) => async (dispatch) => {
+export const updateContractorData =
+  (updatedData, paramsId, user) => async (dispatch) => {
+    if (!user) return;
+    const { token } = user;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    dispatch({ type: UPDATE_CONTRACTOR_DATA });
+    try {
+      const res = await axios.patch(
+        `http://localhost:5002/api/auth/kontrahenci/${paramsId}`,
+        updatedData
+      );
+      dispatch({
+        type: UPDATE_CONTRACTOR_DATA_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(openAlertMessage("Data updated successfully!"));
+    } catch (err) {
+      dispatch({ type: UPDATE_CONTRACTOR_DATA_FAILURE, payload: err.message });
+      dispatch(openAlertMessage("Error updating data: " + err));
+    }
+  };
+
+export const deleteContractor = (paramsId, user) => async (dispatch) => {
   if (!user) return;
   const { token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  dispatch({ type: UPDATE_CONTRACTOR_DATA });
+  dispatch({ type: DELETE_CONTRACTOR_REQUEST });
   try {
-    const res = await axios.patch(
-      `http://localhost:5002/api/auth/kontrahenci/${updatedData.id}`,
-      updatedData
+    await axios.delete(
+      `http://localhost:5002/api/auth/kontrahenci/${paramsId}`
     );
-    dispatch({
-      type: UPDATE_CONTRACTOR_DATA_SUCCESS,
-      payload: res.data,
-    });
-    dispatch(openAlertMessage("Data updated successfully!"));
+    dispatch({ type: DELETE_CONTRACTOR_SUCCESS });
+    dispatch(openAlertMessage("Contractor deleted successfully!"));
   } catch (err) {
-    dispatch({ type: UPDATE_CONTRACTOR_DATA_FAILURE, payload: err.message });
-    dispatch(openAlertMessage("Error updating data: " + err));
+    dispatch({ type: DELETE_CONTRACTOR_FAILURE, payload: err.message });
+    dispatch(openAlertMessage("Error deleting contractor: " + err));
   }
 };

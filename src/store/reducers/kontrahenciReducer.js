@@ -4,6 +4,9 @@ import {
   UPDATE_CONTRACTOR_DATA,
   UPDATE_CONTRACTOR_DATA_SUCCESS,
   UPDATE_CONTRACTOR_DATA_FAILURE,
+  DELETE_CONTRACTOR_REQUEST,
+  DELETE_CONTRACTOR_SUCCESS,
+  DELETE_CONTRACTOR_FAILURE,
 } from "../actions/kontrahenciActions";
 
 const initialState = {
@@ -30,6 +33,27 @@ const contractorReducer = (state = initialState, action) => {
       return { ...state, contractorData: action.payload, loading: false };
     case UPDATE_CONTRACTOR_DATA_FAILURE:
       return { ...state, error: action.payload, loading: false };
+    case DELETE_CONTRACTOR_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        errorMessage: "",
+      };
+    case DELETE_CONTRACTOR_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        errorMessage: "",
+      };
+    case DELETE_CONTRACTOR_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMessage: action.payload,
+      };
     default:
       return state;
   }
