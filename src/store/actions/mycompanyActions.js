@@ -32,13 +32,13 @@ export const addCompanyData = (newData, user) => async (dispatch) => {
   console.log("user", user);
 
   if (!user) return;
-  const { token } = user;
+  const { token, mail } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   try {
-    const res = await axios.put(
-      "http://localhost:5002/api/auth/dane-firmy",
-      newData
-    );
+    const res = await axios.put("http://localhost:5002/api/auth/dane-firmy", {
+      ...newData,
+      userEmail: mail,
+    });
     dispatch({
       type: ADD_COMPANY_DATA,
       payload: res.data,

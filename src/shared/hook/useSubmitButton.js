@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const useSubmitButton = (handleSubmit, handleSubmitEdit, buttonText) => {
-  console.log("buttonText", buttonText);
   const classes = useStyles();
 
   const handleButtonClick = () => {

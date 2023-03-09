@@ -25,14 +25,14 @@ const MyCompany = () => {
 };
 
 const MyComponent = () => {
-  const { updatedCompanyDate, handleChange, handleSubmit } =
+  const { updatedCompanyData, handleChange, handleSubmit } =
     useCompanyContext();
 
   return (
     <>
       <CompanyForm
         whichInputs="company"
-        updatedCompanyDate={updatedCompanyDate}
+        updatedCompanyDate={updatedCompanyData}
         handleChange={handleChange}
       />
       <button onClick={handleSubmit}>Submit</button>

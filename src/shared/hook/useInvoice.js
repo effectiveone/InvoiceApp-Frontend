@@ -19,7 +19,6 @@ export const useInvoice = () => {
   const [invoiceNumberDate, updateInvoiceNumberDate] = useState();
   const [localInvoiceNumber, setLocalInvoiceNumber] = useState();
   useEffect(() => {
-    console.log("invoiceNumberFromuseInvoice", localInvoiceNumber);
     if (!invoiceDate?.length) {
       dispatch(readFaktury(currentUser));
     }

@@ -8,45 +8,32 @@ import { useUser } from "./useUser";
 
 export const useCompany = () => {
   const { currentUser } = useUser();
-
   const dispatch = useDispatch();
   const companyData = useSelector((state) => state.myCompany.companyData);
 
-  const [updatedCompanyDate, setCompanyData] = useState({
-    nip: "",
-    regon: "",
-    street: "",
-    city: "",
-    zipCode: "",
-    companyName: "",
-    legalForm: "",
-    bankName: "",
-    bankAccount: "",
-    userEmail: currentUser?.mail,
-  });
+  const [updatedCompanyData, setCompanyData] = useState({});
 
   const handleChange = (event) => {
-    setCompanyData((prevState) => {
-      return {
-        ...prevState,
-        [event.target.name]: event.target.value,
-      };
+    setCompanyData({
+      ...updatedCompanyData,
+      [event.target.name]: event.target.value,
     });
   };
 
-  useEffect(() => {
-    if (!companyData?.length) {
-      dispatch(getCompanyData(currentUser));
-      setCompanyData(companyData);
-    }
-  }, [dispatch, companyData, currentUser]);
-
   const handleSubmit = () => {
-    dispatch(addCompanyData(updatedCompanyDate, currentUser));
+    dispatch(addCompanyData(updatedCompanyData, currentUser));
   };
 
+  useEffect(() => {
+    dispatch(getCompanyData(currentUser));
+  }, [dispatch, currentUser]);
+
+  useEffect(() => {
+    setCompanyData(companyData);
+  }, [companyData]);
+
   return {
-    updatedCompanyDate,
+    updatedCompanyData,
     setCompanyData,
     companyData,
     handleChange,
