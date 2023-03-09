@@ -19,12 +19,8 @@ const Kontrahent = () => {
   );
 };
 const MyComponent = () => {
-  const { handleOpen, kontrahent, setButtonText } = useKontrahentContext();
-
-  const handleModal = () => {
-    setButtonText("Zapisz");
-    handleOpen();
-  };
+  const { handleOpen, kontrahent, setButtonText, handleModal } =
+    useKontrahentContext();
 
   return (
     <>

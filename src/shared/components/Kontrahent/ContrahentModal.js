@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { legalForms } from "../../utils/forms";
 import { useKontrahentContext } from "../../context/useKontrahentContext";
 import { useModal } from "../../hook/useModal";
+import CompanyForm from "../companyForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -61,110 +62,11 @@ function ContrahentModal() {
     <>
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div className={classes.paper}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" component="h2">
-                Dane firmy
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel id="legalFormLabel">Forma prawna</InputLabel>
-                <Select
-                  labelId="legalFormLabel"
-                  id="legalForm"
-                  name="legalForm"
-                  value={updatedCompanyData?.legalForm}
-                  onChange={handleChange}
-                  label="Forma prawna"
-                >
-                  {/* You can replace legalForms with your own options */}
-                  {legalForms.map((form) => (
-                    <MenuItem key={form.value} value={form.value}>
-                      {form.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                id="companyName"
-                name="companyName"
-                label="Nazwa firmy"
-                variant="outlined"
-                value={updatedCompanyData?.companyName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                id="nip"
-                name="nip"
-                label="NIP"
-                variant="outlined"
-                value={updatedCompanyData?.nip}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                id="regon"
-                name="regon"
-                label="REGON"
-                variant="outlined"
-                value={updatedCompanyData?.regon}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="street"
-                name="street"
-                label="Ulica"
-                variant="outlined"
-                value={updatedCompanyData?.street}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                id="city"
-                name="city"
-                label="Miasto"
-                variant="outlined"
-                value={updatedCompanyData?.city}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                id="city"
-                name="city"
-                label="Miasto"
-                variant="outlined"
-                value={updatedCompanyData?.city}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                id="zipCode"
-                name="zipCode"
-                label="Kod pocztowy"
-                variant="outlined"
-                value={updatedCompanyData?.zipCode}
-                onChange={handleChange}
-              />
-            </Grid>
-          </Grid>
+          <CompanyForm
+            whichInputs="kontrahent"
+            updatedCompanyDate={updatedCompanyData}
+            handleChange={handleChange}
+          />
           <Box sx={{ mt: 3 }}>
             {button}
             <Button sx={{ ml: 2 }} onClick={handleClose}>

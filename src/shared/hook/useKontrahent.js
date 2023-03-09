@@ -50,6 +50,21 @@ export const useKontrahent = () => {
     handleClose();
   };
 
+  const handleModal = () => {
+    setButtonText("Zapisz");
+    handleOpen();
+    setCompanyData({
+      nip: "",
+      regon: "",
+      street: "",
+      city: "",
+      zipCode: "",
+      companyName: "",
+      legalForm: "",
+      userEmail: currentUser?.mail,
+    });
+  };
+
   const handleEdit = (id) => {
     handleOpen();
     setParamsId(id);
@@ -80,6 +95,7 @@ export const useKontrahent = () => {
   return {
     button,
     setButtonText,
+    handleModal,
     open,
     handleOpen,
     handleClose,
