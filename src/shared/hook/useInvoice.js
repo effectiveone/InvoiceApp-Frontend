@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { readFaktury } from "../../store/actions/fakturaActions";
 import { useUser } from "./useUser";
 import { useKontrahent } from "./useKontrahent";
+
 import { useCompany } from "./useCompany";
 import { createFaktura, editFaktury } from "../../store/actions/fakturaActions";
 import { TAX_RATES } from "../utils/tax";
@@ -17,7 +18,6 @@ export const useInvoice = () => {
   const [selectedInvoice, setSelectedInvoice] = useState();
   const [invoiceNumberDate, updateInvoiceNumberDate] = useState();
   const [localInvoiceNumber, setLocalInvoiceNumber] = useState();
-
   useEffect(() => {
     console.log("invoiceNumberFromuseInvoice", localInvoiceNumber);
     if (!invoiceDate?.length) {

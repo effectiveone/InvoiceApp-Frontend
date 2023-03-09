@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function ContrahentModal() {
   const classes = useStyles();
   const {
+    button,
     open,
     handleOpen,
     handleClose,
@@ -165,14 +166,7 @@ function ContrahentModal() {
             </Grid>
           </Grid>
           <Box sx={{ mt: 3 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Dodaj
-            </Button>
+            {button}
             <Button sx={{ ml: 2 }} onClick={handleClose}>
               Anuluj
             </Button>

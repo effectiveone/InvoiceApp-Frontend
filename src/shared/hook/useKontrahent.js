@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useUser } from "./useUser";
 import { useModal } from "./useModal";
+import useSubmitButton from "./useSubmitButton";
+
 export const useKontrahent = () => {
   const { open, handleOpen, handleClose } = useModal();
   const { currentUser } = useUser();
   const dispatch = useDispatch();
   const kontrahent = useSelector((state) => state.kontrahenci?.contractorData);
+  const [buttonText, setButtonText] = useState();
 
   const [updatedCompanyData, setCompanyData] = useState({
     nip: "",
@@ -41,6 +44,11 @@ export const useKontrahent = () => {
     handleClose();
   };
 
+  const handleSubmitEdit = () => {
+    dispatch(updateContractorData(updatedCompanyData, currentUser));
+    handleClose();
+  };
+
   const handleEdit = (id) => {
     handleOpen();
 
@@ -63,7 +71,11 @@ export const useKontrahent = () => {
     console.log(`Delete button clicked for contractor with id: ${id}`);
   };
 
+  const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
+
   return {
+    button,
+    setButtonText,
     open,
     handleOpen,
     handleClose,
