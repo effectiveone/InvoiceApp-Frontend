@@ -24,13 +24,19 @@ export const useCompany = () => {
     dispatch(addCompanyData(updatedCompanyData, currentUser));
   };
 
+  // useEffect(() => {
+  //   dispatch(getCompanyData(currentUser));
+  // }, [dispatch, currentUser]);
+
   useEffect(() => {
     dispatch(getCompanyData(currentUser));
   }, [dispatch, currentUser]);
 
   useEffect(() => {
-    setCompanyData(companyData);
-  }, [companyData]);
+    if (Object.keys(updatedCompanyData).length === 0) {
+      setCompanyData(companyData);
+    }
+  }, [dispatch, addCompanyData, companyData]);
 
   return {
     updatedCompanyData,

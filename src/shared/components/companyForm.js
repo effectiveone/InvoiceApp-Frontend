@@ -10,8 +10,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { legalForms } from "../utils/forms";
-import { useKontrahentContext } from "../context/useKontrahentContext";
-import { useCompanyContext } from "../context/useCompanyContext";
 
 function CompanyForm({ whichInputs, updatedCompanyDate, handleChange }) {
   const [updatedProps, setUpdatedProps] = useState(updatedCompanyDate);
@@ -19,6 +17,9 @@ function CompanyForm({ whichInputs, updatedCompanyDate, handleChange }) {
     setUpdatedProps(updatedCompanyDate);
   }, [updatedCompanyDate]);
 
+  useEffect(() => {
+    console.log("updatedProps", updatedProps);
+  }, [updatedProps]);
   return (
     <>
       <Grid container spacing={2}>
