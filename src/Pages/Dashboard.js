@@ -15,9 +15,11 @@ import {
   TableRow,
   Paper,
   Button,
-  TableSortLabel,
   Modal,
+  TableSortLabel,
+  TablePagination,
 } from "@material-ui/core";
+
 import { useModal } from "../shared/hook/useModal";
 import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
 
@@ -59,6 +61,8 @@ const MyComponent = () => {
   };
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("issueDate");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleSortRequest = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -95,6 +99,19 @@ const MyComponent = () => {
     }
     return 0;
   });
+
+  const emptyRows =
+    rowsPerPage -
+    Math.min(rowsPerPage, sortedInvoices.length - page * rowsPerPage);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <>
@@ -151,7 +168,13 @@ const MyComponent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedInvoices?.map((invoice, index) => (
+            {(rowsPerPage > 0
+              ? sortedInvoices.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : sortedInvoices
+            )?.map((invoice, index) => (
               <React.Fragment key={index}>
                 <InvoiceComponent
                   {...invoice}
@@ -161,6 +184,17 @@ const MyComponent = () => {
               </React.Fragment>
             ))}
           </TableBody>
+          {sortedInvoices.length > 10 && (
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 50]}
+              component="div"
+              count={sortedInvoices.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          )}
         </Table>
       </TableContainer>
       <Modal open={open} onClose={handleClose} className={classes.modal}>
