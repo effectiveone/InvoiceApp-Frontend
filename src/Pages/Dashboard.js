@@ -68,7 +68,7 @@ const MyComponent = () => {
     handleChangeRowsPerPage,
     handleFilterChange,
     sortedInvoices,
-  } = useInvoiceTable(invoiceDate);
+  } = useInvoiceTable({ invoiceDate: invoiceDate });
   const classes = useStyles();
 
   const changeInvoiceNumber = (inv) => {

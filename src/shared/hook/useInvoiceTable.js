@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 
-export const useInvoiceTable = (invoiceDate) => {
+export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
   const [filterValue, setFilterValue] = useState("");
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("issueDate");
@@ -65,6 +65,46 @@ export const useInvoiceTable = (invoiceDate) => {
     return sortedArray;
   }, [invoiceDate, orderBy, order, filterValue]);
 
+  const sortedKontrahents = useMemo(() => {
+    let filteredArray = kontrahent || [];
+
+    if (filterValue) {
+      filteredArray = filteredArray.filter((obj) =>
+        obj.name.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    }
+
+    const sortedArray = filteredArray.sort((a, b) => {
+      if (orderBy === "companyName") {
+        if (order === "asc") {
+          return a.companyName.localeCompare(b.companyName);
+        } else {
+          return b.companyName.localeCompare(a.companyName);
+        }
+      } else if (orderBy === "legalForm") {
+        if (order === "asc") {
+          return a.legalForm.localeCompare(b.legalForm);
+        } else {
+          return b.legalForm.localeCompare(a.legalForm);
+        }
+      } else if (orderBy === "nip") {
+        if (order === "asc") {
+          return a.nip.localeCompare(b.nip);
+        } else {
+          return b.nip.localeCompare(a.nip);
+        }
+      } else if (orderBy === "city") {
+        if (order === "asc") {
+          return a.city.localeCompare(b.city);
+        } else {
+          return b.city.localeCompare(a.city);
+        }
+      }
+      return 0;
+    });
+    return sortedArray;
+  }, [kontrahent, orderBy, order, filterValue]);
+
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, sortedInvoices.length - page * rowsPerPage);
@@ -90,6 +130,7 @@ export const useInvoiceTable = (invoiceDate) => {
     handleSortRequest,
     handleChangeRowsPerPage,
     handleFilterChange,
+    sortedKontrahents,
     order,
     orderBy,
     page,

@@ -10,6 +10,7 @@ import {
 import { useModal } from "../shared/hook/useModal";
 import ContrahentModal from "../shared/components/Kontrahent/ContrahentModal";
 import ContrahentGrid from "../shared/components/Kontrahent/ContrahentGrid";
+import ContrahentTable from "../shared/components/Kontrahent/ContrahentTable";
 
 const Kontrahent = () => {
   return (
@@ -29,9 +30,10 @@ const MyComponent = () => {
           Add Kontrahent
         </Button>
         <ContrahentModal />
-        {Array.isArray(kontrahent) &&
+        {/* {Array.isArray(kontrahent) &&
           kontrahent.length > 0 &&
-          kontrahent?.map((contractor) => <ContrahentGrid {...contractor} />)}
+          kontrahent?.map((contractor) => <ContrahentGrid {...contractor} />)} */}
+        <ContrahentTable />
       </Box>
     </>
   );
