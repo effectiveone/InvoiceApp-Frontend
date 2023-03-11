@@ -25,6 +25,8 @@ function PrivateRoute({ children, ...rest }) {
 }
 
 function App() {
+  const { currentUser } = useUser();
+
   return (
     <>
       <Router>
@@ -50,8 +52,8 @@ function App() {
           <PrivateRoute exact path="/mycompany">
             <MyCompany />
           </PrivateRoute>
-          <Route path="/">
-            <Redirect to="/dashboard" />
+          <Route exact path="/">
+            {currentUser ? <Redirect to="/dashboard" /> : <LoginPage />}
           </Route>
         </Switch>
       </Router>
