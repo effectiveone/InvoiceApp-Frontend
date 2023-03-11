@@ -70,7 +70,7 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
 
     if (filterValue) {
       filteredArray = filteredArray.filter((obj) =>
-        obj.name.toLowerCase().includes(filterValue.toLowerCase())
+        obj.companyName.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 

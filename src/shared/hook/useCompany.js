@@ -29,7 +29,9 @@ export const useCompany = () => {
   // }, [dispatch, currentUser]);
 
   useEffect(() => {
-    dispatch(getCompanyData(currentUser));
+    if (currentUser) {
+      dispatch(getCompanyData(currentUser));
+    }
   }, [dispatch, currentUser]);
 
   useEffect(() => {

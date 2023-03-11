@@ -28,7 +28,7 @@ export const useKontrahent = () => {
     userEmail: currentUser?.mail,
   });
   useEffect(() => {
-    if (!kontrahent?.length) {
+    if (!kontrahent?.length && currentUser) {
       dispatch(getContractorData(currentUser));
     }
   }, [dispatch, kontrahent, currentUser]);
@@ -89,7 +89,9 @@ export const useKontrahent = () => {
   const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
 
   useEffect(() => {
-    dispatch(getContractorData(currentUser));
+    if (currentUser) {
+      dispatch(getContractorData(currentUser));
+    }
   }, [deleteContractor, updateContractorData, addContractorData]);
 
   return {
