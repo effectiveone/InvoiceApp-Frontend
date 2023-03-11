@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Layout from "../shared/components/layout/layout";
 import {
   useInvoice,
@@ -19,8 +19,11 @@ import {
   TableSortLabel,
   TablePagination,
 } from "@material-ui/core";
+import FilterWrapper from "../shared/components/FilterWrapper";
 
+import { useInvoiceTable } from "../shared/hook/useInvoiceTable";
 import { useModal } from "../shared/hook/useModal";
+
 import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,68 +56,32 @@ const MyComponent = () => {
   const { open, handleOpen, handleClose } = useModal();
   const { invoiceDate, handleEditInvoice, setLocalInvoiceNumber } =
     useInvoiceContext();
+  const {
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    sortedArray,
+    emptyRows,
+    handleChangePage,
+    handleSortRequest,
+    handleChangeRowsPerPage,
+    handleFilterChange,
+    sortedInvoices,
+  } = useInvoiceTable(invoiceDate);
   const classes = useStyles();
 
   const changeInvoiceNumber = (inv) => {
     console.log("changeInvoiceNumber__inv__Dashboard", inv);
     setLocalInvoiceNumber(inv);
   };
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("issueDate");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleSortRequest = (property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const sortedInvoices = invoiceDate?.sort((a, b) => {
-    const isAsc = order === "asc";
-    if (orderBy === "number") {
-      return isAsc
-        ? a.invoiceNumber?.localeCompare(b.invoiceNumber)
-        : b.invoiceNumber?.localeCompare(a.invoiceNumber);
-    } else if (orderBy === "issueDate") {
-      return isAsc
-        ? a.invoiceSaleDate?.localeCompare(b.invoiceSaleDate)
-        : b.invoiceSaleDate?.localeCompare(a.invoiceSaleDate);
-    } else if (orderBy === "customer") {
-      return isAsc
-        ? a.selectedKontrahent.companyName?.localeCompare(
-            b.selectedKontrahent.companyName
-          )
-        : b.selectedKontrahent.companyName?.localeCompare(
-            a.selectedKontrahent.companyName
-          );
-    } else if (orderBy === "netAmount") {
-      return isAsc
-        ? a?.totalNetValue - b?.totalNetValue
-        : b?.totalNetValue - a?.totalNetValue;
-    } else if (orderBy === "grossAmount") {
-      return isAsc
-        ? a?.totalGrossValue - b?.totalGrossValue
-        : b?.totalGrossValue - a?.totalGrossValue;
-    }
-    return 0;
-  });
-
-  const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, sortedInvoices.length - page * rowsPerPage);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   return (
     <>
+      <FilterWrapper
+        handleFilterChange={handleFilterChange}
+        // selected={selected}
+      />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="invoices table">
           <TableHead>
