@@ -12,10 +12,17 @@ import MyCompany from "./Pages/MyCompany";
 import AllInvoices from "./Pages/AllInvoices";
 import Kontrahent from "./Pages/Kontrahent";
 import Settings from "./Pages/Settings";
-
+import { useUser } from "./shared/hook/useUser";
 import AlertNotification from "./shared/components/AlertNotification";
 
 import "./App.css";
+
+function PrivateRoute({ children, ...rest }) {
+  const { currentUser } = useUser();
+  return (
+    <Route {...rest}>{currentUser ? children : <Redirect to="/login" />}</Route>
+  );
+}
 
 function App() {
   return (
@@ -28,21 +35,21 @@ function App() {
           <Route exact path="/register">
             <RegisterPage />
           </Route>
-          <Route exact path="/dashboard">
+          <PrivateRoute exact path="/dashboard">
             <Dashboard />
-          </Route>
-          <Route exact path="/allinvoices">
+          </PrivateRoute>
+          <PrivateRoute exact path="/allinvoices">
             <AllInvoices />
-          </Route>
-          <Route exact path="/kontrahent">
+          </PrivateRoute>
+          <PrivateRoute exact path="/kontrahent">
             <Kontrahent />
-          </Route>
-          <Route exact path="/settings">
+          </PrivateRoute>
+          <PrivateRoute exact path="/settings">
             <Settings />
-          </Route>
-          <Route exact path="/mycompany">
+          </PrivateRoute>
+          <PrivateRoute exact path="/mycompany">
             <MyCompany />
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <Redirect to="/dashboard" />
           </Route>
