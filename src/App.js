@@ -14,6 +14,8 @@ import Kontrahent from "./Pages/Kontrahent";
 import Settings from "./Pages/Settings";
 import { useUser } from "./shared/hook/useUser";
 import AlertNotification from "./shared/components/AlertNotification";
+import useTheme from "./shared/hook/useTheme";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 import "./App.css";
 
@@ -26,37 +28,40 @@ function PrivateRoute({ children, ...rest }) {
 
 function App() {
   const { currentUser } = useUser();
+  const theme = useTheme();
 
   return (
     <>
-      <Router>
-        <Switch>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/register">
-            <RegisterPage />
-          </Route>
-          <PrivateRoute exact path="/dashboard">
-            <Dashboard />
-          </PrivateRoute>
-          <PrivateRoute exact path="/allinvoices">
-            <AllInvoices />
-          </PrivateRoute>
-          <PrivateRoute exact path="/kontrahent">
-            <Kontrahent />
-          </PrivateRoute>
-          <PrivateRoute exact path="/settings">
-            <Settings />
-          </PrivateRoute>
-          <PrivateRoute exact path="/mycompany">
-            <MyCompany />
-          </PrivateRoute>
-          <Route exact path="/">
-            {currentUser ? <Redirect to="/dashboard" /> : <LoginPage />}
-          </Route>
-        </Switch>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
+            </Route>
+            <PrivateRoute exact path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute exact path="/allinvoices">
+              <AllInvoices />
+            </PrivateRoute>
+            <PrivateRoute exact path="/kontrahent">
+              <Kontrahent />
+            </PrivateRoute>
+            <PrivateRoute exact path="/settings">
+              <Settings />
+            </PrivateRoute>
+            <PrivateRoute exact path="/mycompany">
+              <MyCompany />
+            </PrivateRoute>
+            <Route exact path="/">
+              {currentUser ? <Redirect to="/dashboard" /> : <LoginPage />}
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
       <AlertNotification />
     </>
   );

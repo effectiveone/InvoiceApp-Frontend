@@ -7,8 +7,10 @@ import alertReducer from "./reducers/alertReducer";
 import { companyReducer } from "./reducers/mycompanyReducer";
 import contractorReducer from "./reducers/kontrahenciReducer";
 import fakturaReducer from "./reducers/fakturaReducer";
+import { designReducer } from "./reducers/designReducer";
 
 const rootReducer = combineReducers({
+  design: designReducer,
   faktura: fakturaReducer,
   kontrahenci: contractorReducer,
   myCompany: companyReducer,
