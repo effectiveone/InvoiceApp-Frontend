@@ -10,7 +10,10 @@
 
 # production
 /build
-
+dist/
+/dist
+Dist/
+/Dist
 # misc
 .DS_Store
 .env.local
