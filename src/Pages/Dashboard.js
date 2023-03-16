@@ -135,21 +135,23 @@ const MyComponent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? sortedInvoices.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : sortedInvoices
-            )?.map((invoice, index) => (
-              <React.Fragment key={index}>
-                <InvoiceComponent
-                  {...invoice}
-                  handleOpen={handleOpen}
-                  changeInvoiceNumber={changeInvoiceNumber}
-                />
-              </React.Fragment>
-            ))}
+            {sortedInvoices &&
+              Array.isArray(sortedInvoices) &&
+              (rowsPerPage > 0
+                ? sortedInvoices.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : sortedInvoices
+              )?.map((invoice, index) => (
+                <React.Fragment key={index}>
+                  <InvoiceComponent
+                    {...invoice}
+                    handleOpen={handleOpen}
+                    changeInvoiceNumber={changeInvoiceNumber}
+                  />
+                </React.Fragment>
+              ))}
           </TableBody>
           {sortedInvoices.length > 10 && (
             <TablePagination

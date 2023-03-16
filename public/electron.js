@@ -31,8 +31,8 @@ async function startServer() {
   mongod = new MongoMemoryServer();
   mongoUri = await mongod.getConnectionString();
 
-  const nodeProcess = spawn("node", ["backend/server.js"], {
-    env: { MONGODB_URI: mongoUri },
+  const nodeProcess = spawn("node", ["../Backend-Invoice-App/server.js"], {
+    env: { MONGODB_URI: "mongodb://localhost:27017/InvoiceApp" },
   });
 
   nodeProcess.stdout.on("data", (data) => {

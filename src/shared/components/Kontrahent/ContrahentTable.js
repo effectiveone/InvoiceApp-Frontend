@@ -79,7 +79,7 @@ function ContrahentTable(contractor) {
     handleEdit(id);
     setButtonText("Zapisz zmiany");
   };
-  console.log("sortedKontrahents", sortedKontrahents);
+
   return (
     <>
       <FilterWrapper
@@ -107,22 +107,24 @@ function ContrahentTable(contractor) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? sortedKontrahents.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : sortedKontrahents
-            )?.map((invoice, index) => (
-              <React.Fragment key={index}>
-                <InvoiceComponent
-                  {...invoice}
-                  handleOpen={handleOpen}
-                  handleEditChange={handleEditChange}
-                  handleDelete={handleDelete}
-                />
-              </React.Fragment>
-            ))}
+            {sortedKontrahents &&
+              Array.isArray(sortedKontrahents) &&
+              (rowsPerPage > 0
+                ? sortedKontrahents?.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : sortedKontrahents
+              )?.map((invoice, index) => (
+                <React.Fragment key={index}>
+                  <InvoiceComponent
+                    {...invoice}
+                    handleOpen={handleOpen}
+                    handleEditChange={handleEditChange}
+                    handleDelete={handleDelete}
+                  />
+                </React.Fragment>
+              ))}
           </TableBody>
           {sortedKontrahents.length > 10 && (
             <TablePagination

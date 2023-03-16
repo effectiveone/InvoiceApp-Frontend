@@ -16,51 +16,54 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
     let filteredArray = invoiceDate || [];
 
     if (filterValue) {
-      filteredArray = filteredArray.filter((obj) =>
+      filteredArray = filteredArray?.filter((obj) =>
         obj.selectedKontrahent.companyName
           .toLowerCase()
           .includes(filterValue.toLowerCase())
       );
     }
 
-    const sortedArray = filteredArray.sort((a, b) => {
-      if (orderBy === "number") {
-        if (order === "asc") {
-          return a.invoiceNumber.localeCompare(b.invoiceNumber);
-        } else {
-          return b.invoiceNumber.localeCompare(a.invoiceNumber);
+    const sortedArray =
+      filteredArray &&
+      filteredArray.length > 0 &&
+      filteredArray?.sort((a, b) => {
+        if (orderBy === "number") {
+          if (order === "asc") {
+            return a.invoiceNumber.localeCompare(b.invoiceNumber);
+          } else {
+            return b.invoiceNumber.localeCompare(a.invoiceNumber);
+          }
+        } else if (orderBy === "issueDate") {
+          if (order === "asc") {
+            return a.invoiceSaleDate.localeCompare(b.invoiceSaleDate);
+          } else {
+            return b.invoiceSaleDate.localeCompare(a.invoiceSaleDate);
+          }
+        } else if (orderBy === "customer") {
+          if (order === "asc") {
+            return a.selectedKontrahent.companyName.localeCompare(
+              b.selectedKontrahent.companyName
+            );
+          } else {
+            return b.selectedKontrahent.companyName.localeCompare(
+              a.selectedKontrahent.companyName
+            );
+          }
+        } else if (orderBy === "netAmount") {
+          if (order === "asc") {
+            return a.totalNetValue - b.totalNetValue;
+          } else {
+            return b.totalNetValue - a.totalNetValue;
+          }
+        } else if (orderBy === "grossAmount") {
+          if (order === "asc") {
+            return a.totalGrossValue - b.totalGrossValue;
+          } else {
+            return b.totalGrossValue - a.totalGrossValue;
+          }
         }
-      } else if (orderBy === "issueDate") {
-        if (order === "asc") {
-          return a.invoiceSaleDate.localeCompare(b.invoiceSaleDate);
-        } else {
-          return b.invoiceSaleDate.localeCompare(a.invoiceSaleDate);
-        }
-      } else if (orderBy === "customer") {
-        if (order === "asc") {
-          return a.selectedKontrahent.companyName.localeCompare(
-            b.selectedKontrahent.companyName
-          );
-        } else {
-          return b.selectedKontrahent.companyName.localeCompare(
-            a.selectedKontrahent.companyName
-          );
-        }
-      } else if (orderBy === "netAmount") {
-        if (order === "asc") {
-          return a.totalNetValue - b.totalNetValue;
-        } else {
-          return b.totalNetValue - a.totalNetValue;
-        }
-      } else if (orderBy === "grossAmount") {
-        if (order === "asc") {
-          return a.totalGrossValue - b.totalGrossValue;
-        } else {
-          return b.totalGrossValue - a.totalGrossValue;
-        }
-      }
-      return 0;
-    });
+        return 0;
+      });
 
     return sortedArray;
   }, [invoiceDate, orderBy, order, filterValue]);
@@ -69,39 +72,42 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
     let filteredArray = kontrahent || [];
 
     if (filterValue) {
-      filteredArray = filteredArray.filter((obj) =>
+      filteredArray = filteredArray?.filter((obj) =>
         obj.companyName.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
-    const sortedArray = filteredArray.sort((a, b) => {
-      if (orderBy === "companyName") {
-        if (order === "asc") {
-          return a.companyName.localeCompare(b.companyName);
-        } else {
-          return b.companyName.localeCompare(a.companyName);
+    const sortedArray =
+      filteredArray &&
+      filteredArray.length > 0 &&
+      filteredArray?.sort((a, b) => {
+        if (orderBy === "companyName") {
+          if (order === "asc") {
+            return a.companyName.localeCompare(b.companyName);
+          } else {
+            return b.companyName.localeCompare(a.companyName);
+          }
+        } else if (orderBy === "legalForm") {
+          if (order === "asc") {
+            return a.legalForm.localeCompare(b.legalForm);
+          } else {
+            return b.legalForm.localeCompare(a.legalForm);
+          }
+        } else if (orderBy === "nip") {
+          if (order === "asc") {
+            return a.nip.localeCompare(b.nip);
+          } else {
+            return b.nip.localeCompare(a.nip);
+          }
+        } else if (orderBy === "city") {
+          if (order === "asc") {
+            return a.city.localeCompare(b.city);
+          } else {
+            return b.city.localeCompare(a.city);
+          }
         }
-      } else if (orderBy === "legalForm") {
-        if (order === "asc") {
-          return a.legalForm.localeCompare(b.legalForm);
-        } else {
-          return b.legalForm.localeCompare(a.legalForm);
-        }
-      } else if (orderBy === "nip") {
-        if (order === "asc") {
-          return a.nip.localeCompare(b.nip);
-        } else {
-          return b.nip.localeCompare(a.nip);
-        }
-      } else if (orderBy === "city") {
-        if (order === "asc") {
-          return a.city.localeCompare(b.city);
-        } else {
-          return b.city.localeCompare(a.city);
-        }
-      }
-      return 0;
-    });
+        return 0;
+      });
     return sortedArray;
   }, [kontrahent, orderBy, order, filterValue]);
 
