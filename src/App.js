@@ -1,9 +1,9 @@
 import React from "react";
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
 import LoginPage from "./Auth/LoginPage/LoginPage";
 import RegisterPage from "./Auth/RegisterPage/RegisterPage";
@@ -14,54 +14,46 @@ import Kontrahent from "./Pages/Kontrahent";
 import Settings from "./Pages/Settings";
 import { useUser } from "./shared/hook/useUser";
 import AlertNotification from "./shared/components/AlertNotification";
-import useTheme from "./shared/hook/useTheme";
-import { ThemeProvider } from "@material-ui/core/styles";
 
 import "./App.css";
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ element, ...rest }) {
   const { currentUser } = useUser();
   return (
-    <Route {...rest}>{currentUser ? children : <Redirect to="/login" />}</Route>
+    <Route
+      {...rest}
+      element={currentUser ? element : <Navigate to="/login" />}
+    />
   );
 }
 
 function App() {
   const { currentUser } = useUser();
-  const theme = useTheme();
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Route exact path="/register">
-              <RegisterPage />
-            </Route>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-            <PrivateRoute exact path="/allinvoices">
-              <AllInvoices />
-            </PrivateRoute>
-            <PrivateRoute exact path="/kontrahent">
-              <Kontrahent />
-            </PrivateRoute>
-            <PrivateRoute exact path="/settings">
-              <Settings />
-            </PrivateRoute>
-            <PrivateRoute exact path="/mycompany">
-              <MyCompany />
-            </PrivateRoute>
-            <Route exact path="/">
-              {currentUser ? <Redirect to="/dashboard" /> : <LoginPage />}
-            </Route>
-          </Switch>
-        </Router>
-      </ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          {currentUser ? (
+            <>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/allinvoices" element={<AllInvoices />} />
+              <Route path="/kontrahent" element={<Kontrahent />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/mycompany" element={<MyCompany />} />
+              <Route path="/" element={<Navigate to="/dashboard" />} />
+            </>
+          ) : (
+            <Route path="/" element={<LoginPage />} />
+          )}
+          <Route
+            path="/"
+            element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage />}
+          />
+        </Routes>
+      </Router>
       <AlertNotification />
     </>
   );

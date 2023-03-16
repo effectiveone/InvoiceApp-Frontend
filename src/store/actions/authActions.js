@@ -1,15 +1,30 @@
 import * as api from "../../shared/utils/api";
 import { openAlertMessage } from "./alertActions";
-
+import axios from "axios";
 export const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
 };
 
 export const getActions = (dispatch) => {
   return {
+    logout: () => dispatch(logout()),
     login: (userDetails, history) => dispatch(login(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
+  };
+};
+
+const logout = () => {
+  return async (dispatch) => {
+    localStorage.removeItem("user");
+
+    dispatch(setUserDetails(null));
+
+    try {
+      await axios.delete("http://localhost:5002/api/auth/logout");
+    } catch (error) {
+      console.error(error);
+    }
   };
 };
 
@@ -31,7 +46,7 @@ const login = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history.push("/dashboard");
+      history("/dashboard");
     }
   };
 };
@@ -47,7 +62,7 @@ const register = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history.push("/dashboard");
+      history("/dashboard");
     }
   };
 };

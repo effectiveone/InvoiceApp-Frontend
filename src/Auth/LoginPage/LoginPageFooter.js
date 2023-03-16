@@ -1,7 +1,7 @@
 import React from "react";
 import CustomPrimaryButton from "../../shared/components/CustomPrimaryButton";
 import RedirectInfo from "../../shared/components/RedirectInfo";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 
 const getFormNotValidMessage = () => {
@@ -13,7 +13,7 @@ const getFormValidMessage = () => {
 };
 
 const LoginPageFooter = ({ handleLogin, isFormValid }) => {
-  const history = useHistory();
+  const history = useNavigate();
 
   const handlePushToRegisterPage = () => {
     history.push("/register");
