@@ -1,4 +1,4 @@
-import { SET_THEME, CHANGE_THEME } from "../actions/designActions";
+import { CHANGE_THEME } from "../actions/designActions";
 
 export const initialState = {
   mySystemOfDesign: [

@@ -1,51 +1,13 @@
-import { Button } from "@mui/material";
-import React, { useState } from "react";
 import Layout from "../shared/components/layout/layout";
 
-import InvoicePrinter from "../shared/components/InvoicePrinter/invoicePrinter";
-import InvoiceForm from "../shared/components/InvoicePrinter/InvoiceForm";
-import ReactToPrint from "react-to-print";
-import {
-  InvoiceProvider,
-  useInvoiceContext,
-} from "../shared/context/useInvoiceContext";
-
-import FactoryInvoicePrinter from "../shared/components/InvoicesTemplates/factoryInvoicePrinter";
+import { InvoiceProvider } from "../shared/context/useInvoiceContext";
+import NewInvoice from "../shared/components/NewInvoice/NewInvoice";
 
 export const AllInvoices = () => {
   return (
     <InvoiceProvider>
-      <MyComponent />
+      <NewInvoice />
     </InvoiceProvider>
-  );
-};
-
-const MyComponent = () => {
-  const { componentRef, handleSubmit } = useInvoiceContext();
-  const [isVisible, setIsVisible] = useState();
-  return (
-    <>
-      <Button onClick={() => setIsVisible((prevState) => !prevState)}>
-        Podgląd
-      </Button>
-      {isVisible && (
-        <ReactToPrint
-          trigger={() => <Button>Print / Download</Button>}
-          content={() => componentRef.current}
-        />
-      )}
-      <Button onClick={handleSubmit}>Zapisz fakture</Button>
-
-      {!isVisible ? (
-        <>
-          <InvoiceForm />
-        </>
-      ) : (
-        <>
-          <FactoryInvoicePrinter ref={componentRef} />
-        </>
-      )}
-    </>
   );
 };
 

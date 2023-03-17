@@ -1,42 +1,13 @@
 import React from "react";
-import {
-  TextField,
-  Grid,
-  Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from "@material-ui/core";
 import Layout from "../shared/components/layout/layout";
-import { legalForms } from "../shared/utils/forms";
-import {
-  useCompanyContext,
-  CompanyProvider,
-} from "../shared/context/useCompanyContext";
-import CompanyForm from "../shared/components/companyForm";
+import { CompanyProvider } from "../shared/context/useCompanyContext";
+import { CompanyContent } from "../shared/components/Company/CompanyContent";
 
 const MyCompany = () => {
   return (
     <CompanyProvider>
-      <MyComponent />
+      <CompanyContent />
     </CompanyProvider>
-  );
-};
-
-const MyComponent = () => {
-  const { updatedCompanyData, handleChange, handleSubmit } =
-    useCompanyContext();
-
-  return (
-    <>
-      <CompanyForm
-        whichInputs="company"
-        updatedCompanyDate={updatedCompanyData}
-        handleChange={handleChange}
-      />
-      <button onClick={handleSubmit}>Submit</button>
-    </>
   );
 };
 

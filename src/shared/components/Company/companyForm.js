@@ -9,7 +9,7 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { legalForms } from "../utils/forms";
+import { legalForms } from "../../utils/forms";
 
 function CompanyForm({ whichInputs, updatedCompanyDate, handleChange }) {
   const [updatedProps, setUpdatedProps] = useState(updatedCompanyDate);

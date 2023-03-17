@@ -1,21 +1,8 @@
 import React from "react";
-import {
-  Button,
-  Box,
-  Modal,
-  TextField,
-  Grid,
-  Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from "@material-ui/core";
+import { Button, Box, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { legalForms } from "../../utils/forms";
 import { useKontrahentContext } from "../../context/useKontrahentContext";
-import { useModal } from "../../hook/useModal";
-import CompanyForm from "../companyForm";
+import CompanyForm from "../Company/companyForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -49,13 +36,10 @@ function ContrahentModal() {
   const {
     button,
     open,
-    handleOpen,
     handleClose,
-    handleEdit,
-    handleDelete,
+
     updatedCompanyData,
-    kontrahent,
-    handleSubmit,
+
     handleChange,
   } = useKontrahentContext();
   return (
