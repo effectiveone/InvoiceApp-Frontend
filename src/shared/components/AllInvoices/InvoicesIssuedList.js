@@ -1,7 +1,7 @@
 import React from "react";
-import { useModal } from "../../hook/useModal";
-import { useInvoiceContext } from "../../context/useInvoiceContext";
-import { useInvoiceTable } from "../../hook/useInvoiceTable";
+import { useModal } from "../../Hook/useModal";
+import { useInvoiceContext } from "../../Context/useInvoiceContext";
+import { useInvoiceTable } from "../../Hook/useInvoiceTable";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,

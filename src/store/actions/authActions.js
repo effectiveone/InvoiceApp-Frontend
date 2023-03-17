@@ -1,4 +1,4 @@
-import * as api from "../../shared/utils/api";
+import * as api from "../../Shared/Utils/api";
 import { openAlertMessage } from "./alertActions";
 import axios from "axios";
 export const authActions = {

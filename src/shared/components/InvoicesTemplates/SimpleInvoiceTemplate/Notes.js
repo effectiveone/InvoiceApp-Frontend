@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { useInvoiceContext } from "../../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 
 export default function Notes() {
   const { notes } = useInvoiceContext();

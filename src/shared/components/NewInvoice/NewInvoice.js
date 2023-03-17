@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import FactoryInvoicePrinter from "../InvoicesTemplates/factoryInvoicePrinter";
-import { useInvoiceContext } from "../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../Context/useInvoiceContext";
 import ReactToPrint from "react-to-print";
 import InvoiceForm from "./InvoiceForm";
 

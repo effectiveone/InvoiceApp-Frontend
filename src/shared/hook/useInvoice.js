@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { readFaktury } from "../../store/actions/fakturaActions";
+import { readFaktury } from "../../Store/actions/fakturaActions";
 import { useUser } from "./useUser";
 import { useKontrahent } from "./useKontrahent";
 
 import { useCompany } from "./useCompany";
-import { createFaktura, editFaktury } from "../../store/actions/fakturaActions";
-import { TAX_RATES } from "../utils/tax";
-import { convertDate } from "../utils/dateValidator";
+import { createFaktura, editFaktury } from "../../Store/actions/fakturaActions";
+import { TAX_RATES } from "../Utils/tax";
+import { convertDate } from "../Utils/dateValidator";
 
 export const useInvoice = () => {
   const { currentUser } = useUser();

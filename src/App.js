@@ -7,25 +7,15 @@ import {
 } from "react-router-dom";
 import LoginPage from "./Auth/LoginPage/LoginPage";
 import RegisterPage from "./Auth/RegisterPage/RegisterPage";
-import Dashboard from "./Pages/Dashboard";
+import IssuedInvoicePage from "./Pages/IssuedInvoicePage";
 import MyCompany from "./Pages/MyCompany";
-import AllInvoices from "./Pages/AllInvoices";
+import NewInvoicePage from "./Pages/NewInvoicePage";
 import Kontrahent from "./Pages/Kontrahent";
-import Settings from "./Pages/Settings";
-import { useUser } from "./shared/hook/useUser";
-import AlertNotification from "./shared/components/AlertNotification";
+import SettingsPage from "./Pages/SettingsPage";
+import { useUser } from "./Shared/Hook/useUser";
+import AlertNotification from "./Shared/Components/AlertNotification";
 
 import "./App.css";
-
-function PrivateRoute({ element, ...rest }) {
-  const { currentUser } = useUser();
-  return (
-    <Route
-      {...rest}
-      element={currentUser ? element : <Navigate to="/login" />}
-    />
-  );
-}
 
 function App() {
   const { currentUser } = useUser();
@@ -38,19 +28,21 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           {currentUser ? (
             <>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/allinvoices" element={<AllInvoices />} />
+              <Route path="/InvoicesIssued" element={<IssuedInvoicePage />} />
+              <Route path="/NewInvoice" element={<NewInvoicePage />} />
               <Route path="/kontrahent" element={<Kontrahent />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/SettingsPage" element={<SettingsPage />} />
               <Route path="/mycompany" element={<MyCompany />} />
-              <Route path="/" element={<Navigate to="/dashboard" />} />
+              <Route path="/" element={<Navigate to="/InvoicesIssued" />} />
             </>
           ) : (
             <Route path="/" element={<LoginPage />} />
           )}
           <Route
             path="/"
-            element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage />}
+            element={
+              currentUser ? <Navigate to="/InvoicesIssued" /> : <LoginPage />
+            }
           />
         </Routes>
       </Router>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Box, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useKontrahentContext } from "../../context/useKontrahentContext";
+import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import CompanyForm from "../Company/companyForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function ContrahentModal() {
   const classes = useStyles();
-  const {
-    button,
-    open,
-    handleClose,
-
-    updatedCompanyData,
-
-    handleChange,
-  } = useKontrahentContext();
+  const { button, open, handleClose, updatedCompanyData, handleChange } =
+    useKontrahentContext();
   return (
     <>
       <Modal open={open} onClose={handleClose} className={classes.modal}>

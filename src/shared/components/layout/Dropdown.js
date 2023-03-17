@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { sanitizedUrl } from "../../utils/api";
+import { sanitizedUrl } from "../../Utils/api";
 
 const useStyles = makeStyles({
   menu: {

@@ -1,5 +1,5 @@
 import React from "react";
-import InputWithLabel from "../../shared/components/InputWithLabel";
+import InputWithLabel from "../../Shared/Components/InputWithLabel";
 
 const RegisterPageInputs = (props) => {
   const { mail, setMail, username, setUsername, password, setPassword } = props;

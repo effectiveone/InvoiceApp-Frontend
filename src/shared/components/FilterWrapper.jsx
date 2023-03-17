@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
 import Container from '@mui/material/Container'
 import { FilterListIcon, SearchIcon, IconButton }
-    from "../utils/Icons"
+    from "../Utils/Icons"
 import { useStyles } from "./StyleFilterWrapper"
 
 

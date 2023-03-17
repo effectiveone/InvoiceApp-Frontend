@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Box, Grid } from "@material-ui/core";
 import { Divider } from "@mui/material";
-import { useKontrahentContext } from "../../context/useKontrahentContext";
+import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
 

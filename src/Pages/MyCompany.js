@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../shared/components/layout/layout";
-import { CompanyProvider } from "../shared/context/useCompanyContext";
-import { CompanyContent } from "../shared/components/Company/CompanyContent";
+import Layout from "../Shared/Components/Layout/layout";
+import { CompanyProvider } from "../Shared/Context/useCompanyContext";
+import { CompanyContent } from "../Shared/Components/Company/CompanyContent";
 
 const MyCompany = () => {
   return (

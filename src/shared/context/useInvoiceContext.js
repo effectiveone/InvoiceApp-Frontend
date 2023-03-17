@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useInvoice } from "../hook/useInvoice";
+import { useInvoice } from "../Hook/useInvoice";
 
 const InvoiceContext = createContext();
 

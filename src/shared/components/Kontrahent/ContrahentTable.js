@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider } from "@mui/material";
-import { useKontrahentContext } from "../../context/useKontrahentContext";
+import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -17,8 +17,8 @@ import {
   TablePagination,
 } from "@material-ui/core";
 import FilterWrapper from "../FilterWrapper";
-import { useInvoiceTable } from "../../hook/useInvoiceTable";
-import { useModal } from "../../hook/useModal";
+import { useInvoiceTable } from "../../Hook/useInvoiceTable";
+import { useModal } from "../../Hook/useModal";
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {

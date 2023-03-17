@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useKontrahent } from "../hook/useKontrahent";
+import { useKontrahent } from "../Hook/useKontrahent";
 
 const KontrahentContext = createContext();
 

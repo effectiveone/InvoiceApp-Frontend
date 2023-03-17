@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   toggleCheckbox,
   selectOption,
-} from "../../store/actions/templateActions";
+} from "../../../Store/actions/templateActions";
 
 const TemplateCheckbox = () => {
   const dispatch = useDispatch();

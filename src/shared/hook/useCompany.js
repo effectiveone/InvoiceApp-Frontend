@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   getCompanyData,
   addCompanyData,
-} from "../../store/actions/mycompanyActions";
+} from "../../Store/actions/mycompanyActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "./useUser";
 

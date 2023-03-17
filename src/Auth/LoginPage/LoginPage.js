@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import AuthBox from "../../shared/components/AuthBox";
+import AuthBox from "../../Shared/Components/AuthBox";
 import LoginPageFooter from "./LoginPageFooter";
 import LoginPageHeader from "./LoginPageHeader";
 import LoginPageInputs from "./LoginPageInputs";
-import { validateLoginForm } from "../../shared/utils/validators";
+import { validateLoginForm } from "../../Shared/Utils/validators";
 import { connect } from "react-redux";
-import { getActions } from "../../store/actions/authActions";
+import { getActions } from "../../Store/actions/authActions";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = ({ login }) => {

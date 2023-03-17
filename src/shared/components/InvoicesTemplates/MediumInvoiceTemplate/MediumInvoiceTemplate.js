@@ -8,7 +8,7 @@ import InvoiceTable from "./InvoiceTable";
 // import Notes from "./Notes";
 // import Footer from "./Footer";
 import HeaderInvoice from "./HeaderInvoice";
-import { useInvoiceContext } from "../../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

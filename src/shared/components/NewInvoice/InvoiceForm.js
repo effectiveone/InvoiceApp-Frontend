@@ -5,8 +5,8 @@ import {
   useInvoiceProvider,
   InvoiceProvider,
   useInvoiceContext,
-} from "../../context/useInvoiceContext";
-import { convertDate } from "../../utils/dateValidator";
+} from "../../Context/useInvoiceContext";
+import { convertDate } from "../../Utils/dateValidator";
 const InvoiceForm = () => {
   const {
     TAX_RATES,

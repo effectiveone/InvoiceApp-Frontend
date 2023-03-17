@@ -7,12 +7,12 @@ import Typography from "@mui/material/Typography";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdAccountCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getActions } from "../../../store/actions/authActions";
+import { getActions } from "../../../Store/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
-import { sanitizedUrl } from "../../utils/api";
-import { useUser } from "../../hook/useUser";
+import { sanitizedUrl } from "../../Utils/api";
+import { useUser } from "../../Hook/useUser";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

@@ -3,7 +3,7 @@ import {
   getContractorData,
   updateContractorData,
   deleteContractor,
-} from "../../store/actions/kontrahenciActions";
+} from "../../Store/actions/kontrahenciActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useUser } from "./useUser";

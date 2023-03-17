@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useCompany } from "../hook/useCompany";
+import { useCompany } from "../Hook/useCompany";
 
 const CompanyContext = createContext();
 

@@ -1,7 +1,7 @@
-import Layout from "../shared/components/layout/layout";
+import Layout from "../Shared/Components/Layout/layout";
 import React from "react";
-import { KontrahentProvider } from "../shared/context/useKontrahentContext";
-import KontrahentContent from "../shared/components/Kontrahent/KontrahentContent";
+import { KontrahentProvider } from "../Shared/Context/useKontrahentContext";
+import KontrahentContent from "../Shared/Components/Kontrahent/KontrahentContent";
 
 const Kontrahent = () => {
   return (

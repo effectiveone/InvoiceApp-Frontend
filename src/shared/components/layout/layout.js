@@ -1,7 +1,7 @@
 import React from "react";
 import PermanentDrawer from "./drawer";
 import Navbar from "./Navbar";
-import useTheme from "../../hook/useTheme";
+import useTheme from "../../Hook/useTheme";
 import { ThemeProvider } from "@material-ui/core/styles";
 const layout = (WrappedComponent) => {
   return function WithPermanentDrawer(props) {

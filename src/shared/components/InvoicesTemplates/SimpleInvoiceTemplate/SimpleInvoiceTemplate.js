@@ -7,7 +7,7 @@ import ClientDetails from "./ClientDetails";
 import Table from "./Table";
 import Notes from "./Notes";
 import Footer from "./Footer";
-import { useInvoiceContext } from "../../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 const SimpleInvoiceTemplate = () => {
   const { componentRef, companyData, selectedKontrahent } = useInvoiceContext();
 

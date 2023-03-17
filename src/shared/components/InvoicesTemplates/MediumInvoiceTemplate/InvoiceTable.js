@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { useInvoiceContext } from "../../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({

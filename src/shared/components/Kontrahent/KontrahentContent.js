@@ -1,6 +1,6 @@
 import ContrahentModal from "./ContrahentModal";
 import ContrahentTable from "./ContrahentTable";
-import { useKontrahentContext } from "../../context/useKontrahentContext";
+import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import { Button, Box } from "@material-ui/core";
 
 const KontrahentContent = () => {

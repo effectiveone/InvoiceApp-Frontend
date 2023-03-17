@@ -1,4 +1,4 @@
-import { useCompanyContext } from "../../context/useCompanyContext";
+import { useCompanyContext } from "../../Context/useCompanyContext";
 import CompanyForm from "./companyForm";
 import { Button } from "@material-ui/core";
 
