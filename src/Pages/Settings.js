@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { US, PL, FR } from "country-flag-icons/react/3x2";
 import { v4 as uuid } from "uuid";
 import i18n from "../i18n";
+import TemplateCheckbox from "../shared/components/templateCheckbox";
 
 const Settings = () => {
   const [language, setLanguage] = useState("en");
@@ -93,6 +94,8 @@ const CustomSelect = ({ value, onChange, options, className, width }) => {
           ))}
         </div>
       )}
+
+      <TemplateCheckbox />
     </div>
   );
 };

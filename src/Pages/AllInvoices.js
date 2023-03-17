@@ -9,13 +9,16 @@ import {
   InvoiceProvider,
   useInvoiceContext,
 } from "../shared/context/useInvoiceContext";
-function AllInvoices() {
+
+import FactoryInvoicePrinter from "../shared/components/InvoicesTemplates/factoryInvoicePrinter";
+
+export const AllInvoices = () => {
   return (
     <InvoiceProvider>
       <MyComponent />
     </InvoiceProvider>
   );
-}
+};
 
 const MyComponent = () => {
   const { componentRef, handleSubmit } = useInvoiceContext();
@@ -39,8 +42,7 @@ const MyComponent = () => {
         </>
       ) : (
         <>
-          {" "}
-          <InvoicePrinter ref={componentRef} />
+          <FactoryInvoicePrinter ref={componentRef} />
         </>
       )}
     </>

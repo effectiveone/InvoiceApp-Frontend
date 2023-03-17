@@ -8,9 +8,17 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import { useInvoiceContext } from "../../context/useInvoiceContext";
+import { useInvoiceContext } from "../../../context/useInvoiceContext";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  tableRowOdd: {
+    background: "#F5F5F5",
+  },
+});
 export default function InvoiceTable() {
   const { items, totalGrossValue } = useInvoiceContext();
+  const classes = useStyles();
 
   return (
     <>
@@ -68,7 +76,10 @@ export default function InvoiceTable() {
               } = item;
 
               return (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  className={index % 2 === 0 ? classes.tableRowOdd : null}
+                >
                   <TableCell>{name}</TableCell>
                   <TableCell>{quantity}</TableCell>
                   <TableCell>{unit}</TableCell>

@@ -8,8 +8,10 @@ import { companyReducer } from "./reducers/mycompanyReducer";
 import contractorReducer from "./reducers/kontrahenciReducer";
 import fakturaReducer from "./reducers/fakturaReducer";
 import { designReducer } from "./reducers/designReducer";
+import { templateReducer } from "./reducers/templateReducer";
 
 const rootReducer = combineReducers({
+  template: templateReducer,
   design: designReducer,
   faktura: fakturaReducer,
   kontrahenci: contractorReducer,

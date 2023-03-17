@@ -7,8 +7,8 @@ import ClientDetails from "./ClientDetails";
 import Table from "./Table";
 import Notes from "./Notes";
 import Footer from "./Footer";
-import { useInvoiceContext } from "../../context/useInvoiceContext";
-const InvoicePrinter = () => {
+import { useInvoiceContext } from "../../../context/useInvoiceContext";
+const SimpleInvoiceTemplate = () => {
   const { componentRef, companyData, selectedKontrahent } = useInvoiceContext();
 
   return (
@@ -57,4 +57,4 @@ const InvoicePrinter = () => {
   );
 };
 
-export default InvoicePrinter;
+export default SimpleInvoiceTemplate;
