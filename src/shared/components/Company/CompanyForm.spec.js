@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import MyCompany from "./MyCompany";
+import CompanyForm from "./CompanyForm";
 import "@testing-library/jest-dom/extend-expect";
 
-describe("MyCompany component", () => {
+describe("CompanyForm component", () => {
   it("should render all input fields", () => {
-    render(<MyCompany />);
+    render(<CompanyForm />);
     expect(screen.getByLabelText("Forma prawna")).toBeInTheDocument();
     expect(screen.getByLabelText("Nazwa firmy")).toBeInTheDocument();
     expect(screen.getByLabelText("NIP")).toBeInTheDocument();
@@ -16,9 +16,9 @@ describe("MyCompany component", () => {
   });
 
   it("should update companyData state when input fields are changed", () => {
-    render(<MyCompany />);
+    render(<CompanyForm />);
     const input = screen.getByLabelText("Nazwa firmy");
-    fireEvent.change(input, { target: { value: "MyCompany" } });
-    expect(input).toHaveValue("MyCompany");
+    fireEvent.change(input, { target: { value: "CompanyForm" } });
+    expect(input).toHaveValue("CompanyForm");
   });
 });
