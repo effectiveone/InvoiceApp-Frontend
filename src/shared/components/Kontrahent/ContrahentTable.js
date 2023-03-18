@@ -1,5 +1,4 @@
 import React from "react";
-import { Divider } from "@mui/material";
 import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
@@ -12,7 +11,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Modal,
   TableSortLabel,
   TablePagination,
 } from "@material-ui/core";
@@ -56,18 +54,16 @@ const kontrahentsDate = [
 ];
 
 function ContrahentTable(contractor) {
-  const { open, handleOpen, handleClose } = useModal();
+  const { handleOpen } = useModal();
 
   const { handleEdit, handleDelete, setButtonText, kontrahent } =
     useKontrahentContext();
-  console.log("kontrahent", kontrahent);
+
   const {
     order,
     orderBy,
     page,
     rowsPerPage,
-    sortedArray,
-    emptyRows,
     handleChangePage,
     handleSortRequest,
     handleChangeRowsPerPage,

@@ -10,7 +10,7 @@ export const CompanyContent = () => {
     <>
       <CompanyForm
         whichInputs="company"
-        updatedCompanyDate={updatedCompanyData}
+        updatedCompanyData={updatedCompanyData}
         handleChange={handleChange}
       />
       <Button onClick={handleSubmit}>Submit</Button>

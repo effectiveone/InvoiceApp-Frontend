@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
   const [filterValue, setFilterValue] = useState("");

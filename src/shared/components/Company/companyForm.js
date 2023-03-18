@@ -8,18 +8,14 @@ import {
   FormControl,
   InputLabel,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { legalForms } from "../../Utils/forms";
 
-function CompanyForm({ whichInputs, updatedCompanyDate, handleChange }) {
-  const [updatedProps, setUpdatedProps] = useState(updatedCompanyDate);
+function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
+  const [updatedProps, setUpdatedProps] = useState(updatedCompanyData);
   useEffect(() => {
-    setUpdatedProps(updatedCompanyDate);
-  }, [updatedCompanyDate]);
+    setUpdatedProps(updatedCompanyData);
+  }, [updatedCompanyData]);
 
-  useEffect(() => {
-    console.log("updatedProps", updatedProps);
-  }, [updatedProps]);
   return (
     <>
       <Grid container spacing={2}>

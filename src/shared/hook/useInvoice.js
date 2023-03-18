@@ -39,9 +39,6 @@ export const useInvoice = () => {
   const [invoiceDates, setInvoiceDates] = useState(
     new Date().toISOString().slice(0, 10)
   );
-  useEffect(() => {
-    console.log("invoiceDates", invoiceDates);
-  }, [invoiceDates]);
 
   const [invoiceSaleDate, setInvoiceSaleDate] = useState(
     new Date().toISOString().slice(0, 10)
@@ -121,7 +118,6 @@ export const useInvoice = () => {
 
   // Add useEffect hook to update certain state based on changes in invoiceDate
   useEffect(() => {
-    console.log("localInvoiceNumberlocalInvoiceNumber", localInvoiceNumber);
     if (localInvoiceNumber) {
       setItems(selectedInvoice?.items);
       setTotalNetValue(selectedInvoice?.totalNetValue);

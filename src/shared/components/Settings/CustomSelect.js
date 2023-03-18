@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 const CustomSelect = ({ value, onChange, options, className, width }) => {
   const {
     isOpen,
-    setIsOpen,
     selectedOption,
     setSelectedOption,
     toggleOptions,

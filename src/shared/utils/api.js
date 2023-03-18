@@ -60,8 +60,8 @@ const checkResponseCode = (exception) => {
 //sanitaze links:
 export const sanitizedUrl = {
   AllInvoices: inHTMLData("/NewInvoice"),
-  Kontrahent: inHTMLData("/kontrahent"),
+  Kontrahent: inHTMLData("/Kontrahent"),
   Settings: inHTMLData("/SettingsPage"),
   Dashboard: inHTMLData("/InvoicesIssued"),
-  MyCompany: inHTMLData("/mycompany"),
+  MyCompany: inHTMLData("/Mycompany"),
 };

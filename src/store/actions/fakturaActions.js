@@ -59,7 +59,6 @@ export const readFaktury = (user) => async (dispatch) => {
 };
 
 export const editFaktury = (faktura, user) => async (dispatch) => {
-  console.log("faktura", faktura.invoiceNumber);
   if (!user) return;
 
   const { token } = user;

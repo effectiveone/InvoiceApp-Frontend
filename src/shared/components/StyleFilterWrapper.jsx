@@ -6,7 +6,9 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexGrow: 1,
         width: "100%",
-        paddingTop: "50px"
+        paddingTop: "50px",
+        flexGrow: 1,
+
     },
     icon: {
         size: "15px",
@@ -42,9 +44,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "107px",
         height: "19x"
     },
-    root: {
-        flexGrow: 1,
-    },
+
     input: {
         marginLeft: theme.spacing(1),
         flex: 1,
@@ -52,13 +52,11 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginRight: theme.spacing(1),
-        backgroundColor: "white",
         color: "#1579C9",
         width: "107px",
         minWidth: "107px",
         maxWidth: "107px",
         padding: "5px 5px 5px 5px",
-        background: "var(--white) 0% 0% no-repeat padding-box",
         background: "#FFFFFF 0% 0% no-repeat padding-box",
         borderRadius: "5px",
         opacity: 1

@@ -3,7 +3,7 @@ import Layout from "../Shared/Components/Layout/layout";
 import { CompanyProvider } from "../Shared/Context/useCompanyContext";
 import { CompanyContent } from "../Shared/Components/Company/CompanyContent";
 
-const MyCompany = () => {
+const MyCompanyPage = () => {
   return (
     <CompanyProvider>
       <CompanyContent />
@@ -11,4 +11,4 @@ const MyCompany = () => {
   );
 };
 
-export default Layout(MyCompany);
+export default Layout(MyCompanyPage);

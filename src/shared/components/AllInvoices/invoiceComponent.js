@@ -11,7 +11,6 @@ export const InvoiceComponent = ({
 }) => {
   const { companyName } = selectedKontrahent;
   const handleClick = () => {
-    console.log("changeInvoiceNumber__inv", invoiceNumber);
     changeInvoiceNumber(invoiceNumber);
     handleOpen();
   };

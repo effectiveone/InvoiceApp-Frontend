@@ -28,9 +28,6 @@ export const getCompanyData = (user) => {
 };
 
 export const addCompanyData = (newData, user) => async (dispatch) => {
-  console.log("newData", newData);
-  console.log("user", user);
-
   if (!user) return;
   const { token, mail } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

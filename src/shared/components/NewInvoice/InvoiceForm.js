@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Grid, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-import {
-  useInvoiceProvider,
-  InvoiceProvider,
-  useInvoiceContext,
-} from "../../Context/useInvoiceContext";
-import { convertDate } from "../../Utils/dateValidator";
+import { useInvoiceContext } from "../../Context/useInvoiceContext";
+
 const InvoiceForm = () => {
   const {
     TAX_RATES,
@@ -27,15 +23,7 @@ const InvoiceForm = () => {
     setInvoiceDate,
     setNotes,
     notes,
-    invoiceNumber,
-    selectedInvoice,
   } = useInvoiceContext();
-  useEffect(() => {
-    console.log("invoiceDate__frominvoiceform", invoiceDate);
-  }, [invoiceDate]);
-  useEffect(() => {
-    console.log("selectedInvoicefrominvoiceform", selectedInvoice);
-  }, [selectedInvoice]);
 
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
   const changeVisibility = () => {

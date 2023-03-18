@@ -79,7 +79,6 @@ export const useKontrahent = () => {
       legalForm: thisKontrahent.legalForm,
       userEmail: currentUser?.mail,
     });
-    console.log("thisKontrahent", thisKontrahent);
   };
 
   const handleDelete = (id) => {

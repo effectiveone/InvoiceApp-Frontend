@@ -56,7 +56,6 @@ const InvoicesIssuedList = () => {
   const classes = useStyles();
 
   const changeInvoiceNumber = (inv) => {
-    console.log("changeInvoiceNumber__inv__Dashboard", inv);
     setLocalInvoiceNumber(inv);
   };
 

@@ -8,9 +8,9 @@ import {
 import LoginPage from "./Auth/LoginPage/LoginPage";
 import RegisterPage from "./Auth/RegisterPage/RegisterPage";
 import IssuedInvoicePage from "./Pages/IssuedInvoicePage";
-import MyCompany from "./Pages/MyCompany";
+import MyCompanyPage from "./Pages/MyCompanyPage";
 import NewInvoicePage from "./Pages/NewInvoicePage";
-import Kontrahent from "./Pages/Kontrahent";
+import KontrahentPage from "./Pages/KontrahentPage";
 import SettingsPage from "./Pages/SettingsPage";
 import { useUser } from "./Shared/Hook/useUser";
 import AlertNotification from "./Shared/Components/AlertNotification";
@@ -30,9 +30,9 @@ function App() {
             <>
               <Route path="/InvoicesIssued" element={<IssuedInvoicePage />} />
               <Route path="/NewInvoice" element={<NewInvoicePage />} />
-              <Route path="/kontrahent" element={<Kontrahent />} />
+              <Route path="/Kontrahent" element={<KontrahentPage />} />
               <Route path="/SettingsPage" element={<SettingsPage />} />
-              <Route path="/mycompany" element={<MyCompany />} />
+              <Route path="/Mycompany" element={<MyCompanyPage />} />
               <Route path="/" element={<Navigate to="/InvoicesIssued" />} />
             </>
           ) : (

@@ -3,7 +3,7 @@ import React from "react";
 import { KontrahentProvider } from "../Shared/Context/useKontrahentContext";
 import KontrahentContent from "../Shared/Components/Kontrahent/KontrahentContent";
 
-const Kontrahent = () => {
+const KontrahentPage = () => {
   return (
     <KontrahentProvider>
       <KontrahentContent />
@@ -11,4 +11,4 @@ const Kontrahent = () => {
   );
 };
 
-export default Layout(Kontrahent);
+export default Layout(KontrahentPage);

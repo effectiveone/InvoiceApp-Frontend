@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
 }));
-function ContrahentGrid(contractor) {
+
+const ContrahentGrid = (contractor) => {
   const { handleEdit, handleDelete, setButtonText } = useKontrahentContext();
   const classes = useStyles();
   const handleEditChange = (id) => {
@@ -95,6 +96,6 @@ function ContrahentGrid(contractor) {
       <Divider />
     </Grid>
   );
-}
+};
 
 export default ContrahentGrid;
