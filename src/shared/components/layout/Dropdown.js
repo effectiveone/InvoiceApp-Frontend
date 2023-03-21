@@ -2,6 +2,7 @@ import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { makeStyles } from "@material-ui/core/styles";
+import { t } from "i18next";
 
 const useStyles = makeStyles({
   menu: {
@@ -39,7 +40,7 @@ function Dropdown({ handleLogout, open, id, anchorEl, handleClose }) {
       }}
       className={classes.menu}
     >
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>{t("logout")}</MenuItem>
     </Menu>
   );
 }

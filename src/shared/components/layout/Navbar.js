@@ -13,6 +13,7 @@ import Dropdown from "./Dropdown";
 import { sanitizedUrl } from "../../Utils/api";
 import { useUser } from "../../Hook/useUser";
 import { makeStyles } from "@material-ui/core/styles";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,6 @@ export default function Navbar({ className }) {
   const handleLogout = () => {
     logout();
     navigate("/login");
-    // history.push("/login");
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -71,7 +71,7 @@ export default function Navbar({ className }) {
             </Typography>
           </Box>
           <Box display="flex" alignItems="center">
-            Welcome, {currentUser?.username}
+            {t("welcome")}, {currentUser?.username}
             <IconButton
               ref={inputElement}
               aria-label="account of current user"

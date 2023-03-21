@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
+import { t } from "i18next";
 
 const useStyles = makeStyles({
   tableRowOdd: {
@@ -28,37 +29,37 @@ export default function InvoiceTable() {
             <TableRow sx={{ backgroundColor: "#f0f0f0" }}>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Nazwa
+                  {t("description")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Ilość
+                  {t("quantity")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Jednostka
+                  {t("unit")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  VAT
+                  {t("vat")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Cena netto
+                  {t("netPrice")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Wartość netto
+                  {t("netValue")}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6" component="h3">
-                  Wartość brutto
+                  {t("grossValue")}
                 </Typography>
               </TableCell>
             </TableRow>

@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTheme, changeTheme } from "../../Store/actions/designActions";
 import { useUser } from "./useUser";
-import {
-  updateSettings,
-  getSettings,
-} from "../../Store/actions/settingsActions";
+import { updateSettings } from "../../Store/actions/settingsActions";
 
 import { US, PL, FR } from "country-flag-icons/react/3x2";
 import i18n from "../../i18n";
@@ -34,14 +31,8 @@ export const useSettings = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentUser) {
-      dispatch(getSettings(currentUser));
-    }
-  }, [dispatch, currentUser]);
-
-  useEffect(() => {
     setLanguage(selectedSettings ?? "en");
-  }, [selectedSettings]);
+  }, [selectedSettings, dispatch]);
 
   const handleThemeChange = (event) => {
     const { value } = event.target;
@@ -72,6 +63,7 @@ export const useSettings = () => {
   };
 
   const handleLang = (e) => {
+    console.log("co tu sie odpierdala", e);
     dispatch(
       updateSettings(
         {

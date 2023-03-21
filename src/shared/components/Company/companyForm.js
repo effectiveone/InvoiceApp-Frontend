@@ -9,7 +9,7 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { legalForms } from "../../Utils/forms";
-
+import { t } from "i18next";
 function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
   const [updatedProps, setUpdatedProps] = useState(updatedCompanyData);
   useEffect(() => {
@@ -21,19 +21,19 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h5" component="h2">
-            Dane firmy
+            {t("companyData")}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <FormControl fullWidth variant="outlined">
-            <InputLabel id="legalFormLabel">Forma prawna</InputLabel>
+            <InputLabel id="legalFormLabel">{t("legalForm")}</InputLabel>
             <Select
               labelId="legalFormLabel"
               id="legalForm"
               name="legalForm"
               value={updatedProps?.legalForm}
               onChange={handleChange}
-              label="Forma prawna"
+              label={t("legalForm")}
             >
               {legalForms.map((form) => (
                 <MenuItem key={form.value} value={form.value}>
@@ -48,7 +48,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             fullWidth
             id="companyName"
             name="companyName"
-            label="Nazwa firmy"
+            label={t("companyName")}
             variant="outlined"
             value={updatedProps?.companyName}
             onChange={handleChange}
@@ -81,7 +81,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             fullWidth
             id="street"
             name="street"
-            label="Ulica"
+            label={t("street")}
             variant="outlined"
             value={updatedProps?.street}
             onChange={handleChange}
@@ -92,7 +92,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             fullWidth
             id="city"
             name="city"
-            label="Miasto"
+            label={t("city")}
             variant="outlined"
             value={updatedProps?.city}
             onChange={handleChange}
@@ -103,7 +103,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             fullWidth
             id="zipCode"
             name="zipCode"
-            label="Kod pocztowy"
+            label={t("zipCode")}
             variant="outlined"
             value={updatedProps?.zipCode}
             onChange={handleChange}
@@ -116,7 +116,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
                 fullWidth
                 id="bankName"
                 name="bankName"
-                label="bank name"
+                label={t("bankName")}
                 variant="outlined"
                 value={updatedProps?.bankName}
                 onChange={handleChange}
@@ -127,7 +127,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
                 fullWidth
                 id="bankAccount"
                 name="bankAccount"
-                label="Konto bankowe"
+                label={t("bankAccount")}
                 variant="outlined"
                 value={updatedProps?.bankAccount}
                 onChange={handleChange}

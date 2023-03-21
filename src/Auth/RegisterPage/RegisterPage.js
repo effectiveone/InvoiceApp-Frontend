@@ -7,6 +7,7 @@ import { validateRegisterForm } from "../../Shared/Utils/validators";
 import { connect } from "react-redux";
 import { getActions } from "../../Store/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const RegisterPage = ({ register }) => {
   const history = useNavigate();
@@ -40,7 +41,7 @@ const RegisterPage = ({ register }) => {
   return (
     <AuthBox>
       <Typography variant="h5" sx={{ color: "white " }}>
-        Create an account
+        {t("createAccount")}
       </Typography>
       <RegisterPageInputs
         mail={mail}

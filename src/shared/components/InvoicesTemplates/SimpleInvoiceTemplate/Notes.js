@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
+import { t } from "i18next";
 
 export default function Notes() {
   const { notes } = useInvoiceContext();
@@ -8,7 +9,7 @@ export default function Notes() {
   return (
     <Box sx={{ marginTop: 10, marginBottom: 5 }} component="section">
       <Typography variant="h3" component="h3">
-        Additional notes
+        {t("additionalNotes")}
       </Typography>
       <Typography
         variant="body1"

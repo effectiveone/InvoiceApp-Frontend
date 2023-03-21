@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 import { FilterListIcon, SearchIcon }
     from "../Utils/Icons"
 import { useStyles } from "./StyleFilterWrapper"
-
+import { t } from "i18next"
 
 
 const FilterWrapper = ({
@@ -20,7 +20,7 @@ const FilterWrapper = ({
                     <Grid className={classes.flexbox}>
                         <Grid className={classes.filter}>
                             <Button className={classes.button} variant="contained" startIcon={<FilterListIcon sx={{ p: 0 }} className={classes.icon} />}>
-                                Filter
+                                {t("filter")}
                             </Button>
                         </Grid>
                     </Grid>

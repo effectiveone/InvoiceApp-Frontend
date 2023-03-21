@@ -12,8 +12,6 @@ const useTheme = () => {
   console.log("selectedDesign", selectedDesign);
   useEffect(() => {
     const selectedDesign = design.find((p) => p.name === selectedDesignName);
-    console.log("selectedDesign", selectedDesign);
-    console.log("selectedDesignName", selectedDesignName);
 
     setSelectedDesign(selectedDesign);
   }, [design, selectedDesignName, dispatch]);

@@ -3,6 +3,7 @@ import { Button, Box, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import CompanyForm from "../Company/companyForm";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -40,14 +41,14 @@ function ContrahentModal() {
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div className={classes.paper}>
           <CompanyForm
-            whichInputs="kontrahent"
+            whichInputs={t("buyer")}
             updatedCompanyDate={updatedCompanyData}
             handleChange={handleChange}
           />
           <Box sx={{ mt: 3 }}>
             {button}
             <Button sx={{ ml: 2 }} onClick={handleClose}>
-              Anuluj
+              {t("cancel")}
             </Button>
           </Box>
         </div>

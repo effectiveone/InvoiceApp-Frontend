@@ -10,6 +10,7 @@ import InvoiceTable from "./InvoiceTable";
 import HeaderInvoice from "./HeaderInvoice";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   logowrapper: {
@@ -77,7 +78,7 @@ const MediumInvoiceTemplate = () => {
       <Grid className={classes.wrapperKontrahent}>
         <Box style={{ width: "50%" }}>
           <CompanyDetails
-            title="Faktura do:"
+            title={t("invoiceTo")}
             companyName={selectedKontrahent?.kontrahent_companyName}
             legalForm={selectedKontrahent?.kontrahent_legalForm}
             zip={selectedKontrahent?.kontrahent_zipCode}

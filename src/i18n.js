@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 
 import translationEN from "./Shared/Locales/en/translation.json";
 import translationPL from "./Shared/Locales/pl/translation.json";
+import translationFR from "./Shared/Locales/fr/translation.json";
 
 // Konfiguracja i18n
 i18n
@@ -16,6 +17,9 @@ i18n
       },
       pl: {
         translation: translationPL, // plik z tłumaczeniami dla języka polskiego
+      },
+      fr: {
+        translation: translationFR, // plik z tłumaczeniami dla języka polskiego
       },
     },
     interpolation: {

@@ -19,6 +19,7 @@ import {
 import InvoiceForm from "../NewInvoice/InvoiceForm";
 import FilterWrapper from "../FilterWrapper";
 import { InvoiceComponent } from "./invoiceComponent";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -75,7 +76,7 @@ const InvoicesIssuedList = () => {
                   direction={order}
                   onClick={() => handleSortRequest("number")}
                 >
-                  Numer faktury
+                  {t("numberInvoice")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -84,7 +85,7 @@ const InvoicesIssuedList = () => {
                   direction={order}
                   onClick={() => handleSortRequest("issueDate")}
                 >
-                  Data wystawienia
+                  {t("issueDate")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -93,7 +94,7 @@ const InvoicesIssuedList = () => {
                   direction={order}
                   onClick={() => handleSortRequest("customer")}
                 >
-                  Kontrahent
+                  {t("customer")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -102,7 +103,7 @@ const InvoicesIssuedList = () => {
                   direction={order}
                   onClick={() => handleSortRequest("netAmount")}
                 >
-                  Kwota netto
+                  {t("netAmount")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -111,7 +112,7 @@ const InvoicesIssuedList = () => {
                   direction={order}
                   onClick={() => handleSortRequest("grossAmount")}
                 >
-                  Kwota brutto
+                  {t("grossAmount")}
                 </TableSortLabel>
               </TableCell>
               <TableCell></TableCell>
@@ -157,7 +158,7 @@ const InvoicesIssuedList = () => {
             color="primary"
             onClick={handleEditInvoice}
           >
-            Zapisz zmiany
+            {t("saveChanges")}
           </Button>
         </div>
       </Modal>

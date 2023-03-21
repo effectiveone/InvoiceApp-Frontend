@@ -3,20 +3,21 @@ import CustomPrimaryButton from "../../Shared/Components/CustomPrimaryButton";
 import RedirectInfo from "../../Shared/Components/RedirectInfo";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import { t } from "i18next";
 
 const getFormNotValidMessage = () => {
-  return "Enter correct e-mail address and password should contains between 6 and 12 characters";
+  return t("enterEmailAdress");
 };
 
 const getFormValidMessage = () => {
-  return "Press to log in!";
+  return t("pressLogIn");
 };
 
 const LoginPageFooter = ({ handleLogin, isFormValid }) => {
   const history = useNavigate();
 
   const handlePushToRegisterPage = () => {
-    history.push("/register");
+    history("/register");
   };
 
   return (
@@ -26,7 +27,7 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
       >
         <div>
           <CustomPrimaryButton
-            label="Log in"
+            label={t("login")}
             additionalStyles={{ marginTop: "30px" }}
             disabled={!isFormValid}
             onClick={handleLogin}
@@ -34,8 +35,8 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
         </div>
       </Tooltip>
       <RedirectInfo
-        text="Need an account? "
-        redirectText="Create an account"
+        text={t("needAccount")}
+        redirectText={t("createAccount")}
         additionalStyles={{ marginTop: "5px" }}
         redirectHandler={handlePushToRegisterPage}
       />

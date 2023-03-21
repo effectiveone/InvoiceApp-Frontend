@@ -4,6 +4,7 @@ import { Divider } from "@mui/material";
 import { useKontrahentContext } from "../../Context/useKontrahentContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {
@@ -82,7 +83,7 @@ const ContrahentGrid = (contractor) => {
           className={classes.button}
           onClick={() => handleEditChange(contractor._id)}
         >
-          Edytuj
+          {t("edit")}
         </Button>
         <Button
           variant="contained"
@@ -90,7 +91,7 @@ const ContrahentGrid = (contractor) => {
           className={classes.button}
           onClick={() => handleDelete(contractor._id)}
         >
-          Usuń
+          {t("delete")}
         </Button>
       </div>
       <Divider />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Grid, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { useInvoiceContext } from "../../Context/useInvoiceContext";
+import { t } from "i18next";
 
 const InvoiceForm = () => {
   const {
@@ -86,7 +87,7 @@ const InvoiceForm = () => {
           xs={12}
           md={6}
         >
-          <Typography>Wybierz kontrahenta</Typography>
+          <Typography>{t("selectCustomer")}</Typography>
           <select
             style={{ width: "300px" }}
             name="companyName"
@@ -119,36 +120,36 @@ const InvoiceForm = () => {
               flexDirection: "column",
             }}
           >
-            <label htmlFor="invoiceDate">Invoice Date</label>
+            <label htmlFor="invoiceDate">{t("invoiceDates")}</label>
             <input
               type="date"
               name="invoiceDate"
               id="invoiceDate"
-              placeholder="Invoice Date"
+              placeholder={t("invoiceDates")}
               autoComplete="off"
               value={invoiceDate}
               onChange={(e) => setInvoiceDate(e.target.value)}
             />
           </Grid>
           <Grid style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="dueDate">Due Date</label>
+            <label htmlFor="dueDate">{t("invoiceSaleDate")}</label>
             <input
               type="date"
               name="dueDate"
               id="dueDate"
-              placeholder="Invoice Date"
+              placeholder={t("invoiceSaleDate")}
               autoComplete="off"
               value={invoiceSaleDate}
               onChange={(e) => setInvoiceSaleDate(e.target.value)}
             />
           </Grid>
           <Grid style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="dueDate">Data płatności</label>
+            <label htmlFor="dueDate">{t("invoicePaymentDate")}</label>
             <input
               type="date"
               name="dueDate"
               id="dueDate"
-              placeholder="Invoice Date"
+              placeholder={t("invoicePaymentDate")}
               autoComplete="off"
               value={invoicePaymentDate}
               onChange={(e) => setInvoicePaymentDate(e.target.value)}
@@ -165,7 +166,7 @@ const InvoiceForm = () => {
               onClick={handleAddItem}
               style={{ width: "100%" }}
             >
-              Dodaj produkt/usługę
+              {t("addProductOrService")}
             </Button>
           </Grid>
           {items?.map((item, index) => (
@@ -188,7 +189,7 @@ const InvoiceForm = () => {
               paddingTop: "50px",
             }}
           >
-            <Button onClick={changeVisibility}>Additional Notes</Button>
+            <Button onClick={changeVisibility}>{t("additionalNotes")}</Button>
             {isNotesVisibility && (
               <>
                 {" "}
@@ -206,16 +207,8 @@ const InvoiceForm = () => {
           </Grid>
           <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
             <TextField
-              label="Wartość netto"
+              label={t("netValue")}
               value={totalNetValue?.toFixed(2)}
-              InputProps={{ readOnly: true }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
-            <TextField
-              label="Wartość brutto"
-              value={totalGrossValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -224,6 +217,14 @@ const InvoiceForm = () => {
             <TextField
               label="Vat"
               value={(totalGrossValue - totalNetValue)?.toFixed(2)}
+              InputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} md={2} style={{ paddingTop: "50px" }}>
+            <TextField
+              label={t("grossValue")}
+              value={totalGrossValue?.toFixed(2)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -249,21 +250,21 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
     <>
       <Grid item xs={12}>
         <Typography variant="h6" gutterBottom>
-          Produkt/usługa {index + 1}
+          {t("productOrSerivce")} {index + 1}
           {index > 0 && (
             <Button
               startIcon={<Delete />}
               onClick={() => onRemove(index)}
               style={{ float: "right" }}
             >
-              Usuń
+              {t("delete")}
             </Button>
           )}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
-          label="Nazwa"
+          label={t("description")}
           name="name"
           value={item.name}
           onChange={handleFieldChange}
@@ -272,7 +273,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
       </Grid>
       <Grid item xs={12} md={1}>
         <TextField
-          label="Ilość"
+          label={t("quantity")}
           type="number"
           name="quantity"
           value={item.quantity}
@@ -282,7 +283,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
       </Grid>
       <Grid item xs={12} md={1}>
         <TextField
-          label="Jednostka"
+          label={t("unit")}
           name="unit"
           value={item.unit}
           onChange={handleFieldChange}
@@ -307,7 +308,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
       </Grid>
       <Grid item xs={12} md={1}>
         <TextField
-          label="Cena netto"
+          label={t("netPrice")}
           type="number"
           name="netPrice"
           value={item.netPrice}
@@ -317,7 +318,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
       </Grid>
       <Grid item xs={12} md={1}>
         <TextField
-          label="Wartość netto"
+          label={t("netValue")}
           type="number"
           name="netValue"
           value={item.netValue}
@@ -327,7 +328,7 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
       </Grid>
       <Grid item xs={12} md={1}>
         <TextField
-          label="Wartość brutto"
+          label={t("grossValue")}
           type="number"
           name="grossValue"
           value={item.grossValue}

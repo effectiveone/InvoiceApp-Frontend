@@ -1,15 +1,14 @@
 import React from "react";
 import { Typography } from "@mui/material";
+import { t } from "i18next";
 
 const LoginPageHeader = () => {
   return (
     <>
       <Typography variant="h5" sx={{ color: "white" }}>
-        Welcome Back!
+        {t("welcomeBack")}
       </Typography>
-      <Typography sx={{ color: "#b9bbbe" }}>
-        We are happy that you are with us!
-      </Typography>
+      <Typography sx={{ color: "#b9bbbe" }}>{t("happy")}</Typography>
     </>
   );
 };

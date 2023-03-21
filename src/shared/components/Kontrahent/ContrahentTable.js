@@ -17,6 +17,7 @@ import {
 import FilterWrapper from "../FilterWrapper";
 import { useInvoiceTable } from "../../Hook/useInvoiceTable";
 import { useModal } from "../../Hook/useModal";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {
@@ -173,7 +174,7 @@ const InvoiceComponent = ({
           className={classes.button}
           onClick={() => handleEditChange(_id)}
         >
-          Edytuj
+          {t("edit")}
         </Button>
       </TableCell>
 
@@ -184,7 +185,7 @@ const InvoiceComponent = ({
           className={classes.button}
           onClick={() => handleDelete(_id)}
         >
-          Usuń
+          {t("delete")}
         </Button>
       </TableCell>
     </TableRow>

@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box } from "@material-ui/core";
+import { t } from "i18next";
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -58,7 +59,7 @@ const HeaderInvoice = () => {
         </Grid>
         <Grid item xs={12}>
           <Box className={classes.title}>
-            <h1 className={classes.invoice}>INVOICE 3-2-1</h1>
+            <h1 className={classes.invoice}>{t("invoice")} </h1>
           </Box>
         </Grid>
       </Grid>

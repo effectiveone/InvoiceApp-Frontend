@@ -1,6 +1,6 @@
 import React from "react";
 import InputWithLabel from "../../Shared/Components/InputWithLabel";
-
+import { t } from "i18next";
 const LoginPageInputs = ({ mail, setMail, password, setPassword }) => {
   return (
     <>
@@ -9,14 +9,14 @@ const LoginPageInputs = ({ mail, setMail, password, setPassword }) => {
         setValue={setMail}
         label="E-mail"
         type="text"
-        placeholder="Enter e-mail address"
+        placeholder={t("enterEmail")}
       />
       <InputWithLabel
         value={password}
         setValue={setPassword}
-        label="Password"
+        label={t("password")}
         type="password"
-        placeholder="Enter password"
+        placeholder={t("enterPassword")}
       />
     </>
   );

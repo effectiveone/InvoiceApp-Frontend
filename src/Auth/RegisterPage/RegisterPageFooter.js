@@ -3,20 +3,21 @@ import CustomPrimaryButton from "../../Shared/Components/CustomPrimaryButton";
 import RedirectInfo from "../../Shared/Components/RedirectInfo";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import { t } from "i18next";
 
 const getFormNotValidMessage = () => {
-  return "Username should contains between 3 and 12 characters and password should contains between 6 and 12 character. Also correct e-mail address should provided";
+  return t("usernameRestriction");
 };
 
 const getFormValidMessage = () => {
-  return "Press to register!";
+  return t("pressRegister");
 };
 
 const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
   const history = useNavigate();
 
   const handlePushToLoginPage = () => {
-    history.push("/login");
+    history("/login");
   };
 
   return (
@@ -26,7 +27,7 @@ const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
       >
         <div>
           <CustomPrimaryButton
-            label="Register"
+            label={t("register")}
             additionalStyles={{ marginTop: "30px" }}
             disabled={!isFormValid}
             onClick={handleRegister}
@@ -35,7 +36,7 @@ const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
       </Tooltip>
       <RedirectInfo
         text=""
-        redirectText="Already have an account ?"
+        redirectText={t("accountHave")}
         additionalStyles={{ marginTop: "5px" }}
         redirectHandler={handlePushToLoginPage}
       />

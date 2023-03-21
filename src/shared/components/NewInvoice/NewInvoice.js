@@ -4,6 +4,7 @@ import FactoryInvoicePrinter from "../InvoicesTemplates/factoryInvoicePrinter";
 import { useInvoiceContext } from "../../Context/useInvoiceContext";
 import ReactToPrint from "react-to-print";
 import InvoiceForm from "./InvoiceForm";
+import { t } from "i18next";
 
 const NewInvoice = () => {
   const { componentRef, handleSubmit } = useInvoiceContext();
@@ -15,14 +16,14 @@ const NewInvoice = () => {
 
   return (
     <>
-      <Button onClick={toggleVisibility}>Podgląd</Button>
+      <Button onClick={toggleVisibility}>{t("preview")}</Button>
       {isVisible && (
         <ReactToPrint
-          trigger={() => <Button>Print / Download</Button>}
+          trigger={() => <Button>{t("printOrDownload")}</Button>}
           content={() => componentRef.current}
         />
       )}
-      <Button onClick={handleSubmit}>Zapisz fakture</Button>
+      <Button onClick={handleSubmit}>{t("saveInvoice")}</Button>
 
       {!isVisible && <InvoiceForm />}
       {isVisible && <FactoryInvoicePrinter ref={componentRef} />}

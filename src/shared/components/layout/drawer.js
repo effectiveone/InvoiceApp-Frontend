@@ -13,6 +13,7 @@ import ListIcon from "@material-ui/icons/List";
 import BusinessIcon from "@material-ui/icons/Business";
 import SettingsIcon from "@material-ui/icons/Settings";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { t } from "i18next";
 
 const drawerWidth = 240;
 
@@ -53,25 +54,25 @@ const PermanentDrawer = ({ children }) => {
             <ListItemIcon>
               <AddCircleOutlineIcon />
             </ListItemIcon>
-            <ListItemText primary="Nowa faktura" />
+            <ListItemText primary={t("newInvoice")} />
           </ListItem>
           <ListItem button component={Link} to={sanitizedUrl.Dashboard}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Wszystkie faktury" />
+            <ListItemText primary={t("allInvoice")} />
           </ListItem>
           <ListItem button component={Link} to={sanitizedUrl.MyCompany}>
             <ListItemIcon>
               <BusinessIcon />
             </ListItemIcon>
-            <ListItemText primary="Moja firma" />
+            <ListItemText primary={t("myCompany")} />
           </ListItem>
           <ListItem button component={Link} to={sanitizedUrl.Kontrahent}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Kontrahenci" />
+            <ListItemText primary={t("contrahent")} />
           </ListItem>
         </List>
         <Divider />
@@ -80,7 +81,7 @@ const PermanentDrawer = ({ children }) => {
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
-            <ListItemText primary="Ustawienia" />
+            <ListItemText primary={t("settings")} />
           </ListItem>
         </List>
       </Drawer>

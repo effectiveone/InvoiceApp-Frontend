@@ -9,6 +9,7 @@ import InvoiceTable from "./InvoiceTable";
 // import Footer from "./Footer";
 import HeaderInvoice from "./HeaderInvoice";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
+import { t } from "i18next";
 const BasicInvoiceTemplate = () => {
   const { componentRef, companyData, selectedKontrahent } = useInvoiceContext();
 
@@ -21,7 +22,7 @@ const BasicInvoiceTemplate = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <CompanyDetails
-            title="Sprzedawca"
+            title={t("seller")}
             companyName={companyData.companyName}
             legalForm={companyData.legalForm}
             zip={companyData.zipCode}
@@ -32,7 +33,7 @@ const BasicInvoiceTemplate = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <CompanyDetails
-            title="Nabywca"
+            title={t("buyer")}
             companyName={selectedKontrahent?.kontrahent_companyName}
             legalForm={selectedKontrahent?.kontrahent_legalForm}
             zip={selectedKontrahent?.kontrahent_zipCode}
