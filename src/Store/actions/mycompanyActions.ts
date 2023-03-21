@@ -36,8 +36,8 @@ export type CompanyActionTypes =
   | UpdateCompanyDataAction
   | DeleteCompanyDataAction;
 
-export const getCompanyData = (user: any): AppThunk => {
-  if (!user) return () => {};
+export const getCompanyData = (user: any) => {
+  if (!user) return;
   const { mail, token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
@@ -82,7 +82,7 @@ export const updateCompanyData = (
   updatedData: CompanyData,
   user: any
 ): AppThunk => {
-  if (!user) return () => {};
+  if (!user) return;
   const { mail, token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return (dispatch) => {
@@ -104,7 +104,7 @@ export const updateCompanyData = (
 };
 
 export const deleteCompanyData = (user: any): AppThunk => {
-  if (!user) return () => {};
+  if (!user) return;
   const { token } = user;
 
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

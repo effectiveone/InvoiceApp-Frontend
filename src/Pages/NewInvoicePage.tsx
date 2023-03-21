@@ -6,7 +6,9 @@ import NewInvoice from "../Shared/Components/NewInvoice/NewInvoice";
 const NewInvoicePage: React.FC = () => {
   return (
     <InvoiceProvider>
-      <NewInvoice />
+      <div>
+        <NewInvoice />
+      </div>
     </InvoiceProvider>
   );
 };

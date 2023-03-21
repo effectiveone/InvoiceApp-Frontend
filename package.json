@@ -48,6 +48,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-start": "electron .",
+    "tsLint": "tslint 'src/**/*.{ts,tsx}'",
+    "tsLint:fix": "tslint --fix 'src/**/*.{ts,tsx}'",
     "dev": "concurrently \"npm start\" \"npm run start:backend\"",
     "start:backend": "node backend/server.js",
     "electron-build": "electron-builder",

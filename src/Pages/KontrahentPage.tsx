@@ -6,7 +6,9 @@ import KontrahentContent from "../Shared/Components/Kontrahent/KontrahentContent
 const KontrahentPage: React.FC = () => {
   return (
     <KontrahentProvider>
-      <KontrahentContent />
+      <div>
+        <KontrahentContent />
+      </div>
     </KontrahentProvider>
   );
 };

@@ -5,7 +5,7 @@ interface UserState {
     user: {
       username: string;
       email: string;
-      // ... other user properties
+      token: string;
     };
   };
 }

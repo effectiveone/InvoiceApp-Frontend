@@ -6,7 +6,9 @@ import CompanyContent from "../Shared/Components/Company/CompanyContent";
 const MyCompanyPage: React.FC = () => {
   return (
     <CompanyProvider>
-      <CompanyContent />
+      <div>
+        <CompanyContent />
+      </div>
     </CompanyProvider>
   );
 };

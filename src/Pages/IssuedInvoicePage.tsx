@@ -6,7 +6,9 @@ import InvoicesIssuedList from "../Shared/Components/AllInvoices/InvoicesIssuedL
 const IssuedInvoicePage: React.FC = () => {
   return (
     <InvoiceProvider>
-      <InvoicesIssuedList />
+      <div>
+        <InvoicesIssuedList />
+      </div>
     </InvoiceProvider>
   );
 };

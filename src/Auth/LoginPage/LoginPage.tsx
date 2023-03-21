@@ -4,18 +4,17 @@ import LoginPageFooter from "./LoginPageFooter";
 import LoginPageHeader from "./LoginPageHeader";
 import LoginPageInputs from "./LoginPageInputs";
 import { validateLoginForm } from "../../Shared/Utils/validators";
-import { connect, ConnectedProps } from "react-redux";
+import { connect } from "react-redux";
 import { getActions } from "../../Store/actions/authActions";
 import { useNavigate } from "react-router-dom";
 
 interface UserDetails {
   mail: string;
   password: string;
+  onLogin: () => void;
 }
 
-interface LoginPageProps extends ConnectedProps<typeof connector> {}
-
-const LoginPage: React.FC<LoginPageProps> = ({ login }) => {
+const LoginPage: React.FC = ({ login }) => {
   const history = useNavigate();
 
   const [mail, setMail] = useState("");
@@ -49,6 +48,4 @@ const LoginPage: React.FC<LoginPageProps> = ({ login }) => {
   );
 };
 
-const connector = connect(null, getActions);
-
-export default connector(LoginPage);
+export default connect(null, getActions)(LoginPage);

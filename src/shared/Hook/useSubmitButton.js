@@ -2,14 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
-interface Props {
-  handleSubmit: () => void;
-  handleSubmitEdit: () => void;
-  buttonText: string;
-}
-
 const useStyles = makeStyles((theme) => ({
-  button: {
+  Button: {
     display: "flex",
     flexDirection: "row",
     gap: "150px",
@@ -17,12 +11,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "50px",
   },
 }));
-
-const useSubmitButton = ({
-  handleSubmit,
-  handleSubmitEdit,
-  buttonText,
-}: Props) => {
+const useSubmitButton = (handleSubmit, handleSubmitEdit, buttonText) => {
   const classes = useStyles();
 
   const handleButtonClick = () => {

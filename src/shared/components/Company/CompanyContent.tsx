@@ -3,9 +3,7 @@ import CompanyForm from "./companyForm";
 import { Button } from "@material-ui/core";
 import React from "react";
 
-interface CompanyContentProps {}
-
-const CompanyContent: React.FC<CompanyContentProps> = () => {
+const CompanyContent: React.FC = () => {
   const { updatedCompanyData, handleChange, handleSubmit } =
     useCompanyContext();
 

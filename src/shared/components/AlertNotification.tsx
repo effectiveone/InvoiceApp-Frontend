@@ -5,9 +5,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../Store";
 import { getActions } from "../../Store/actions/alertActions";
 
-interface AlertNotificationProps extends ConnectedProps<typeof connector> {}
-
-const AlertNotification: React.FC<AlertNotificationProps> = ({
+const AlertNotification: React.FC<ConnectedProps<typeof connector>> = ({
   showAlertMessage,
   closeAlertMessage,
   alertMessageContent,

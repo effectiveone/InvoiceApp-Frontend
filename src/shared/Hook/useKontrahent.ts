@@ -53,7 +53,7 @@ export const useKontrahent = (): KontrahentProps => {
     zipCode: "",
     companyName: "",
     legalForm: "",
-    userEmail: currentUser?.mail,
+    userEmail: currentUser?.email,
   });
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const useKontrahent = (): KontrahentProps => {
       zipCode: "",
       companyName: "",
       legalForm: "",
-      userEmail: currentUser?.mail,
+      userEmail: currentUser?.email,
     });
   };
 
@@ -107,33 +107,40 @@ export const useKontrahent = (): KontrahentProps => {
       zipCode: thisKontrahent?.zipCode || "",
       companyName: thisKontrahent?.companyName || "",
       legalForm: thisKontrahent?.legalForm || "",
-      userEmail: currentUser?.mail,
-      });
-      
-      const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
-      
-      useEffect(() => {
-      if (currentUser) {
+      userEmail: currentUser?.email,
+    });
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteContractor(id, currentUser));
+  };
+
+  const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
+
+  useEffect(() => {
+    if (currentUser) {
       dispatch(getContractorData(currentUser));
-      }
-      }, [deleteContractor, updateContractorData, addContractorData, currentUser, dispatch]);
-      
-      return {
-      button,
-      setButtonText,
-      handleModal,
-      open,
-      handleOpen,
-      handleClose,
-      handleEdit,
-      handleDelete,
-      updatedCompanyData,
-      kontrahent,
-      handleSubmit,
-      handleChange,
-      };
-      };
-      
-      
-      
-      
+    }
+  }, [
+    deleteContractor,
+    updateContractorData,
+    addContractorData,
+    currentUser,
+    dispatch,
+  ]);
+
+  return {
+    button,
+    setButtonText,
+    handleModal,
+    open,
+    handleOpen,
+    handleClose,
+    handleEdit,
+    handleDelete,
+    updatedCompanyData,
+    kontrahent,
+    handleSubmit,
+    handleChange,
+  };
+};

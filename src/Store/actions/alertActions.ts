@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-const dispatch = useDispatch();
 
 export interface AlertActions {
   OPEN_ALERT_MESSAGE: "ALERT.OPEN_ALERT_MESSAGE";
