@@ -4,7 +4,9 @@ import SimpleInvoiceTemplate from "./SimpleInvoiceTemplate";
 import { useSelector } from "react-redux";
 
 const FactoryInvoicePrinter = ({ ref }) => {
-  const selectedOption = useSelector((state) => state?.template.selectedOption);
+  const selectedOption = useSelector(
+    (state) => state?.settings.settings?.templateInvoice
+  );
 
   switch (selectedOption) {
     case "basicInput":

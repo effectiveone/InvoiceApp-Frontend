@@ -9,8 +9,10 @@ import contractorReducer from "./reducers/kontrahenciReducer";
 import fakturaReducer from "./reducers/fakturaReducer";
 import { designReducer } from "./reducers/designReducer";
 import { templateReducer } from "./reducers/templateReducer";
+import settingsReducer from "./reducers/settingsReducer";
 
 const rootReducer = combineReducers({
+  settings: settingsReducer,
   template: templateReducer,
   design: designReducer,
   faktura: fakturaReducer,

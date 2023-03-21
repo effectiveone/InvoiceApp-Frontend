@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTheme, changeTheme } from "../../Store/actions/designActions";
+import { useUser } from "./useUser";
+import {
+  updateSettings,
+  getSettings,
+} from "../../Store/actions/settingsActions";
+
 import { US, PL, FR } from "country-flag-icons/react/3x2";
 import i18n from "../../i18n";
 
 export const useSettings = () => {
-  const [language, setLanguage] = useState("en");
+  const { currentUser } = useUser();
+  const settings = useSelector((state) => state.settings.settings);
+  const selectedSettings = settings?.lang;
+
+  const [language, setLanguage] = useState(selectedSettings ?? "en");
   const options = [
     { value: "en", icon: <US /> },
     { value: "pl", icon: <PL /> },
@@ -15,21 +25,62 @@ export const useSettings = () => {
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language, setLanguage]);
+
   const mySystemOfDesign = useSelector(
-    (state) => state.design.mySystemOfDesign
+    (state) => state.settings.mySystemOfDesign
   );
-  const selectedDesign = useSelector((state) => state.design.selectedDesign);
+
+  const selectedDesign = settings?.designName;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getSettings(currentUser));
+    }
+  }, [dispatch, currentUser]);
+
+  useEffect(() => {
+    setLanguage(selectedSettings ?? "en");
+  }, [selectedSettings]);
 
   const handleThemeChange = (event) => {
     const { value } = event.target;
-    dispatch(changeTheme(value)); // dodaj dispatch tutaj
+    dispatch(
+      updateSettings(
+        {
+          designName: value,
+          email: currentUser.mail,
+        },
+        currentUser
+      )
+    );
   };
+
   const handleChange = (e) => {
     const selectedDesign = mySystemOfDesign.find(
       (design) => design.name === e.target.value
     );
-    dispatch(setTheme(selectedDesign));
+    dispatch(
+      updateSettings(
+        {
+          designName: selectedDesign.name,
+          email: currentUser.mail,
+        },
+        currentUser
+      )
+    );
+  };
+
+  const handleLang = (e) => {
+    dispatch(
+      updateSettings(
+        {
+          lang: e,
+          email: currentUser.mail,
+        },
+        currentUser
+      )
+    );
   };
 
   // Custom
@@ -39,13 +90,18 @@ export const useSettings = () => {
     icon: <US />,
   });
 
+  useEffect(() => {
+    const selectedLang = options?.find((p) => p.value === selectedSettings);
+    setSelectedOption(selectedLang);
+  }, [dispatch, selectedSettings]);
+
   const toggleOptions = () => {
     setIsOpen(!isOpen);
   };
 
   return {
+    handleLang,
     language,
-    setLanguage,
     options,
     mySystemOfDesign,
     handleThemeChange,

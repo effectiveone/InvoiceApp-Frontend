@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  toggleCheckbox,
-  selectOption,
-} from "../../../Store/actions/templateActions";
-
+import { updateSettings } from "../../../Store/actions/settingsActions";
+import { useUser } from "../../../Shared/Hook/useUser";
 const TemplateCheckbox = () => {
+  const { currentUser } = useUser();
   const dispatch = useDispatch();
 
-  const selectedOption = useSelector((state) => state?.template.selectedOption);
+  const selectedOption = useSelector(
+    (state) => state?.settings?.settings?.templateInvoice
+  );
 
   return (
     <div>
@@ -26,7 +26,17 @@ const TemplateCheckbox = () => {
             name="option"
             value="basicInput"
             checked={selectedOption === "basicInput"}
-            onChange={() => dispatch(selectOption("basicInput"))}
+            onChange={() =>
+              dispatch(
+                updateSettings(
+                  {
+                    templateInvoice: "basicInput",
+                    email: currentUser.mail,
+                  },
+                  currentUser
+                )
+              )
+            }
           />
           Basic Input
         </label>
@@ -36,7 +46,17 @@ const TemplateCheckbox = () => {
             name="option"
             value="mediumInput"
             checked={selectedOption === "mediumInput"}
-            onChange={() => dispatch(selectOption("mediumInput"))}
+            onChange={() =>
+              dispatch(
+                updateSettings(
+                  {
+                    templateInvoice: "mediumInput",
+                    email: currentUser.mail,
+                  },
+                  currentUser
+                )
+              )
+            }
           />
           Medium Input
         </label>
@@ -46,7 +66,17 @@ const TemplateCheckbox = () => {
             name="option"
             value="printerInput"
             checked={selectedOption === "printerInput"}
-            onChange={() => dispatch(selectOption("printerInput"))}
+            onChange={() =>
+              dispatch(
+                updateSettings(
+                  {
+                    templateInvoice: "printerInput",
+                    email: currentUser.mail,
+                  },
+                  currentUser
+                )
+              )
+            }
           />
           Printer Input
         </label>

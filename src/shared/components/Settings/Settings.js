@@ -6,8 +6,8 @@ import TemplateCheckbox from "./templateCheckbox";
 
 const Settings = () => {
   const {
+    handleLang,
     language,
-    setLanguage,
     options,
     mySystemOfDesign,
     handleThemeChange,
@@ -26,7 +26,7 @@ const Settings = () => {
         justifyContent: "space-between",
       }}
     >
-      <select value={selectedDesign?.name} onChange={handleThemeChange}>
+      <select value={selectedDesign} onChange={handleThemeChange}>
         {mySystemOfDesign?.map((design) => (
           <option key={design.name} value={design.name}>
             {design.name}
@@ -35,7 +35,7 @@ const Settings = () => {
       </select>
       <CustomSelect
         value={language}
-        onChange={(e) => setLanguage(e)}
+        onChange={(e) => handleLang(e)}
         options={options}
         className="language-select"
         width="30px"
