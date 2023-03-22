@@ -5,7 +5,10 @@ import {
 } from "../actions/fakturaActions";
 
 const initialState = {
-  fakturaData: [],
+  faktury: [],
+  currentInvoiceNumber: null,
+  loading: false,
+  error: null,
 };
 
 const fakturaReducer = (state = initialState, action) => {
@@ -17,7 +20,11 @@ const fakturaReducer = (state = initialState, action) => {
       };
     case READ_FAKTURA_SUCCESS:
       return {
-        fakturaData: action.payload,
+        ...state,
+        faktury: action.payload.faktury,
+        currentInvoiceNumber: action.payload.currentInvoiceNumber,
+        loading: false,
+        error: null,
       };
     case EDIT_FAKTURA_SUCCESS:
       return {

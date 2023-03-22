@@ -14,7 +14,11 @@ export const useInvoice = () => {
   const { companyData } = useCompany();
   const { kontrahent } = useKontrahent();
   const dispatch = useDispatch();
-  const invoiceDate = useSelector((state) => state?.faktura?.fakturaData);
+  const invoiceDate = useSelector((state) => state?.faktura?.faktury);
+  const currentInvoiceNumber = useSelector(
+    (state) => state?.faktura?.currentInvoiceNumber
+  );
+
   const [selectedInvoice, setSelectedInvoice] = useState();
   const [invoiceNumberDate, updateInvoiceNumberDate] = useState();
   const [localInvoiceNumber, setLocalInvoiceNumber] = useState();
@@ -131,6 +135,7 @@ export const useInvoice = () => {
   }, [selectedInvoice]);
 
   return {
+    currentInvoiceNumber,
     selectedInvoice,
     setLocalInvoiceNumber,
     invoiceDate,

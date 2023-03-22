@@ -6,6 +6,7 @@ import { t } from "i18next";
 
 const InvoiceForm = () => {
   const {
+    currentInvoiceNumber,
     TAX_RATES,
     selectedKontrahent,
     items,
@@ -156,6 +157,19 @@ const InvoiceForm = () => {
             />
           </Grid>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p>
+          {" "}
+          {t("invoice")} {currentInvoiceNumber}
+        </p>
       </Box>
       <form>
         <Grid container spacing={2} style={{ paddingTop: "50px" }}>

@@ -1,17 +1,21 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import { Divider } from "@mui/material";
-
+import { t } from "i18next";
 import Dates from "./Dates";
 import ClientDetails from "./ClientDetails";
 import Table from "./Table";
 import Notes from "./Notes";
 import Footer from "./Footer";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
-import { t } from "i18next";
 
 const SimpleInvoiceTemplate = () => {
-  const { componentRef, companyData, selectedKontrahent } = useInvoiceContext();
+  const {
+    componentRef,
+    companyData,
+    selectedKontrahent,
+    currentInvoiceNumber,
+  } = useInvoiceContext();
 
   return (
     <div ref={componentRef} className="p-5">
@@ -25,6 +29,19 @@ const SimpleInvoiceTemplate = () => {
         nip={companyData.nip}
       />
       <Divider />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p>
+          {" "}
+          {t("invoice")} {currentInvoiceNumber}
+        </p>
+      </Box>
       <Dates />
       <Divider />
       <Grid container spacing={2}>

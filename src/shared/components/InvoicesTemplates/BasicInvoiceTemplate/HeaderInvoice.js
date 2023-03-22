@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box } from "@material-ui/core";
 import { t } from "i18next";
+import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HeaderInvoice = () => {
   const classes = useStyles();
-
+  const { currentInvoiceNumber } = useInvoiceContext();
   return (
     <header className={classes.header}>
       <Grid>
@@ -59,7 +60,9 @@ const HeaderInvoice = () => {
         </Grid>
         <Grid item xs={12}>
           <Box className={classes.title}>
-            <h1 className={classes.invoice}>{t("invoice")} </h1>
+            <h1 className={classes.invoice}>
+              {t("invoice")} {currentInvoiceNumber}
+            </h1>
           </Box>
         </Grid>
       </Grid>

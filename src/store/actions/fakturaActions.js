@@ -42,12 +42,30 @@ export const readFaktury = (user) => async (dispatch) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   dispatch({ type: READ_FAKTURA_REQUEST });
   try {
-    const res = await axios.post(`http://localhost:5002/api/auth/get-faktury`, {
-      userEmail: mail,
-    });
+    const currentInvoiceNumberRes = await axios.post(
+      `http://localhost:5002/api/auth/invoiceNumber`,
+      {
+        userEmail: mail,
+      }
+    );
+    const currentInvoiceNumber = currentInvoiceNumberRes.data;
+    console.log("currentInvoiceNumber", currentInvoiceNumber);
+
+    const fakturyRes = await axios.post(
+      `http://localhost:5002/api/auth/get-faktury`,
+      {
+        userEmail: mail,
+      }
+    );
+    const faktury = fakturyRes.data;
+
+    console.log("faktury", faktury);
     dispatch({
       type: READ_FAKTURA_SUCCESS,
-      payload: res.data,
+      payload: {
+        faktury,
+        currentInvoiceNumber,
+      },
     });
   } catch (err) {
     dispatch({
