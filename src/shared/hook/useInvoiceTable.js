@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 
-export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
+export const useInvoiceTable = ({ invoiceDate, kontrahent, productList }) => {
   const [filterValue, setFilterValue] = useState("");
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("issueDate");
@@ -67,6 +67,49 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
 
     return sortedArray;
   }, [invoiceDate, orderBy, order, filterValue]);
+
+  const sortedProducts = useMemo(() => {
+    let filteredArray = productList || [];
+
+    if (filterValue) {
+      filteredArray = filteredArray?.filter((obj) =>
+        obj.name.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    }
+
+    const sortedArray =
+      filteredArray &&
+      filteredArray.length > 0 &&
+      filteredArray?.sort((a, b) => {
+        if (orderBy === "name") {
+          if (order === "asc") {
+            return a.name.localeCompare(b.name);
+          } else {
+            return b.name.localeCompare(a.name);
+          }
+        } else if (orderBy === "netPrice") {
+          if (order === "asc") {
+            return a.netPrice - b.netPrice;
+          } else {
+            return b.netPrice - a.netPrice;
+          }
+        } else if (orderBy === "vat") {
+          if (order === "asc") {
+            return a.vat - b.vat;
+          } else {
+            return b.vat - a.vat;
+          }
+        } else if (orderBy === "unit") {
+          if (order === "asc") {
+            return a.unit - b.unit;
+          } else {
+            return b.unit - a.unit;
+          }
+        }
+        return 0;
+      });
+    return sortedArray;
+  }, [productList, orderBy, order, filterValue]);
 
   const sortedKontrahents = useMemo(() => {
     let filteredArray = kontrahent || [];
@@ -137,6 +180,7 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent }) => {
     handleChangeRowsPerPage,
     handleFilterChange,
     sortedKontrahents,
+    sortedProducts,
     order,
     orderBy,
     page,

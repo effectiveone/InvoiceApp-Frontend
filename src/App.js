@@ -10,6 +10,7 @@ import RegisterPage from "./Auth/RegisterPage/RegisterPage";
 import IssuedInvoicePage from "./Pages/IssuedInvoicePage";
 import MyCompanyPage from "./Pages/MyCompanyPage";
 import NewInvoicePage from "./Pages/NewInvoicePage";
+import InventoryPage from "./Pages/InventoryPage";
 import KontrahentPage from "./Pages/KontrahentPage";
 import SettingsPage from "./Pages/SettingsPage";
 import { useUser } from "./Shared/Hook/useUser";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           {currentUser ? (
             <>
+              <Route path="/Inventory" element={<InventoryPage />} />
               <Route path="/InvoicesIssued" element={<IssuedInvoicePage />} />
               <Route path="/NewInvoice" element={<NewInvoicePage />} />
               <Route path="/Kontrahent" element={<KontrahentPage />} />

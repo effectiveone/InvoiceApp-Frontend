@@ -1,7 +1,6 @@
 import { composeWithDevTools } from "redux-devtools-extension";
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-
 import authReducer from "./reducers/authReducer";
 import alertReducer from "./reducers/alertReducer";
 import { companyReducer } from "./reducers/mycompanyReducer";
@@ -10,8 +9,10 @@ import fakturaReducer from "./reducers/fakturaReducer";
 import { designReducer } from "./reducers/designReducer";
 import { templateReducer } from "./reducers/templateReducer";
 import settingsReducer from "./reducers/settingsReducer";
+import { productReducer } from "./reducers/productReducer";
 
 const rootReducer = combineReducers({
+  products: productReducer,
   settings: settingsReducer,
   template: templateReducer,
   design: designReducer,

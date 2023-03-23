@@ -62,17 +62,24 @@ const PermanentDrawer = ({ children }) => {
             </ListItemIcon>
             <ListItemText primary={t("allInvoice")} />
           </ListItem>
-          <ListItem button component={Link} to={sanitizedUrl.MyCompany}>
+
+          <ListItem button component={Link} to={sanitizedUrl.Inventory}>
             <ListItemIcon>
               <BusinessIcon />
             </ListItemIcon>
-            <ListItemText primary={t("myCompany")} />
+            <ListItemText primary={t("inventory")} />
           </ListItem>
           <ListItem button component={Link} to={sanitizedUrl.Kontrahent}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary={t("contrahent")} />
+          </ListItem>
+          <ListItem button component={Link} to={sanitizedUrl.MyCompany}>
+            <ListItemIcon>
+              <BusinessIcon />
+            </ListItemIcon>
+            <ListItemText primary={t("myCompany")} />
           </ListItem>
         </List>
         <Divider />

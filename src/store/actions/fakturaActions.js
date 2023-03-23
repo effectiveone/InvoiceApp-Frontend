@@ -49,7 +49,6 @@ export const readFaktury = (user) => async (dispatch) => {
       }
     );
     const currentInvoiceNumber = currentInvoiceNumberRes.data;
-    console.log("currentInvoiceNumber", currentInvoiceNumber);
 
     const fakturyRes = await axios.post(
       `http://localhost:5002/api/auth/get-faktury`,
@@ -59,7 +58,6 @@ export const readFaktury = (user) => async (dispatch) => {
     );
     const faktury = fakturyRes.data;
 
-    console.log("faktury", faktury);
     dispatch({
       type: READ_FAKTURA_SUCCESS,
       payload: {

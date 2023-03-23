@@ -64,4 +64,5 @@ export const sanitizedUrl = {
   Settings: inHTMLData("/SettingsPage"),
   Dashboard: inHTMLData("/InvoicesIssued"),
   MyCompany: inHTMLData("/Mycompany"),
+  Inventory: inHTMLData("/Inventory"),
 };
