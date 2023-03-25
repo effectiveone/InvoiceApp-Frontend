@@ -43,7 +43,7 @@ export const readFaktury = (user) => async (dispatch) => {
   dispatch({ type: READ_FAKTURA_REQUEST });
   try {
     const currentInvoiceNumberRes = await axios.post(
-      `http://localhost:5002/api/auth/invoiceNumber`,
+      `http://localhost:5002/api/auth/invoiceAllNumber`,
       {
         userEmail: mail,
       }

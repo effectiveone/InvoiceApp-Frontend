@@ -15,9 +15,28 @@ export const useInvoice = () => {
   const { kontrahent } = useKontrahent();
   const dispatch = useDispatch();
   const invoiceDate = useSelector((state) => state?.faktura?.faktury);
-  const currentInvoiceNumber = useSelector(
+  const [invoiceType, setInvoiceType] = useState();
+  const [currentInvoiceNumber, setCurrentInvoiceNumber] = useState();
+  const AllCurrentInvoiceNumber = useSelector(
     (state) => state?.faktura?.currentInvoiceNumber
   );
+
+  useEffect(() => {
+    switch (invoiceType) {
+      case "koregujaca":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.korygujaca);
+        break;
+      case "sprzedazowa":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.sprzedazowa);
+        break;
+      case "zakupowa":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.zakupowa);
+        break;
+      default:
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.sprzedazowa);
+        break;
+    }
+  }, [invoiceType, AllCurrentInvoiceNumber]);
 
   const [selectedInvoice, setSelectedInvoice] = useState();
   const [invoiceNumberDate, updateInvoiceNumberDate] = useState();
@@ -51,7 +70,6 @@ export const useInvoice = () => {
   const [invoicePaymentDate, setInvoicePaymentDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
-
   const [selectedKontrahent, setSelectedKontrahent] = useState({});
   const [notes, setNotes] = useState("");
   const [items, setItems] = useState([
@@ -89,6 +107,7 @@ export const useInvoice = () => {
     totalNetValue,
     totalGrossValue,
     notes,
+    invoiceType,
     userEmail: currentUser?.mail,
   };
 
@@ -102,6 +121,7 @@ export const useInvoice = () => {
     totalNetValue,
     totalGrossValue,
     notes,
+    invoiceType,
     userEmail: currentUser?.mail,
     invoiceNumber: invoiceNumberDate,
   };
@@ -123,6 +143,7 @@ export const useInvoice = () => {
   // Add useEffect hook to update certain state based on changes in invoiceDate
   useEffect(() => {
     if (localInvoiceNumber) {
+      setInvoiceType(selectedInvoice?.invoiceType);
       setItems(selectedInvoice?.items);
       setTotalNetValue(selectedInvoice?.totalNetValue);
       setTotalGrossValue(selectedInvoice?.totalGrossValue);
@@ -135,6 +156,8 @@ export const useInvoice = () => {
   }, [selectedInvoice]);
 
   return {
+    invoiceType,
+    setInvoiceType,
     currentInvoiceNumber,
     selectedInvoice,
     setLocalInvoiceNumber,

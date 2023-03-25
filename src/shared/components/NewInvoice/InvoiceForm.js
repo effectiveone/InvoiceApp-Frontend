@@ -6,6 +6,8 @@ import { t } from "i18next";
 
 const InvoiceForm = () => {
   const {
+    invoiceType,
+    setInvoiceType,
     currentInvoiceNumber,
     TAX_RATES,
     selectedKontrahent,
@@ -105,6 +107,15 @@ const InvoiceForm = () => {
             ))}
           </select>
         </Grid>
+        <select
+          name="invoiceType"
+          value={invoiceType}
+          onChange={(e) => setInvoiceType(e.target.value)}
+        >
+          <option value="zakupowa">Faktura zakupowa</option>
+          <option value="sprzedazowa">Faktura sprzedażowa</option>
+          <option value="koregujaca">Faktura koregująca</option>
+        </select>
         <Box
           item
           xs={12}
