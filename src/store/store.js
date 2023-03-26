@@ -10,8 +10,10 @@ import { designReducer } from "./reducers/designReducer";
 import { templateReducer } from "./reducers/templateReducer";
 import settingsReducer from "./reducers/settingsReducer";
 import { productReducer } from "./reducers/productReducer";
+import statsReducer from "./reducers/statsReducer";
 
 const rootReducer = combineReducers({
+  stats: statsReducer,
   products: productReducer,
   settings: settingsReducer,
   template: templateReducer,

@@ -32,6 +32,15 @@ export const useInvoice = () => {
       case "zakupowa":
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.zakupowa);
         break;
+      case "zaliczkowa":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.zaliczkowa);
+        break;
+      case "proformaSprzedazowa":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.proformaSprzedazowa);
+        break;
+      case "proformaZakupowa":
+        setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.proformaZakupowa);
+        break;
       default:
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.sprzedazowa);
         break;

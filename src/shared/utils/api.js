@@ -59,6 +59,7 @@ const checkResponseCode = (exception) => {
 
 //sanitaze links:
 export const sanitizedUrl = {
+  MainPage: inHTMLData("/Dashboard"),
   AllInvoices: inHTMLData("/NewInvoice"),
   Kontrahent: inHTMLData("/Kontrahent"),
   Settings: inHTMLData("/SettingsPage"),

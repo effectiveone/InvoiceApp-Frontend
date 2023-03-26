@@ -9,6 +9,8 @@ import LoginPage from "./Auth/LoginPage/LoginPage";
 import RegisterPage from "./Auth/RegisterPage/RegisterPage";
 import IssuedInvoicePage from "./Pages/IssuedInvoicePage";
 import MyCompanyPage from "./Pages/MyCompanyPage";
+import DashboardPage from "./Pages/DashboardPage";
+
 import NewInvoicePage from "./Pages/NewInvoicePage";
 import InventoryPage from "./Pages/InventoryPage";
 import KontrahentPage from "./Pages/KontrahentPage";
@@ -29,13 +31,14 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           {currentUser ? (
             <>
+              <Route path="/Dashboard" element={<DashboardPage />} />
               <Route path="/Inventory" element={<InventoryPage />} />
               <Route path="/InvoicesIssued" element={<IssuedInvoicePage />} />
               <Route path="/NewInvoice" element={<NewInvoicePage />} />
               <Route path="/Kontrahent" element={<KontrahentPage />} />
               <Route path="/SettingsPage" element={<SettingsPage />} />
               <Route path="/Mycompany" element={<MyCompanyPage />} />
-              <Route path="/" element={<Navigate to="/InvoicesIssued" />} />
+              <Route path="/" element={<Navigate to="/SettingsPage" />} />
             </>
           ) : (
             <Route path="/" element={<LoginPage />} />
@@ -43,7 +46,7 @@ function App() {
           <Route
             path="/"
             element={
-              currentUser ? <Navigate to="/InvoicesIssued" /> : <LoginPage />
+              currentUser ? <Navigate to="/SettingsPage" /> : <LoginPage />
             }
           />
         </Routes>

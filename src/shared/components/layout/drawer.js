@@ -50,6 +50,12 @@ const PermanentDrawer = ({ children }) => {
         <div className={classes.toolbar} />
         <Divider />
         <List>
+          <ListItem button component={Link} to={sanitizedUrl.MainPage}>
+            <ListItemIcon>
+              <AddCircleOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary={t("dashboardPage")} />
+          </ListItem>
           <ListItem button component={Link} to={sanitizedUrl.AllInvoices}>
             <ListItemIcon>
               <AddCircleOutlineIcon />

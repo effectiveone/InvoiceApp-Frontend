@@ -115,7 +115,13 @@ const InvoiceForm = () => {
           <option value="zakupowa">Faktura zakupowa</option>
           <option value="sprzedazowa">Faktura sprzedażowa</option>
           <option value="koregujaca">Faktura koregująca</option>
+          <option value="zaliczkowa">Faktura zaliczkowa</option>
+          <option value="proformaSprzedazowa">
+            Faktura proforma sprzedażowa
+          </option>
+          <option value="proformaZakupowa">Faktura proforma zakupowa</option>
         </select>
+
         <Box
           item
           xs={12}

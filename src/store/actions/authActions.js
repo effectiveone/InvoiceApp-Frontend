@@ -46,7 +46,7 @@ const login = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history("/InvoicesIssued");
+      history("/SettingsPage");
     }
   };
 };
@@ -62,7 +62,7 @@ const register = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history("/InvoicesIssued");
+      history("/SettingsPage");
     }
   };
 };
