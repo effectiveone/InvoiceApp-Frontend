@@ -26,7 +26,7 @@ const NewInvoice = () => {
       <Button onClick={handleSubmit}>{t("saveInvoice")}</Button>
 
       {!isVisible && <InvoiceForm />}
-      {isVisible && <FactoryInvoicePrinter ref={componentRef} />}
+      {isVisible && <FactoryInvoicePrinter />}
     </>
   );
 };

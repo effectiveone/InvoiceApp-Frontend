@@ -1,4 +1,3 @@
-import Reeact from "react";
 import InventoryTable from "./InventoryTable";
 import InventoryButton from "./InventoryButton";
 import InventoryModal from "./InventoryModal";

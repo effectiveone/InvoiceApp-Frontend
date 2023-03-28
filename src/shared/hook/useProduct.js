@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   createProduct,
   readProducts,
-  readProduct,
   updateProduct,
   deleteProduct,
 } from "../../Store/actions/productActions";
@@ -168,7 +167,7 @@ export const useProduct = () => {
     if (currentUser) {
       dispatch(readProducts(currentUser));
     }
-  }, [dispatch]);
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -192,6 +191,5 @@ export const useProduct = () => {
     product,
     productList,
     handleSubmit,
-    handleChange,
   };
 };

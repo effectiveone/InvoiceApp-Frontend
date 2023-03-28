@@ -1,27 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { fetchStats } from "../../Store/actions/statsActions";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "./useUser";
-import { useModal } from "./useModal";
 import { useTranslation } from "react-i18next";
 
 export const useStatistic = () => {
   const { t } = useTranslation();
-
   const { currentUser } = useUser();
   const dispatch = useDispatch();
-  const { open, handleOpen, handleClose } = useModal();
   const stats = useSelector((state) => state.stats?.stats);
   const monthlySale = useSelector((state) => state.stats?.stats?.monthlySales);
   useEffect(() => {
     if (!stats?.length && currentUser) {
       dispatch(fetchStats(currentUser));
     }
-  }, []);
+  }, [currentUser, dispatch, stats?.length]);
 
   const years = stats?.years;
-  const total = stats?.total;
 
   const dataForYears = years?.map((year) => {
     const dataForYear = stats?.chartData.reduce((acc, cur) => {

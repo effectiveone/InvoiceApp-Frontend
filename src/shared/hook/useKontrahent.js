@@ -91,7 +91,7 @@ export const useKontrahent = () => {
     if (currentUser) {
       dispatch(getContractorData(currentUser));
     }
-  }, [deleteContractor, updateContractorData, addContractorData]);
+  }, [currentUser, dispatch]);
 
   return {
     button,

@@ -24,10 +24,6 @@ export const useCompany = () => {
     dispatch(addCompanyData(updatedCompanyData, currentUser));
   };
 
-  // useEffect(() => {
-  //   dispatch(getCompanyData(currentUser));
-  // }, [dispatch, currentUser]);
-
   useEffect(() => {
     if (currentUser) {
       dispatch(getCompanyData(currentUser));
@@ -38,7 +34,7 @@ export const useCompany = () => {
     if (Object.keys(updatedCompanyData).length === 0) {
       setCompanyData(companyData);
     }
-  }, [dispatch, addCompanyData, companyData]);
+  }, [dispatch, companyData, updatedCompanyData]);
 
   return {
     updatedCompanyData,

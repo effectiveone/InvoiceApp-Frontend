@@ -1,5 +1,4 @@
 import axios from "axios";
-import { logout } from "./auth";
 import { inHTMLData } from "xss-filters";
 
 const apiClient = axios.create({
@@ -44,16 +43,6 @@ export const register = async (data) => {
       error: true,
       exception,
     };
-  }
-};
-
-// secure routes
-
-const checkResponseCode = (exception) => {
-  const responseCode = exception?.response?.status;
-
-  if (responseCode) {
-    (responseCode === 401 || responseCode === 403) && logout();
   }
 };
 

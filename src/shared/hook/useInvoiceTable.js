@@ -167,12 +167,9 @@ export const useInvoiceTable = ({ invoiceDate, kontrahent, productList }) => {
     setPage(0);
   };
 
-  const handleFilterChange = useCallback(
-    (e) => {
-      setFilterValue(e);
-    },
-    [filterValue]
-  );
+  const handleFilterChange = useCallback((e) => {
+    setFilterValue(e);
+  }, []);
   return {
     emptyRows,
     handleChangePage,

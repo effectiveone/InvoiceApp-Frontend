@@ -66,7 +66,7 @@ export const useInvoice = () => {
         setSelectedInvoice(invoice);
       }
     }
-  }, [localInvoiceNumber, currentUser, dispatch]);
+  }, [localInvoiceNumber, currentUser, dispatch, invoiceDate]);
 
   const [invoiceDates, setInvoiceDates] = useState(
     new Date().toISOString().slice(0, 10)
@@ -162,7 +162,7 @@ export const useInvoice = () => {
       setNotes(selectedInvoice?.notes);
       setInvoiceSaleDate(convertDate(selectedInvoice?.invoiceSaleDate));
     }
-  }, [selectedInvoice]);
+  }, [selectedInvoice, localInvoiceNumber]);
 
   return {
     invoiceType,

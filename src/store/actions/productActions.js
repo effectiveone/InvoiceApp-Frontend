@@ -119,7 +119,7 @@ export const updateProduct = (product, id, user) => async (dispatch) => {
 export const deleteProduct = (id, user) => async (dispatch) => {
   if (!user) return;
 
-  const { token, mail } = user;
+  const { token } = user;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   dispatch({ type: DELETE_PRODUCT_REQUEST });
   try {

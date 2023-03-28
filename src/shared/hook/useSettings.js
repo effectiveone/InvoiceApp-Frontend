@@ -1,27 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setTheme, changeTheme } from "../../Store/actions/designActions";
 import { useUser } from "./useUser";
 import { updateSettings } from "../../Store/actions/settingsActions";
-
 import { US, PL, FR } from "country-flag-icons/react/3x2";
 import i18n from "../../i18n";
 
 export const useSettings = () => {
   const { currentUser } = useUser();
   const settings = useSelector((state) => state.settings.settings);
-  const selectedSettings = settings?.lang;
-
-  const [language, setLanguage] = useState(selectedSettings ?? "en");
-  const options = [
-    { value: "en", icon: <US /> },
-    { value: "pl", icon: <PL /> },
-    { value: "fr", icon: <FR /> },
-  ];
-
-  useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language, setLanguage]);
 
   const mySystemOfDesign = useSelector(
     (state) => state.settings.mySystemOfDesign
@@ -29,10 +15,6 @@ export const useSettings = () => {
 
   const selectedDesign = settings?.designName;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setLanguage(selectedSettings ?? "en");
-  }, [selectedSettings, dispatch]);
 
   const handleThemeChange = (event) => {
     const { value } = event.target;
@@ -62,8 +44,27 @@ export const useSettings = () => {
     );
   };
 
+  // Language settings
+  const selectedSettings = settings?.lang;
+
+  const [language, setLanguage] = useState(selectedSettings ?? "en");
+  const options = useMemo(
+    () => [
+      { value: "en", icon: <US /> },
+      { value: "pl", icon: <PL /> },
+      { value: "fr", icon: <FR /> },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    setLanguage(selectedSettings ?? "en");
+  }, [selectedSettings, dispatch]);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, setLanguage]);
   const handleLang = (e) => {
-    console.log("co tu sie odpierdala", e);
     dispatch(
       updateSettings(
         {
@@ -75,7 +76,6 @@ export const useSettings = () => {
     );
   };
 
-  // Custom
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
     value: "en",
@@ -85,10 +85,10 @@ export const useSettings = () => {
   useEffect(() => {
     const selectedLang = options?.find((p) => p.value === selectedSettings);
     setSelectedOption(selectedLang);
-  }, [dispatch, selectedSettings]);
+  }, [dispatch, selectedSettings, options]);
 
   const toggleOptions = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   return {

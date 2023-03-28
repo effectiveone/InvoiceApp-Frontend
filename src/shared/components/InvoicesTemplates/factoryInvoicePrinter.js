@@ -3,20 +3,20 @@ import MediumInvoiceTemplate from "./MediumInvoiceTemplate";
 import SimpleInvoiceTemplate from "./SimpleInvoiceTemplate";
 import { useSelector } from "react-redux";
 
-const FactoryInvoicePrinter = ({ ref }) => {
+const FactoryInvoicePrinter = () => {
   const selectedOption = useSelector(
     (state) => state?.settings.settings?.templateInvoice
   );
 
   switch (selectedOption) {
     case "basicInput":
-      return <BasicInvoiceTemplate ref={ref} />;
+      return <BasicInvoiceTemplate />;
     case "mediumInput":
-      return <MediumInvoiceTemplate ref={ref} />;
+      return <MediumInvoiceTemplate />;
     case "printerInput":
-      return <SimpleInvoiceTemplate ref={ref} />;
+      return <SimpleInvoiceTemplate />;
     default:
-      return <SimpleInvoiceTemplate ref={ref} />;
+      return <SimpleInvoiceTemplate />;
   }
 };
 

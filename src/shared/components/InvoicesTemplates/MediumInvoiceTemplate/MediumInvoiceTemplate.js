@@ -7,7 +7,6 @@ import CompanyDetails from "./CompanyDetails";
 import InvoiceTable from "./InvoiceTable";
 // import Notes from "./Notes";
 // import Footer from "./Footer";
-import HeaderInvoice from "./HeaderInvoice";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { t } from "i18next";

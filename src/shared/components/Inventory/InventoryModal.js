@@ -34,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const InvenotryModal = () => {
   const classes = useStyles();
-  const { button, open, handleClose, updatedCompanyData, handleChange } =
-    useProductContext();
+  const { button, open, handleClose } = useProductContext();
   return (
     <>
       <Modal

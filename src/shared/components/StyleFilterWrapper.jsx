@@ -7,8 +7,6 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         width: "100%",
         paddingTop: "50px",
-        flexGrow: 1,
-
     },
     icon: {
         size: "15px",

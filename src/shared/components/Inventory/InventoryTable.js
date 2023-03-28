@@ -155,10 +155,6 @@ const InvoiceComponent = ({
 }) => {
   const classes = useStyles();
 
-  const handleClick = () => {
-    changeInvoiceNumber(_id);
-    handleOpen();
-  };
   return (
     <TableRow key={uuidv4()}>
       <TableCell component="th" scope="row">

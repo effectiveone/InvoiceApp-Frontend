@@ -6,7 +6,7 @@ import Dates from "./Dates";
 import ClientDetails from "./ClientDetails";
 import Table from "./Table";
 import Notes from "./Notes";
-import Footer from "./Footer";
+import { Footer } from "../Common/Footer";
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 
 const SimpleInvoiceTemplate = () => {
