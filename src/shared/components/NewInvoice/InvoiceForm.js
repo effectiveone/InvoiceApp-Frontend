@@ -23,8 +23,8 @@ const InvoiceForm = () => {
     invoicePaymentDate,
     setInvoicePaymentDate,
     handleSelectChange,
-    invoiceDate,
-    setInvoiceDate,
+    invoiceDates,
+    setInvoiceDates,
     setNotes,
     notes,
   } = useInvoiceContext();
@@ -112,16 +112,15 @@ const InvoiceForm = () => {
           value={invoiceType}
           onChange={(e) => setInvoiceType(e.target.value)}
         >
-          <option value="zakupowa">Faktura zakupowa</option>
-          <option value="sprzedazowa">Faktura sprzedażowa</option>
-          <option value="koregujaca">Faktura koregująca</option>
-          <option value="zaliczkowa">Faktura zaliczkowa</option>
+          <option value="zakupowa">{t("zakupowa")}</option>
+          <option value="sprzedazowa">{t("sprzedazowa")}</option>
+          <option value="koregujaca">{t("koregujaca")}</option>
+          <option value="zaliczkowa">{t("zaliczkowa")}</option>
           <option value="proformaSprzedazowa">
-            Faktura proforma sprzedażowa
+            {t("proformaSprzedazowa")}
           </option>
-          <option value="proformaZakupowa">Faktura proforma zakupowa</option>
+          <option value="proformaZakupowa">{t("proformaZakupowa")}</option>
         </select>
-
         <Box
           item
           xs={12}
@@ -138,15 +137,15 @@ const InvoiceForm = () => {
               flexDirection: "column",
             }}
           >
-            <label htmlFor="invoiceDate">{t("invoiceDates")}</label>
+            <label htmlFor="invoiceDates">{t("invoiceDates")}</label>
             <input
               type="date"
-              name="invoiceDate"
-              id="invoiceDate"
+              name="invoiceDates"
+              id="invoiceDates"
               placeholder={t("invoiceDates")}
               autoComplete="off"
-              value={invoiceDate}
-              onChange={(e) => setInvoiceDate(e.target.value)}
+              value={invoiceDates}
+              onChange={(e) => setInvoiceDates(e.target.value)}
             />
           </Grid>
           <Grid style={{ display: "flex", flexDirection: "column" }}>

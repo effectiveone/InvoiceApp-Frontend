@@ -9,7 +9,7 @@ const useTheme = () => {
   const selectedDesignName = useSelector(
     (state) => state?.settings.settings.designName
   );
-  console.log("selectedDesign", selectedDesign);
+
   useEffect(() => {
     const selectedDesign = design.find((p) => p.name === selectedDesignName);
 

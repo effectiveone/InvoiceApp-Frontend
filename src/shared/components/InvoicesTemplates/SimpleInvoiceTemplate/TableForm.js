@@ -174,7 +174,7 @@ export default function TableForm({
           </Grid>
         </Box>
 
-        <div className="flex flex-col">
+        <Grid>
           <TextField
             label="Amount"
             type="text"
@@ -183,7 +183,7 @@ export default function TableForm({
             variant="outlined"
             margin="normal"
           />
-        </div>
+        </Grid>
         <Button
           variant="contained"
           color="primary"
