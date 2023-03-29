@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { Divider } from "@mui/material";
+import { Footer } from "../Common/Footer";
 
 // import Dates from "./Dates";
 import CompanyDetails from "./CompanyDetails";
@@ -45,8 +46,7 @@ const BasicInvoiceTemplate = () => {
       </Grid>
       <Divider />
       <InvoiceTable />
-      {/* <Notes />
-      <Footer /> */}
+      <Footer />
     </div>
   );
 };

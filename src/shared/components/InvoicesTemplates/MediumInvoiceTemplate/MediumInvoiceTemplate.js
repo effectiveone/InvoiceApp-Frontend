@@ -1,12 +1,11 @@
 import React from "react";
 import { Grid, Box } from "@material-ui/core";
 import { Divider } from "@mui/material";
-
+import { Footer } from "../Common/Footer";
 import Dates from "./Dates";
 import CompanyDetails from "./CompanyDetails";
 import InvoiceTable from "./InvoiceTable";
-// import Notes from "./Notes";
-// import Footer from "./Footer";
+
 import { useInvoiceContext } from "../../../Context/useInvoiceContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { t } from "i18next";
@@ -93,8 +92,8 @@ const MediumInvoiceTemplate = () => {
       </Grid>
       <Divider />
       <InvoiceTable />
-      {/* <Notes />
-      <Footer /> */}
+      {/* <Notes /> */}
+      <Footer />
     </div>
   );
 };
