@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getSettings } from "../../Store/actions/settingsActions";
-import { useDispatch } from "react-redux";
 
 export const useUser = () => {
   const user = useSelector((state) => state.auth.user);

@@ -14,7 +14,6 @@ export const usePagination = (page) => {
     startIndex,
     endIndex,
     currentPage,
-
     pageSize,
     handleChangePage,
   };
