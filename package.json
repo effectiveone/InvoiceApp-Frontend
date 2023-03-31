@@ -60,6 +60,8 @@
     "dev": "concurrently \"npm start\" \"npm run start:backend\"",
     "start:backend": "node backend/server.js",
     "electron-build": "electron-builder",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.js\"",
     "postinstall": "electron-builder install-app-deps"
   },
   "eslintConfig": {
