@@ -10,8 +10,10 @@ import { templateReducer } from "./reducers/templateReducer";
 import settingsReducer from "./reducers/settingsReducer";
 import { productReducer } from "./reducers/productReducer";
 import statsReducer from "./reducers/statsReducer";
+import { jpkReducer } from "./reducers/jpkReducer";
 
 const rootReducer = combineReducers({
+  jpk: jpkReducer,
   stats: statsReducer,
   products: productReducer,
   settings: settingsReducer,
