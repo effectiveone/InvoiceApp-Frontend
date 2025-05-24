@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   IconButton,
@@ -13,6 +13,7 @@ import { v4 as uuid } from 'uuid';
 const LanguageSelector = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'inline-block',
+  overflow: 'visible',
 }));
 
 const SelectedOption = styled(IconButton)(({ theme }) => ({
@@ -34,7 +35,7 @@ const OptionsContainer = styled(Paper)(({ theme }) => ({
   top: '70px',
   left: '50%',
   transform: 'translateX(-50%)',
-  zIndex: 9999,
+  zIndex: 10000,
   padding: '8px',
   borderRadius: '16px',
   background: 'rgba(255, 255, 255, 0.95)',
@@ -45,14 +46,17 @@ const OptionsContainer = styled(Paper)(({ theme }) => ({
   flexDirection: 'column',
   gap: '4px',
   minWidth: '80px',
+  pointerEvents: 'auto',
 }));
 
-const OptionButton = styled(IconButton)(({ theme }) => ({
+const OptionButton = styled(IconButton)(({ theme, isSelected }) => ({
   width: '48px',
   height: '48px',
   borderRadius: '12px',
   fontSize: '20px',
   transition: 'all 0.2s ease',
+  backgroundColor: isSelected ? 'rgba(102, 126, 234, 0.2)' : 'transparent',
+  border: isSelected ? '2px solid #667eea' : '2px solid transparent',
   '&:hover': {
     background: 'rgba(102, 126, 234, 0.1)',
     transform: 'scale(1.1)',
@@ -62,15 +66,37 @@ const OptionButton = styled(IconButton)(({ theme }) => ({
 const CustomSelect = () => {
   const {
     isOpen,
-    setSelectedOption,
     selectedOption,
     toggleOptions,
     handleLang,
     options,
+    language,
   } = useSettings();
 
-  const selectOptions = (option) => {
-    setSelectedOption(option);
+  // Debug logging
+  useEffect(() => {
+    console.log('🌐 CustomSelect - State update:', {
+      selectedOption,
+      currentLanguage: language,
+      isOpen,
+    });
+  }, [selectedOption, language, isOpen]);
+
+  const selectOption = (option) => {
+    console.log('🌐 CustomSelect - Option selected:', {
+      option,
+      currentLanguage: language,
+    });
+
+    // Nie zmieniamy języka jeśli to ten sam
+    if (option.value === language) {
+      console.log(
+        '🌐 CustomSelect - Same language selected, just closing dropdown',
+      );
+      toggleOptions();
+      return;
+    }
+
     handleLang(option.value);
     toggleOptions();
   };
@@ -84,9 +110,12 @@ const CustomSelect = () => {
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <LanguageSelector>
-        <Tooltip title='Wybierz język aplikacji' placement='top'>
+        <Tooltip
+          title={`Obecny język: ${selectedOption?.label || 'Nieznany'}`}
+          placement='top'
+        >
           <SelectedOption onClick={toggleOptions}>
-            {selectedOption.icon}
+            {selectedOption?.icon}
           </SelectedOption>
         </Tooltip>
 
@@ -94,13 +123,14 @@ const CustomSelect = () => {
           <OptionsContainer elevation={0}>
             {options.map((option) => (
               <Tooltip
-                key={uuid()}
-                title={option.label || option.value}
+                key={option.value}
+                title={option.label}
                 placement='right'
               >
                 <OptionButton
-                  onClick={() => selectOptions(option)}
+                  onClick={() => selectOption(option)}
                   size='small'
+                  isSelected={option.value === language}
                 >
                   {option.icon}
                 </OptionButton>

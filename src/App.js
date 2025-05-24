@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,11 +16,62 @@ import InventoryPage from './Pages/InventoryPage.js';
 import KontrahentPage from './Pages/KontrahentPage.js';
 import SettingsPage from './Pages/SettingsPage.js';
 import { useUser } from './Shared/Hook/useUser.js';
+import { useSelector } from 'react-redux';
 import AlertNotification from './Shared/Components/AlertNotification.js';
+import i18n from './i18n';
 import './App.css';
 
 function App() {
   const { currentUser } = useUser();
+  const settings = useSelector((state) => state.settings.settings);
+
+  // Inicjalizacja języka przy ładowaniu aplikacji
+  useEffect(() => {
+    const initializeLanguage = () => {
+      // Priorytet: ustawienia użytkownika > localStorage > domyślny 'en'
+      const userLang = settings?.lang;
+      const storedLang = localStorage.getItem('i18nextLng');
+      const defaultLang = 'en';
+
+      const languageToUse = userLang || storedLang || defaultLang;
+
+      console.log('🌐 App - Initializing language:', {
+        userLang,
+        storedLang,
+        languageToUse,
+        currentI18nLang: i18n.language,
+      });
+
+      // Ustaw język tylko jeśli jest inny niż obecny
+      if (languageToUse && languageToUse !== i18n.language) {
+        console.log('🔄 App - Setting language to:', languageToUse);
+        i18n.changeLanguage(languageToUse);
+      }
+    };
+
+    initializeLanguage();
+  }, [settings?.lang]);
+
+  // 🔥 GLOBALNY LISTENER dla zmian języka - naprawia problem z odświeżaniem
+  useEffect(() => {
+    const handleLanguageChange = (lng) => {
+      console.log('🌐 App - Language changed globally to:', lng);
+      // To wydarzenie wymusi re-render wszystkich komponentów używających useTranslation
+      document.documentElement.lang = lng;
+
+      // Opcjonalnie można dodać force update dla bardzo opornych komponentów
+      // To może być przydatne dla komponentów które nie używają hooków react-i18next
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: lng }));
+    };
+
+    // Subskrybuj zmiany języka
+    i18n.on('languageChanged', handleLanguageChange);
+
+    // Cleanup przy unmount
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, []);
 
   return (
     <>

@@ -22,7 +22,8 @@ import {
   Settings,
   AddCircle,
 } from '@mui/icons-material';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { useLanguageListener } from '../../Hook/useLanguageListener';
 
 const drawerWidth = 280;
 
@@ -31,11 +32,14 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   flexShrink: 0,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
-    background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)',
-    color: 'white',
+    background:
+      theme.customTheme?.gradient ||
+      `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+    color: theme.palette.primary.contrastText || 'white',
     border: 'none',
     boxShadow: '4px 0 20px rgba(0, 0, 0, 0.15)',
     zIndex: 1200,
+    transition: 'background 0.3s ease',
   },
 }));
 
@@ -86,6 +90,10 @@ const MainContent = styled('main')(({ theme }) => ({
 
 const PermanentDrawer = ({ children }) => {
   const location = useLocation();
+  const { t } = useTranslation();
+
+  // 🔥 Hook który wymusza re-render przy zmianie języka
+  const { currentLanguage } = useLanguageListener();
 
   const menuItems = [
     {
@@ -171,14 +179,14 @@ const PermanentDrawer = ({ children }) => {
         </LogoSection>
 
         {menuItems.map((section, sectionIndex) => (
-          <Box key={sectionIndex}>
+          <Box key={`${sectionIndex}-${currentLanguage}`}>
             <SectionTitle>{section.section}</SectionTitle>
             <List sx={{ padding: 0 }}>
               {section.items.map((item, index) => {
                 const isActive = location.pathname === item.path;
                 return (
                   <StyledListItem
-                    key={index}
+                    key={`${index}-${currentLanguage}`}
                     component={Link}
                     to={item.path}
                     active={isActive}

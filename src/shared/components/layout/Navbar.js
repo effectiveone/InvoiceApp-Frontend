@@ -11,12 +11,15 @@ import { useUser } from '../../Hook/useUser';
 import { t } from 'i18next';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  boxShadow: '0 4px 20px rgba(102, 126, 234, 0.3)',
+  background:
+    theme.customTheme?.gradient ||
+    `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+  boxShadow: `0 4px 20px ${theme.palette.primary.main}50`,
   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
   marginLeft: '280px',
   width: 'calc(100% - 280px)',
   zIndex: 1300,
+  transition: 'background 0.3s ease, box-shadow 0.3s ease',
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({

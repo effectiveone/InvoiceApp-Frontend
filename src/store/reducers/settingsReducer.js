@@ -1,5 +1,6 @@
 import {
   UPDATE_SETTINGS_SUCCESS,
+  UPDATE_SETTINGS_OPTIMISTIC,
   GET_SETTINGS_SUCCESS,
 } from '../Actions/settingsActions';
 
@@ -195,15 +196,39 @@ const initialState = {
 };
 
 const settingsReducer = (state = initialState, action) => {
+  console.log('🔄 settingsReducer - Action:', {
+    type: action.type,
+    payload: action.payload,
+    currentState: state.settings,
+  });
+
   switch (action.type) {
     case GET_SETTINGS_SUCCESS:
-      return {
+      const newStateGet = {
         ...state,
         settings: {
           ...state.settings,
           ...action.payload,
         },
       };
+      console.log('✅ GET_SETTINGS_SUCCESS - New state:', newStateGet.settings);
+      return newStateGet;
+
+    case UPDATE_SETTINGS_OPTIMISTIC:
+      // Optimistic update - natychmiast aktualizujemy stan bez czekania na backend
+      const newStateOptimistic = {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.payload,
+        },
+      };
+      console.log(
+        '🚀 UPDATE_SETTINGS_OPTIMISTIC - New state:',
+        newStateOptimistic.settings,
+      );
+      return newStateOptimistic;
+
     case UPDATE_SETTINGS_SUCCESS:
       if (
         action.payload &&
@@ -211,21 +236,31 @@ const settingsReducer = (state = initialState, action) => {
         action.payload.name &&
         action.payload.value !== undefined
       ) {
-        return {
+        const newStateUpdate1 = {
           ...state,
           settings: {
             ...state.settings,
             [action.payload.name]: action.payload.value,
           },
         };
+        console.log(
+          '✅ UPDATE_SETTINGS_SUCCESS (name/value) - New state:',
+          newStateUpdate1.settings,
+        );
+        return newStateUpdate1;
       } else {
-        return {
+        const newStateUpdate2 = {
           ...state,
           settings: {
             ...state.settings,
             ...action.payload,
           },
         };
+        console.log(
+          '✅ UPDATE_SETTINGS_SUCCESS (object) - New state:',
+          newStateUpdate2.settings,
+        );
+        return newStateUpdate2;
       }
     default:
       return state;

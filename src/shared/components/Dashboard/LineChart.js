@@ -2,7 +2,7 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { Grid, Typography, Card, CardContent, Box } from '@mui/material';
 import { styled } from '@mui/system';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: '16px',
@@ -23,6 +23,8 @@ const SectionTitle = styled(Typography)(({ theme }) => ({
 }));
 
 export const LineChart = ({ chartsToDisplay }) => {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ mb: 4 }}>
       <SectionTitle variant='h5'>{t('salesByYear')}</SectionTitle>

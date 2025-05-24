@@ -46,9 +46,12 @@ const HeaderSection = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   marginBottom: '32px',
   padding: '24px',
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  background:
+    theme.customTheme?.gradient ||
+    `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
   borderRadius: '16px',
-  color: 'white',
+  color: theme.palette.primary.contrastText || 'white',
+  transition: 'background 0.3s ease',
 }));
 
 const SettingsCard = styled(Card)(({ theme }) => ({
@@ -59,6 +62,7 @@ const SettingsCard = styled(Card)(({ theme }) => ({
   pointerEvents: 'auto',
   position: 'relative',
   zIndex: 2,
+  overflow: 'visible',
   '&:hover': {
     transform: 'translateY(-4px)',
     boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
@@ -477,12 +481,11 @@ const Settings = () => {
 
   return (
     <Container
-      maxWidth='xl'
+      maxWidth='lg'
       sx={{
-        pointerEvents: 'auto',
+        py: 4,
+        overflow: 'visible',
         position: 'relative',
-        zIndex: 1,
-        py: 3,
       }}
     >
       <HeaderSection>
@@ -518,7 +521,15 @@ const Settings = () => {
               <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
                 Wybierz język interfejsu aplikacji
               </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'visible',
+                  zIndex: 1000,
+                }}
+              >
                 <CustomSelect />
               </Box>
             </CardContent>

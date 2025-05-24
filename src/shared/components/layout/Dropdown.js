@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem, Menu } from '@mui/material';
 import { styled } from '@mui/system';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const StyledMenu = styled(Menu)(({ theme }) => ({
   '& .MuiPaper-root': {
@@ -27,6 +27,8 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 function Dropdown({ handleLogout, open, id, anchorEl, handleClose }) {
+  const { t } = useTranslation();
+
   return (
     <StyledMenu
       id={id}

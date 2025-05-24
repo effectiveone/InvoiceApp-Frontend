@@ -11,8 +11,21 @@ const useTheme = () => {
   );
 
   useEffect(() => {
-    const selectedDesign = design?.find((p) => p.name === selectedDesignName);
-    setSelectedDesign(selectedDesign);
+    const foundDesign = design?.find((p) => p.name === selectedDesignName);
+    console.log('🎨 useTheme - Debug Info:', {
+      selectedDesignName,
+      foundDesign: foundDesign?.name,
+      foundDesignColors: foundDesign
+        ? {
+            primary: foundDesign.primaryColor,
+            secondary: foundDesign.secondaryColor,
+            background: foundDesign.backgroundColor,
+            text: foundDesign.textColor,
+          }
+        : null,
+      allDesigns: design?.map((d) => d.name),
+    });
+    setSelectedDesign(foundDesign);
   }, [design, selectedDesignName, dispatch]);
 
   // Funkcja do określenia trybu na podstawie koloru tła
