@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   getCompanyData,
   addCompanyData,
-} from "../../Store/actions/mycompanyActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useUser } from "./useUser";
+} from '../../Store/Actions/mycompanyActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useUser } from './useUser';
 
 export const useCompany = () => {
   const { currentUser } = useUser();

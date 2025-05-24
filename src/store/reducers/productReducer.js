@@ -14,13 +14,13 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
-} from "../actions/productActions";
+} from '../Actions/productActions';
 
 const initialState = {
   products: [],
   currentProduct: {},
   loading: false,
-  error: "",
+  error: '',
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -38,33 +38,33 @@ export const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: "",
+        error: '',
       };
     case READ_PRODUCTS_SUCCESS:
       return {
         ...state,
         loading: false,
         products: action.payload,
-        error: "",
+        error: '',
       };
     case READ_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         currentProduct: action.payload,
-        error: "",
+        error: '',
       };
     case UPDATE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: "",
+        error: '',
       };
     case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: "",
+        error: '',
       };
     case CREATE_PRODUCT_FAILURE:
     case READ_PRODUCTS_FAILURE:

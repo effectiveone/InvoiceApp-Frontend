@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { sendJPK, getJPK } from "../../Store/actions/jpkActions";
-import { useUser } from "./useUser";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendJPK, getJPK } from '../../Store/Actions/jpkActions';
+import { useUser } from './useUser';
 
 export const useJPK = () => {
   const { currentUser } = useUser();

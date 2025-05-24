@@ -7,7 +7,7 @@ import {
   SEND_JPK_REQUEST,
   SEND_JPK_SUCCESS,
   SEND_JPK_FAILURE,
-} from "../actions/jpkActions";
+} from '../Actions/jpkActions';
 
 const initialState = {
   loading: false,

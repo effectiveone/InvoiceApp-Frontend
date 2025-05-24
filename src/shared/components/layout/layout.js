@@ -1,9 +1,9 @@
-import React from "react";
-import PermanentDrawer from "./drawer";
-import Navbar from "./Navbar";
-import useTheme from "../../Hook/useTheme";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
+import React from 'react';
+import PermanentDrawer from './drawer';
+import Navbar from './Navbar';
+import useTheme from '../../Hook/useTheme';
+import { ThemeProvider } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 const layout = (WrappedComponent) => {
   return function WithPermanentDrawer(props) {
@@ -12,12 +12,14 @@ const layout = (WrappedComponent) => {
     return (
       <>
         <ThemeProvider theme={theme}>
-          <Navbar />
           <PermanentDrawer>
+            <Navbar />
             <Box
               sx={{
-                padding: [20, 20, 20, 20],
-                margin: [20, 20, 20, 20],
+                padding: { xs: 2, sm: 3, md: 4 },
+                minHeight: '100vh',
+                background: '#f8fafc',
+                marginTop: '64px',
               }}
             >
               <WrappedComponent {...props} />

@@ -2,7 +2,7 @@ import {
   CREATE_FAKTURA_SUCCESS,
   READ_FAKTURA_SUCCESS,
   EDIT_FAKTURA_SUCCESS,
-} from "../actions/fakturaActions";
+} from '../Actions/fakturaActions';
 
 const initialState = {
   faktury: [],

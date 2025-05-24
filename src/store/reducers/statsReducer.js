@@ -2,7 +2,7 @@ import {
   FETCH_STATS_REQUEST,
   FETCH_STATS_SUCCESS,
   FETCH_STATS_FAILURE,
-} from "../actions/statsActions";
+} from '../Actions/statsActions';
 
 const initialState = {
   stats: null,

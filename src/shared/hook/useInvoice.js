@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { readFaktury } from "../../Store/actions/fakturaActions";
-import { useUser } from "./useUser";
-import { useKontrahent } from "./useKontrahent";
+import { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { readFaktury } from '../../Store/Actions/fakturaActions';
+import { useUser } from './useUser';
+import { useKontrahent } from './useKontrahent';
 
-import { useCompany } from "./useCompany";
-import { createFaktura, editFaktury } from "../../Store/actions/fakturaActions";
-import { TAX_RATES } from "../Utils/tax";
-import { convertDate } from "../Utils/dateValidator";
+import { useCompany } from './useCompany';
+import { createFaktura, editFaktury } from '../../Store/Actions/fakturaActions';
+import { TAX_RATES } from '../Utils/tax';
+import { convertDate } from '../Utils/dateValidator';
 
 export const useInvoice = () => {
   const { currentUser } = useUser();
@@ -18,27 +18,27 @@ export const useInvoice = () => {
   const [invoiceType, setInvoiceType] = useState();
   const [currentInvoiceNumber, setCurrentInvoiceNumber] = useState();
   const AllCurrentInvoiceNumber = useSelector(
-    (state) => state?.faktura?.currentInvoiceNumber
+    (state) => state?.faktura?.currentInvoiceNumber,
   );
 
   useEffect(() => {
     switch (invoiceType) {
-      case "koregujaca":
+      case 'koregujaca':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.korygujaca);
         break;
-      case "sprzedazowa":
+      case 'sprzedazowa':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.sprzedazowa);
         break;
-      case "zakupowa":
+      case 'zakupowa':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.zakupowa);
         break;
-      case "zaliczkowa":
+      case 'zaliczkowa':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.zaliczkowa);
         break;
-      case "proformaSprzedazowa":
+      case 'proformaSprzedazowa':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.proformaSprzedazowa);
         break;
-      case "proformaZakupowa":
+      case 'proformaZakupowa':
         setCurrentInvoiceNumber(AllCurrentInvoiceNumber?.proformaZakupowa);
         break;
       default:
@@ -58,7 +58,7 @@ export const useInvoice = () => {
       updateInvoiceNumberDate(localInvoiceNumber);
       // Find the invoice in the store by its number
       const invoice = invoiceDate.find(
-        (faktura) => faktura.invoiceNumber === localInvoiceNumber
+        (faktura) => faktura.invoiceNumber === localInvoiceNumber,
       );
 
       // If the invoice exists, set its data to the invoiceDate state
@@ -69,23 +69,23 @@ export const useInvoice = () => {
   }, [localInvoiceNumber, currentUser, dispatch, invoiceDate]);
 
   const [invoiceDates, setInvoiceDates] = useState(
-    new Date().toISOString().slice(0, 10)
+    new Date().toISOString().slice(0, 10),
   );
 
   const [invoiceSaleDate, setInvoiceSaleDate] = useState(
-    new Date().toISOString().slice(0, 10)
+    new Date().toISOString().slice(0, 10),
   );
 
   const [invoicePaymentDate, setInvoicePaymentDate] = useState(
-    new Date().toISOString().slice(0, 10)
+    new Date().toISOString().slice(0, 10),
   );
   const [selectedKontrahent, setSelectedKontrahent] = useState({});
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState('');
   const [items, setItems] = useState([
     {
-      name: "",
+      name: '',
       quantity: 1,
-      unit: "szt",
+      unit: 'szt',
       vat: TAX_RATES[0].value,
       netPrice: 0,
       netValue: 0,
@@ -97,7 +97,7 @@ export const useInvoice = () => {
 
   const handleSelectChange = (event) => {
     const selectedCompany = kontrahent.find(
-      (k) => k.nip === event.target.value
+      (k) => k.nip === event.target.value,
     );
     const prefixedCompany = {};
     Object.entries(selectedCompany).forEach(([key, value]) => {

@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { fetchStats } from "../../Store/actions/statsActions";
+import { useEffect } from 'react';
+import { fetchStats } from '../../Store/Actions/statsActions';
 
-import { useDispatch, useSelector } from "react-redux";
-import { useUser } from "./useUser";
-import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from 'react-redux';
+import { useUser } from './useUser';
+import { useTranslation } from 'react-i18next';
 
 export const useStatistic = () => {
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ export const useStatistic = () => {
         result[saleType][year] = {};
 
         for (let month = 1; month <= 12; month++) {
-          const monthStr = String(month).padStart(2, "0");
+          const monthStr = String(month).padStart(2, '0');
           result[saleType][year][monthStr] =
             monthlySale[saleType][year]?.[monthStr] ?? 0;
         }
@@ -74,22 +74,22 @@ export const useStatistic = () => {
 
         const values = [];
         for (let i = 1; i <= 12; i++) {
-          const month = i.toString().padStart(2, "0");
+          const month = i.toString().padStart(2, '0');
           values.push(date[key][year][month] || 0);
         }
         const monthNames = {
-          January: t("January"),
-          February: t("February"),
-          March: t("March"),
-          April: t("April"),
-          May: t("May"),
-          June: t("June"),
-          July: t("July"),
-          August: t("August"),
-          September: t("September"),
-          October: t("October"),
-          November: t("November"),
-          December: t("December"),
+          January: t('January'),
+          February: t('February'),
+          March: t('March'),
+          April: t('April'),
+          May: t('May'),
+          June: t('June'),
+          July: t('July'),
+          August: t('August'),
+          September: t('September'),
+          October: t('October'),
+          November: t('November'),
+          December: t('December'),
         };
         yearlySales[year].push({
           name: t(key),

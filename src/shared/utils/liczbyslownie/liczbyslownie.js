@@ -1,31 +1,31 @@
-import { odmianaZlotych } from "./odmianazlotych.js";
-import { groszeSlownie } from "./groszeslownie.js";
+import { odmianaZlotych } from './odmianazlotych.js';
+import { groszeSlownie } from './groszeslownie.js';
 import {
   grupy,
   setki,
   dziesiatki,
   nascie,
   jednosci,
-} from "./odmianadziesiatek";
+} from './odmianadziesiatek.js';
 
 export function liczbySlownie(liczba) {
   const licznik = liczba != null ? liczba.toFixed(2) : null;
-  let [zloteRaw, groszeRaw] = licznik.toString().split(".");
+  let [zloteRaw, groszeRaw] = licznik.toString().split('.');
   let zlote = parseInt(zloteRaw);
   const nominal = odmianaZlotych(zlote);
-  let grosze = parseInt(groszeRaw || "0");
+  let grosze = parseInt(groszeRaw || '0');
 
   if (isNaN(zlote) || isNaN(grosze)) {
-    return "Niepoprawna wartość";
+    return 'Niepoprawna wartość';
   }
 
-  let wynik = "";
-  let znak = "";
+  let wynik = '';
+  let znak = '';
   if (zlote === 0 && grosze === 0) {
-    wynik = "zero";
+    wynik = 'zero';
   }
   if (zlote < 0) {
-    znak = "minus";
+    znak = 'minus';
     zlote = -zlote;
   }
 
@@ -64,13 +64,13 @@ export function liczbySlownie(liczba) {
   }
 
   if (grosze === 0) {
-    return wynik.trim() + " " + nominal;
+    return wynik.trim() + ' ' + nominal;
   }
 
-  let wynikGrosze = "";
+  let wynikGrosze = '';
 
   if (grosze === 1) {
-    wynikGrosze = "jeden grosz";
+    wynikGrosze = 'jeden grosz';
   } else if (
     grosze % 10 >= 2 &&
     grosze % 10 <= 4 &&
@@ -81,7 +81,7 @@ export function liczbySlownie(liczba) {
     wynikGrosze = `${groszeSlownie(grosze)} groszy`;
   }
 
-  if (wynik === "") {
+  if (wynik === '') {
     return znak + wynikGrosze.trim();
   }
 

@@ -1,14 +1,15 @@
-import * as api from "../../Shared/Utils/api";
-import { openAlertMessage } from "./alertActions";
-import axios from "axios";
+import * as api from '../../Shared/Utils/api';
+import { openAlertMessage } from './alertActions';
+import axios from 'axios';
 export const authActions = {
-  SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
+  SET_USER_DETAILS: 'AUTH.SET_USER_DETAILS',
 };
 
 export const getActions = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-    login: (userDetails, history) => dispatch(login(userDetails, history)),
+    loginAction: (userDetails, history) =>
+      dispatch(loginAction(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
   };
@@ -16,12 +17,12 @@ export const getActions = (dispatch) => {
 
 const logout = () => {
   return async (dispatch) => {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
 
     dispatch(setUserDetails(null));
 
     try {
-      await axios.delete("http://localhost:5002/api/auth/logout");
+      await axios.delete('http://localhost:5002/api/auth/logout');
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +36,7 @@ const setUserDetails = (userDetails) => {
   };
 };
 
-const login = (userDetails, history) => {
+const loginAction = (userDetails, history) => {
   return async (dispatch) => {
     const response = await api.login(userDetails);
     console.log(response);
@@ -43,10 +44,10 @@ const login = (userDetails, history) => {
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       const { userDetails } = response?.data;
-      localStorage.setItem("user", JSON.stringify(userDetails));
+      localStorage.setItem('user', JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history("/SettingsPage");
+      history('/SettingsPage');
     }
   };
 };
@@ -59,10 +60,10 @@ const register = (userDetails, history) => {
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       const { userDetails } = response?.data;
-      localStorage.setItem("user", JSON.stringify(userDetails));
+      localStorage.setItem('user', JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history("/SettingsPage");
+      history('/SettingsPage');
     }
   };
 };

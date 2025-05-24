@@ -3,12 +3,12 @@ import {
   getContractorData,
   updateContractorData,
   deleteContractor,
-} from "../../Store/actions/kontrahenciActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { useUser } from "./useUser";
-import { useModal } from "./useModal";
-import useSubmitButton from "./useSubmitButton";
+} from '../../Store/Actions/kontrahenciActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useUser } from './useUser';
+import { useModal } from './useModal';
+import useSubmitButton from './useSubmitButton';
 
 export const useKontrahent = () => {
   const { open, handleOpen, handleClose } = useModal();
@@ -18,13 +18,13 @@ export const useKontrahent = () => {
   const [buttonText, setButtonText] = useState();
 
   const [updatedCompanyData, setCompanyData] = useState({
-    nip: "",
-    regon: "",
-    street: "",
-    city: "",
-    zipCode: "",
-    companyName: "",
-    legalForm: "",
+    nip: '',
+    regon: '',
+    street: '',
+    city: '',
+    zipCode: '',
+    companyName: '',
+    legalForm: '',
     userEmail: currentUser?.mail,
   });
   useEffect(() => {
@@ -51,16 +51,16 @@ export const useKontrahent = () => {
   };
 
   const handleModal = () => {
-    setButtonText("Zapisz");
+    setButtonText('Zapisz');
     handleOpen();
     setCompanyData({
-      nip: "",
-      regon: "",
-      street: "",
-      city: "",
-      zipCode: "",
-      companyName: "",
-      legalForm: "",
+      nip: '',
+      regon: '',
+      street: '',
+      city: '',
+      zipCode: '',
+      companyName: '',
+      legalForm: '',
       userEmail: currentUser?.mail,
     });
   };

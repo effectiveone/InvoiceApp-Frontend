@@ -7,7 +7,7 @@ import {
   DELETE_CONTRACTOR_REQUEST,
   DELETE_CONTRACTOR_SUCCESS,
   DELETE_CONTRACTOR_FAILURE,
-} from "../actions/kontrahenciActions";
+} from '../Actions/kontrahenciActions';
 
 const initialState = {
   contractorData: [],
@@ -38,14 +38,14 @@ const contractorReducer = (state = initialState, action) => {
         ...state,
         isLoading: true,
         isError: false,
-        errorMessage: "",
+        errorMessage: '',
       };
     case DELETE_CONTRACTOR_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
-        errorMessage: "",
+        errorMessage: '',
       };
     case DELETE_CONTRACTOR_FAILURE:
       return {

@@ -3,7 +3,7 @@ import {
   UPDATE_COMPANY_DATA,
   DELETE_COMPANY_DATA,
   ADD_COMPANY_DATA,
-} from "../actions/mycompanyActions";
+} from '../Actions/mycompanyActions';
 
 const initialState = {
   companyData: {},
