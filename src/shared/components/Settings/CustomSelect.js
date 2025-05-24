@@ -34,7 +34,7 @@ const OptionsContainer = styled(Paper)(({ theme }) => ({
   top: '70px',
   left: '50%',
   transform: 'translateX(-50%)',
-  zIndex: 1000,
+  zIndex: 9999,
   padding: '8px',
   borderRadius: '16px',
   background: 'rgba(255, 255, 255, 0.95)',

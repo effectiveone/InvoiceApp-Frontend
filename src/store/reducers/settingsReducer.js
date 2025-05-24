@@ -60,13 +60,28 @@ const settingsReducer = (state = initialState, action) => {
         },
       };
     case UPDATE_SETTINGS_SUCCESS:
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          [action.payload.name]: action.payload.value,
-        },
-      };
+      if (
+        action.payload &&
+        typeof action.payload === 'object' &&
+        action.payload.name &&
+        action.payload.value !== undefined
+      ) {
+        return {
+          ...state,
+          settings: {
+            ...state.settings,
+            [action.payload.name]: action.payload.value,
+          },
+        };
+      } else {
+        return {
+          ...state,
+          settings: {
+            ...state.settings,
+            ...action.payload,
+          },
+        };
+      }
     default:
       return state;
   }
