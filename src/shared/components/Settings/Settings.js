@@ -35,6 +35,7 @@ import {
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUser } from '../../Hook/useUser';
+import { useSettings } from '../../Hook/useSettings';
 import { updateSettings } from '../../../Store/Actions/settingsActions';
 import CustomSelect from './CustomSelect';
 import DesignSelect from './designSelect';
@@ -122,6 +123,7 @@ const LogoUploadBox = styled(Box)(({ theme }) => ({
 
 const Settings = () => {
   const { currentUser } = useUser();
+  const { mySystemOfDesign } = useSettings();
   const dispatch = useDispatch();
   const selectedTemplateType = useSelector(
     (state) => state?.settings?.settings?.templateInvoice,
@@ -475,11 +477,12 @@ const Settings = () => {
 
   return (
     <Container
-      maxWidth='lg'
+      maxWidth='xl'
       sx={{
         pointerEvents: 'auto',
         position: 'relative',
         zIndex: 1,
+        py: 3,
       }}
     >
       <HeaderSection>
@@ -489,19 +492,32 @@ const Settings = () => {
             Ustawienia aplikacji
           </Typography>
           <Typography variant='body1' sx={{ opacity: 0.9 }}>
-            Personalizuj swoją aplikację fakturową
+            Personalizuj swoją aplikację fakturową według własnych preferencji
           </Typography>
         </Box>
       </HeaderSection>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={4}>
+      {/* Pierwsza sekcja - Podstawowe ustawienia */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12}>
+          <Typography
+            variant='h5'
+            sx={{ mb: 3, fontWeight: 600, color: '#374151' }}
+          >
+            🌐 Podstawowe ustawienia
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
           <SettingsCard>
-            <CardContent sx={{ p: 3 }}>
+            <CardContent sx={{ p: 4 }}>
               <SectionTitle>
                 <Language sx={{ color: '#667eea' }} />
                 Język aplikacji
               </SectionTitle>
+              <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
+                Wybierz język interfejsu aplikacji
+              </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CustomSelect />
               </Box>
@@ -509,26 +525,58 @@ const Settings = () => {
           </SettingsCard>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <SettingsCard>
-            <CardContent sx={{ p: 3 }}>
-              <SectionTitle>
-                <Palette sx={{ color: '#667eea' }} />
-                Motyw aplikacji
-              </SectionTitle>
-              <DesignSelect />
-            </CardContent>
-          </SettingsCard>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <SettingsCard>
-            <CardContent sx={{ p: 3 }}>
+            <CardContent sx={{ p: 4 }}>
               <SectionTitle>
                 <ArticleOutlined sx={{ color: '#667eea' }} />
                 Szablon faktury
               </SectionTitle>
+              <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
+                Wybierz domyślny szablon dla nowych faktur
+              </Typography>
               {renderTemplateSelector()}
+            </CardContent>
+          </SettingsCard>
+        </Grid>
+      </Grid>
+
+      {/* Druga sekcja - Wygląd aplikacji */}
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Typography
+            variant='h5'
+            sx={{ mb: 3, fontWeight: 600, color: '#374151' }}
+          >
+            🎨 Wygląd aplikacji
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <SettingsCard>
+            <CardContent sx={{ p: 4 }}>
+              <Box sx={{ mb: 3 }}>
+                <SectionTitle>
+                  <Palette sx={{ color: '#667eea' }} />
+                  Motywy kolorystyczne
+                </SectionTitle>
+                <Typography
+                  variant='body2'
+                  color='text.secondary'
+                  sx={{ mb: 1 }}
+                >
+                  Wybierz spośród{' '}
+                  <strong>
+                    {mySystemOfDesign?.length || 18} pięknych motywów
+                  </strong>{' '}
+                  dostosowanych do różnych potrzeb biznesowych
+                </Typography>
+                <Typography variant='caption' color='text.secondary'>
+                  Każdy motyw zawiera starannie dobrane kolory, gradienty i
+                  style dla najlepszego doświadczenia użytkownika
+                </Typography>
+              </Box>
+              <DesignSelect />
             </CardContent>
           </SettingsCard>
         </Grid>
@@ -541,7 +589,12 @@ const Settings = () => {
         maxWidth='md'
         fullWidth
       >
-        <DialogTitle>Dostosuj szablon faktury</DialogTitle>
+        <DialogTitle>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Palette sx={{ color: '#667eea' }} />
+            Dostosuj szablon faktury
+          </Box>
+        </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
             {/* Wybór kolorystyki */}
