@@ -18,6 +18,7 @@ import {
   Person as PersonIcon,
 } from '@mui/icons-material';
 import DataTableProvider from './DataTableProvider';
+import EnhancedContrahentForm from './EnhancedContrahentForm';
 import { useKontrahentContext } from '../../Context/useKontrahentContext';
 import { useModal } from '../../Hook/useModal';
 import { t } from 'i18next';
@@ -316,12 +317,13 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     document.body.removeChild(a);
   };
 
-  // Contrahent Form Component (placeholder)
-  const ContrahentForm = () => (
-    <Box>
-      <Typography>Formularz kontrahenta będzie tutaj...</Typography>
-      {/* Implement your contrahent form here */}
-    </Box>
+  // Contrahent Form Component
+  const ContrahentForm = ({ initialData, onSubmit, onCancel }) => (
+    <EnhancedContrahentForm
+      initialData={initialData}
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+    />
   );
 
   return (
@@ -471,7 +473,15 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
               </Card>
             </Box>
           ) : (
-            <ContrahentForm />
+            <ContrahentForm
+              initialData={selectedContrahent}
+              onSubmit={(updatedContrahent) => {
+                // Implement save logic here
+                handleEditContrahent(updatedContrahent._id, updatedContrahent);
+                handleClose();
+              }}
+              onCancel={handleClose}
+            />
           )}
 
           <Stack

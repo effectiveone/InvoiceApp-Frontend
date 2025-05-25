@@ -11,6 +11,7 @@ import {
   CardContent,
   LinearProgress,
   Tooltip,
+  IconButton,
 } from '@mui/material';
 import {
   Inventory as InventoryIcon,
@@ -20,8 +21,11 @@ import {
   Warning as WarningIcon,
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
+  AllInclusive as UnlimitedIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import DataTableProvider from './DataTableProvider';
+import EnhancedProductForm from './EnhancedProductForm';
 import { useProductContext } from '../../Context/useProductContext';
 import { useModal } from '../../Hook/useModal';
 import { t } from 'i18next';
@@ -460,12 +464,13 @@ const EnhancedInventoryTable = ({ products = [] }) => {
     document.body.removeChild(a);
   };
 
-  // Product Form Component (placeholder)
-  const ProductForm = () => (
-    <Box>
-      <Typography>Formularz produktu będzie tutaj...</Typography>
-      {/* Implement your product form here */}
-    </Box>
+  // Product Form Component
+  const ProductForm = ({ initialData, onSubmit, onCancel }) => (
+    <EnhancedProductForm
+      initialData={initialData}
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+    />
   );
 
   return (
@@ -639,7 +644,15 @@ const EnhancedInventoryTable = ({ products = [] }) => {
               </Card>
             </Box>
           ) : (
-            <ProductForm />
+            <ProductForm
+              initialData={selectedProduct}
+              onSubmit={(updatedProduct) => {
+                // Implement save logic here
+                handleEditProduct(updatedProduct._id, updatedProduct);
+                handleClose();
+              }}
+              onCancel={handleClose}
+            />
           )}
 
           <Stack
