@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '../Shared/Components/Layout/layout';
-import { ProductProvider } from '../Shared/Context/useProductContext';
-import { EnhancedInventoryTable } from '../Shared/Components/DataTable';
-import { useProductContext } from '../Shared/Context/useProductContext';
+import Layout from '../shared/ui/Layout/layout';
+import { ProductProvider } from '../entities/product/model/useProductContext';
+import { EnhancedInventoryTable } from '../shared/ui/DataTable';
+import { useProductContext } from '../entities/product/model/useProductContext';
 
 // Component that uses the product context
 const InventoryTableWithContext = () => {

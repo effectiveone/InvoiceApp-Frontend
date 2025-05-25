@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '../Shared/Components/Layout/layout';
-import { KontrahentProvider } from '../Shared/Context/useKontrahentContext';
-import { EnhancedContrahentsTable } from '../Shared/Components/DataTable';
-import { useKontrahentContext } from '../Shared/Context/useKontrahentContext';
+import Layout from '../shared/ui/Layout/layout';
+import { KontrahentProvider } from '../entities/kontrahent/model/useKontrahentContext';
+import { EnhancedContrahentsTable } from '../shared/ui/DataTable';
+import { useKontrahentContext } from '../entities/kontrahent/model/useKontrahentContext';
 
 // Component that uses the kontrahent context
 const ContrahentsTableWithContext = () => {
