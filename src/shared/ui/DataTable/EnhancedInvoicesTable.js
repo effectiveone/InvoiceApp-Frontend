@@ -15,45 +15,49 @@ import {
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
 import DataTableProvider from './DataTableProvider';
 import InvoiceForm from '../../../features/invoice/ui/NewInvoice/InvoiceForm';
 import { useInvoiceContext } from '../../../entities/invoice/model/useInvoiceContext';
 import { useModal } from '../../lib/useModal';
-import { t } from 'i18next';
 
 // Styled Modal Content
-const ModalContent = ({ children, onClose, title }) => (
-  <Box
-    sx={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '90%',
-      maxWidth: '1200px',
-      maxHeight: '90vh',
-      overflow: 'auto',
-      borderRadius: '16px',
-      bgcolor: 'background.paper',
-      boxShadow: 24,
-      p: 4,
-    }}
-  >
-    <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
-      {title}
-    </Typography>
-    {children}
-    <Stack
-      direction='row'
-      spacing={2}
-      sx={{ mt: 3, justifyContent: 'flex-end' }}
+const ModalContent = ({ children, onClose, title }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        maxWidth: '1200px',
+        maxHeight: '90vh',
+        overflow: 'auto',
+        borderRadius: '16px',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+      }}
     >
-      <Button variant='outlined' onClick={onClose}>
-        Anuluj
-      </Button>
-    </Stack>
-  </Box>
-);
+      <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
+        {title}
+      </Typography>
+      {children}
+      <Stack
+        direction='row'
+        spacing={2}
+        sx={{ mt: 3, justifyContent: 'flex-end' }}
+      >
+        <Button variant='outlined' onClick={onClose}>
+          {t('cancel')}
+        </Button>
+      </Stack>
+    </Box>
+  );
+};
 
 // Domain Model for Invoice Status
 const InvoiceStatus = {
@@ -81,25 +85,26 @@ const getStatusColor = (status) => {
   }
 };
 
-const getStatusLabel = (status) => {
+const getStatusLabel = (status, t) => {
   switch (status) {
     case InvoiceStatus.DRAFT:
-      return 'Szkic';
+      return t('statusDraft');
     case InvoiceStatus.SENT:
-      return 'Wysłana';
+      return t('statusSent');
     case InvoiceStatus.PAID:
-      return 'Opłacona';
+      return t('statusPaid');
     case InvoiceStatus.OVERDUE:
-      return 'Przeterminowana';
+      return t('statusOverdue');
     case InvoiceStatus.CANCELLED:
-      return 'Anulowana';
+      return t('statusCancelled');
     default:
-      return 'Nieznany';
+      return t('statusUnknown');
   }
 };
 
 // Enhanced Invoice Table Component
 const EnhancedInvoicesTable = ({ invoices = [] }) => {
+  const { t } = useTranslation();
   const { open, handleOpen, handleClose } = useModal();
   const { handleEditInvoice: handleEditInvoiceContext, setLocalInvoiceNumber } =
     useInvoiceContext();
@@ -110,7 +115,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
   const columns = [
     {
       key: 'invoiceNumber',
-      label: 'Numer faktury',
+      label: t('invoiceNumber'),
       sortable: true,
       filterable: true,
       render: (value, row) => (
@@ -126,7 +131,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'invoiceSaleDate',
-      label: 'Data wystawienia',
+      label: t('issueDate'),
       sortable: true,
       filterable: true,
       render: (value) =>
@@ -134,13 +139,13 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'selectedKontrahent.companyName',
-      label: 'Kontrahent',
+      label: t('customer'),
       sortable: true,
       filterable: true,
       render: (value, row) => (
         <Box>
           <Typography variant='body2' fontWeight='500'>
-            {value || 'Brak danych'}
+            {value || t('noData')}
           </Typography>
           {row.selectedKontrahent?.nip && (
             <Typography variant='caption' color='text.secondary'>
@@ -152,7 +157,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'totalNetValue',
-      label: 'Wartość netto',
+      label: t('netAmount'),
       sortable: true,
       filterable: false,
       render: (value) => (
@@ -163,7 +168,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'totalGrossValue',
-      label: 'Wartość brutto',
+      label: t('grossAmount'),
       sortable: true,
       filterable: false,
       render: (value) => (
@@ -174,12 +179,12 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'status',
-      label: 'Status',
+      label: t('invoiceStatus'),
       sortable: true,
       filterable: true,
       render: (value) => (
         <Chip
-          label={getStatusLabel(value || InvoiceStatus.DRAFT)}
+          label={getStatusLabel(value || InvoiceStatus.DRAFT, t)}
           color={getStatusColor(value || InvoiceStatus.DRAFT)}
           size='small'
           variant='outlined'
@@ -188,7 +193,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
     },
     {
       key: 'dueDate',
-      label: 'Termin płatności',
+      label: t('dueDate'),
       sortable: true,
       filterable: true,
       render: (value) => {
@@ -199,7 +204,6 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
           <Typography
             variant='body2'
             color={isOverdue ? 'error.main' : 'text.primary'}
-            fontWeight={isOverdue ? '600' : '400'}
           >
             {format(dueDate, 'dd MMM yyyy', { locale: pl })}
           </Typography>
@@ -370,7 +374,7 @@ const EnhancedInvoicesTable = ({ invoices = [] }) => {
                     Status
                   </Typography>
                   <Chip
-                    label={getStatusLabel(selectedInvoice.status)}
+                    label={getStatusLabel(selectedInvoice.status, t)}
                     color={getStatusColor(selectedInvoice.status)}
                     size='small'
                   />

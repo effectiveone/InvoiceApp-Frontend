@@ -17,11 +17,11 @@ import {
   LocationOn as LocationIcon,
   Person as PersonIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import DataTableProvider from './DataTableProvider';
 import EnhancedContrahentForm from './EnhancedContrahentForm';
 import { useKontrahentContext } from '../../../entities/kontrahent/model/useKontrahentContext';
 import { useModal } from '../../lib/useModal';
-import { t } from 'i18next';
 
 // Domain Model for Contrahent Types
 const ContrahentType = {
@@ -46,60 +46,68 @@ const getContrahentTypeColor = (type) => {
   }
 };
 
-const getContrahentTypeLabel = (type) => {
+const getContrahentTypeLabel = (type, t) => {
   switch (type) {
     case ContrahentType.INDIVIDUAL:
-      return 'Osoba fizyczna';
+      return t('contractorIndividual', 'Osoba fizyczna');
     case ContrahentType.COMPANY:
-      return 'Firma';
+      return t('contractorCompany', 'Firma');
     case ContrahentType.GOVERNMENT:
-      return 'Instytucja';
+      return t('contractorGovernment', 'Instytucja');
     case ContrahentType.NON_PROFIT:
-      return 'Organizacja';
+      return t('contractorNonProfit', 'Organizacja');
     default:
-      return 'Nieznany';
+      return t('unknown');
   }
 };
 
 // Legal Form mapping
-const legalFormLabels = {
-  sp_z_oo: 'Sp. z o.o.',
-  sa: 'S.A.',
-  jednoosobowa: 'Jednoosobowa',
-  spolka_jawna: 'Spółka jawna',
-  spolka_komandytowa: 'Sp. komandytowa',
-  osoba_fizyczna: 'Osoba fizyczna',
-  fundacja: 'Fundacja',
-  stowarzyszenie: 'Stowarzyszenie',
+const getLegalFormLabel = (value, t) => {
+  const legalFormLabels = {
+    sp_z_oo: 'Sp. z o.o.',
+    sa: 'S.A.',
+    jednoosobowa: t('contractorSole', 'Jednoosobowa'),
+    spolka_jawna: t('contractorPartnership', 'Spółka jawna'),
+    spolka_komandytowa: t('contractorLimited', 'Sp. komandytowa'),
+    osoba_fizyczna: t('contractorIndividual', 'Osoba fizyczna'),
+    fundacja: t('contractorFoundation', 'Fundacja'),
+    stowarzyszenie: t('contractorAssociation', 'Stowarzyszenie'),
+  };
+  return legalFormLabels[value] || value || t('unknown');
 };
 
 // Styled Modal Content
-const ModalContent = ({ children, onClose, title }) => (
-  <Box
-    sx={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '90%',
-      maxWidth: '800px',
-      maxHeight: '90vh',
-      overflow: 'auto',
-      borderRadius: '16px',
-      bgcolor: 'background.paper',
-      boxShadow: 24,
-      p: 4,
-    }}
-  >
-    <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
-      {title}
-    </Typography>
-    {children}
-  </Box>
-);
+const ModalContent = ({ children, onClose, title }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        maxWidth: '800px',
+        maxHeight: '90vh',
+        overflow: 'auto',
+        borderRadius: '16px',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+      }}
+    >
+      <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
+        {title}
+      </Typography>
+      {children}
+    </Box>
+  );
+};
 
 // Enhanced Contrahents Table Component
 const EnhancedContrahentsTable = ({ contrahents = [] }) => {
+  const { t } = useTranslation();
   const { open, handleOpen, handleClose } = useModal();
   const {
     handleEdit: handleEditContrahent,
@@ -128,17 +136,17 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     },
     {
       key: 'companyName',
-      label: 'Nazwa firmy',
+      label: t('contractorName'),
       sortable: true,
       filterable: true,
       render: (value, row) => (
         <Box>
           <Typography variant='body2' fontWeight='600'>
-            {value || 'Brak nazwy'}
+            {value || t('noData')}
           </Typography>
           {row.contactPerson && (
             <Typography variant='caption' color='text.secondary'>
-              Kontakt: {row.contactPerson}
+              {t('contact', 'Kontakt')}: {row.contactPerson}
             </Typography>
           )}
         </Box>
@@ -146,12 +154,12 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     },
     {
       key: 'legalForm',
-      label: 'Forma prawna',
+      label: t('contractorLegalForm'),
       sortable: true,
       filterable: true,
       render: (value) => (
         <Chip
-          label={legalFormLabels[value] || value || 'Nieznana'}
+          label={getLegalFormLabel(value, t)}
           size='small'
           variant='outlined'
           color='primary'
@@ -160,7 +168,7 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     },
     {
       key: 'nip',
-      label: 'NIP',
+      label: t('contractorNip'),
       sortable: true,
       filterable: true,
       render: (value) => (
@@ -173,12 +181,12 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     },
     {
       key: 'location',
-      label: 'Lokalizacja',
+      label: t('contractorAddress'),
       sortable: true,
       filterable: true,
       render: (value, row) => (
         <Box>
-          <Typography variant='body2'>{row.city || 'Brak miasta'}</Typography>
+          <Typography variant='body2'>{row.city || t('noData')}</Typography>
           {row.postalCode && (
             <Typography variant='caption' color='text.secondary'>
               {row.postalCode}
@@ -189,7 +197,7 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     },
     {
       key: 'contact',
-      label: 'Kontakt',
+      label: t('contact', 'Kontakt'),
       sortable: false,
       filterable: false,
       render: (value, row) => (
@@ -216,7 +224,7 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
       filterable: true,
       render: (value) => (
         <Chip
-          label={getContrahentTypeLabel(value || ContrahentType.COMPANY)}
+          label={getContrahentTypeLabel(value || ContrahentType.COMPANY, t)}
           color={getContrahentTypeColor(value || ContrahentType.COMPANY)}
           size='small'
           variant='filled'
@@ -296,7 +304,7 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     const rows = data.map((item) => [
       item.companyName || '',
       item.nip || '',
-      legalFormLabels[item.legalForm] || item.legalForm || '',
+      getLegalFormLabel(item.legalForm, t),
       item.city || '',
       item.email || '',
       item.phone || '',
@@ -389,10 +397,10 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
                             Forma prawna
                           </Typography>
                           <Chip
-                            label={
-                              legalFormLabels[selectedContrahent.legalForm] ||
-                              selectedContrahent.legalForm
-                            }
+                            label={getLegalFormLabel(
+                              selectedContrahent.legalForm,
+                              t,
+                            )}
                             size='small'
                             color='primary'
                           />

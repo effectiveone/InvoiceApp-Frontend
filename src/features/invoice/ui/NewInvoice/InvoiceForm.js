@@ -24,8 +24,8 @@ import {
   AttachMoney,
 } from '@mui/icons-material';
 import { styled } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { useInvoiceContext } from '../../../../entities/invoice/model/useInvoiceContext';
-import { t } from 'i18next';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: '24px',
@@ -110,6 +110,7 @@ const TotalCard = styled(Card)(({ theme }) => ({
 }));
 
 const InvoiceForm = () => {
+  const { t } = useTranslation();
   const {
     invoiceType,
     setInvoiceType,
@@ -194,7 +195,7 @@ const InvoiceForm = () => {
         <Receipt sx={{ fontSize: 32, marginRight: 2 }} />
         <Box>
           <Typography variant='h4' sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-            Nowa Faktura
+            {t('newInvoiceTitle')}
           </Typography>
           <Typography variant='h6' sx={{ opacity: 0.9 }}>
             {t('invoice')} {currentInvoiceNumber}
@@ -206,7 +207,7 @@ const InvoiceForm = () => {
       <StyledPaper>
         <SectionTitle>
           <Business />
-          Dane podstawowe
+          {t('contractorData')}
         </SectionTitle>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
@@ -230,11 +231,11 @@ const InvoiceForm = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <StyledFormControl fullWidth>
-              <InputLabel>Typ faktury</InputLabel>
+              <InputLabel>{t('invoiceType', 'Typ faktury')}</InputLabel>
               <Select
                 value={invoiceType}
                 onChange={(e) => setInvoiceType(e.target.value)}
-                label='Typ faktury'
+                label={t('invoiceType', 'Typ faktury')}
               >
                 <MenuItem value='zakupowa'>{t('zakupowa')}</MenuItem>
                 <MenuItem value='sprzedazowa'>{t('sprzedazowa')}</MenuItem>
@@ -256,7 +257,7 @@ const InvoiceForm = () => {
       <StyledPaper>
         <SectionTitle>
           <DateRange />
-          Daty faktury
+          {t('invoiceDates', 'Daty faktury')}
         </SectionTitle>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
@@ -302,7 +303,7 @@ const InvoiceForm = () => {
         >
           <SectionTitle sx={{ marginBottom: 0 }}>
             <AttachMoney />
-            Produkty/Usługi
+            {t('productOrSerivce')}
           </SectionTitle>
           <AddButton
             variant='contained'
@@ -329,20 +330,20 @@ const InvoiceForm = () => {
       <StyledPaper>
         <SectionTitle>
           <Note />
-          Dodatkowe informacje
+          {t('additionalNotes')}
         </SectionTitle>
         <Button onClick={changeVisibility} variant='outlined' sx={{ mb: 2 }}>
-          {t('additionalNotes')}
+          {isNotesVisibility ? t('hideNotes') : t('showNotes')}
         </Button>
         {isNotesVisibility && (
           <StyledTextField
             fullWidth
             multiline
             rows={4}
-            label='Notatki dodatkowe'
+            label={t('additionalNotes')}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder='Dodatkowe informacje dla klienta...'
+            placeholder={t('additionalNotes') + '...'}
           />
         )}
       </StyledPaper>
@@ -355,7 +356,7 @@ const InvoiceForm = () => {
             gutterBottom
             sx={{ fontWeight: 'bold', color: '#0369a1' }}
           >
-            Podsumowanie
+            {t('totalPayment', 'Podsumowanie')}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
@@ -405,6 +406,8 @@ const InvoiceForm = () => {
 };
 
 const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
+  const { t } = useTranslation();
+
   const handleFieldChange = (event) => {
     const { name, value } = event.target;
     onChange(index, name, value);

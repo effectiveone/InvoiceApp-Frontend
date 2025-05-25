@@ -24,11 +24,11 @@ import {
   AllInclusive as UnlimitedIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import DataTableProvider from './DataTableProvider';
 import EnhancedProductForm from './EnhancedProductForm';
 import { useProductContext } from '../../../entities/product/model/useProductContext';
 import { useModal } from '../../lib/useModal';
-import { t } from 'i18next';
 
 // Domain Model for Product Categories
 const ProductCategory = {
@@ -56,20 +56,20 @@ const getCategoryColor = (category) => {
   }
 };
 
-const getCategoryLabel = (category) => {
+const getCategoryLabel = (category, t) => {
   switch (category) {
     case ProductCategory.GOODS:
-      return 'Towary';
+      return t('categoryGoods', 'Towary');
     case ProductCategory.SERVICES:
-      return 'Usługi';
+      return t('categoryServices', 'Usługi');
     case ProductCategory.MATERIALS:
-      return 'Materiały';
+      return t('categoryMaterials', 'Materiały');
     case ProductCategory.DIGITAL:
-      return 'Produkty cyfrowe';
+      return t('categoryDigital', 'Produkty cyfrowe');
     case ProductCategory.OTHER:
-      return 'Inne';
+      return t('categoryOther', 'Inne');
     default:
-      return 'Nieokreślone';
+      return t('categoryUndefined', 'Nieokreślone');
   }
 };
 
@@ -96,18 +96,18 @@ const getStockStatusColor = (status) => {
   }
 };
 
-const getStockStatusLabel = (status) => {
+const getStockStatusLabel = (status, t) => {
   switch (status) {
     case StockStatus.IN_STOCK:
-      return 'Na stanie';
+      return t('inStock');
     case StockStatus.LOW_STOCK:
-      return 'Niski stan';
+      return t('lowStock');
     case StockStatus.OUT_OF_STOCK:
-      return 'Brak na stanie';
+      return t('outOfStock');
     case StockStatus.UNLIMITED:
-      return 'Nieograniczony';
+      return t('stockUnlimited', 'Nieograniczony');
     default:
-      return 'Nieznany';
+      return t('unknown');
   }
 };
 
@@ -127,53 +127,64 @@ const getStockStatusIcon = (status) => {
 };
 
 // VAT rates mapping
-const vatRates = {
-  0: '0%',
-  5: '5%',
-  8: '8%',
-  23: '23%',
+const getVatRateLabel = (rate) => {
+  const vatRates = {
+    0: '0%',
+    5: '5%',
+    8: '8%',
+    23: '23%',
+  };
+  return vatRates[rate] || `${rate}%`;
 };
 
 // Unit types mapping
-const unitTypes = {
-  szt: 'sztuki',
-  kg: 'kilogramy',
-  l: 'litry',
-  m: 'metry',
-  m2: 'metry kwadratowe',
-  m3: 'metry sześcienne',
-  godz: 'godziny',
-  dni: 'dni',
-  usł: 'usługi',
+const getUnitTypeLabel = (unit, t) => {
+  const unitTypes = {
+    szt: t('unitPieces', 'sztuki'),
+    kg: t('unitKilograms', 'kilogramy'),
+    l: t('unitLiters', 'litry'),
+    m: t('unitMeters', 'metry'),
+    m2: t('unitSquareMeters', 'metry kwadratowe'),
+    m3: t('unitCubicMeters', 'metry sześcienne'),
+    godz: t('unitHours', 'godziny'),
+    dni: t('unitDays', 'dni'),
+    usł: t('unitServices', 'usługi'),
+  };
+  return unitTypes[unit] || unit;
 };
 
 // Styled Modal Content
-const ModalContent = ({ children, onClose, title }) => (
-  <Box
-    sx={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '90%',
-      maxWidth: '900px',
-      maxHeight: '90vh',
-      overflow: 'auto',
-      borderRadius: '16px',
-      bgcolor: 'background.paper',
-      boxShadow: 24,
-      p: 4,
-    }}
-  >
-    <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
-      {title}
-    </Typography>
-    {children}
-  </Box>
-);
+const ModalContent = ({ children, onClose, title }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        maxWidth: '900px',
+        maxHeight: '90vh',
+        overflow: 'auto',
+        borderRadius: '16px',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+      }}
+    >
+      <Typography variant='h5' sx={{ mb: 3, fontWeight: 'bold' }}>
+        {title}
+      </Typography>
+      {children}
+    </Box>
+  );
+};
 
 // Enhanced Inventory Table Component
 const EnhancedInventoryTable = ({ products = [] }) => {
+  const { t } = useTranslation();
   const { open, handleOpen, handleClose } = useModal();
   const {
     handleEdit: handleEditProduct,
@@ -198,66 +209,79 @@ const EnhancedInventoryTable = ({ products = [] }) => {
             height: 48,
           }}
         >
-          <CategoryIcon />
+          <InventoryIcon />
         </Avatar>
       ),
     },
     {
       key: 'name',
-      label: 'Nazwa produktu',
+      label: t('productName'),
       sortable: true,
       filterable: true,
       render: (value, row) => (
         <Box>
           <Typography variant='body2' fontWeight='600'>
-            {value || 'Brak nazwy'}
+            {value || t('noData')}
           </Typography>
-          {row.sku && (
+          {row.code && (
             <Typography variant='caption' color='text.secondary'>
-              SKU: {row.sku}
+              {t('productCode')}: {row.code}
             </Typography>
-          )}
-          {row.category && (
-            <Box sx={{ mt: 0.5 }}>
-              <Chip
-                label={getCategoryLabel(row.category)}
-                size='small'
-                color={getCategoryColor(row.category)}
-                variant='outlined'
-              />
-            </Box>
           )}
         </Box>
       ),
     },
     {
-      key: 'pricing',
-      label: 'Cena',
+      key: 'category',
+      label: t('productCategory'),
+      sortable: true,
+      filterable: true,
+      render: (value) => (
+        <Chip
+          label={getCategoryLabel(value, t)}
+          size='small'
+          variant='outlined'
+          color={getCategoryColor(value)}
+          icon={<CategoryIcon />}
+        />
+      ),
+    },
+    {
+      key: 'netPrice',
+      label: t('productNetPrice'),
       sortable: true,
       filterable: false,
       render: (value, row) => (
         <Box>
-          <Typography variant='body2' fontWeight='600' color='primary.main'>
-            {row.netPrice ? `${Number(row.netPrice).toFixed(2)} zł` : '0.00 zł'}
-          </Typography>
-          <Typography variant='caption' color='text.secondary'>
-            netto
+          <Typography variant='body2' fontWeight='600'>
+            {value ? `${Number(value).toFixed(2)} PLN` : '0.00 PLN'}
           </Typography>
           {row.vat && (
-            <Typography
-              variant='caption'
-              display='block'
-              color='text.secondary'
-            >
-              VAT: {vatRates[row.vat] || `${row.vat}%`}
+            <Typography variant='caption' color='text.secondary'>
+              VAT: {getVatRateLabel(row.vat)}
             </Typography>
           )}
         </Box>
       ),
     },
     {
-      key: 'stock',
-      label: 'Stan magazynowy',
+      key: 'grossPrice',
+      label: t('productGrossPrice'),
+      sortable: true,
+      filterable: false,
+      render: (value, row) => (
+        <Typography variant='body2' fontWeight='600' color='primary.main'>
+          {value
+            ? `${Number(value).toFixed(2)} PLN`
+            : row.netPrice
+            ? `${calculateGrossPrice(row.netPrice, row.vat).toFixed(2)} PLN`
+            : '0.00 PLN'}
+        </Typography>
+      ),
+    },
+    {
+      key: 'quantity',
+      label: t('productStock'),
       sortable: true,
       filterable: false,
       render: (value, row) => {
@@ -265,86 +289,41 @@ const EnhancedInventoryTable = ({ products = [] }) => {
         const stockPercentage = calculateStockPercentage(row);
 
         return (
-          <Box sx={{ minWidth: 120 }}>
-            <Stack
-              direction='row'
-              spacing={1}
-              alignItems='center'
-              sx={{ mb: 1 }}
-            >
-              <Tooltip title={getStockStatusLabel(stockStatus)}>
+          <Box>
+            <Box display='flex' alignItems='center' gap={1}>
+              <Tooltip title={getStockStatusLabel(stockStatus, t)}>
                 <Box sx={{ color: `${getStockStatusColor(stockStatus)}.main` }}>
                   {getStockStatusIcon(stockStatus)}
                 </Box>
               </Tooltip>
               <Typography variant='body2' fontWeight='500'>
-                {row.quantity || 0} {unitTypes[row.unit] || row.unit || 'szt'}
+                {value || 0} {getUnitTypeLabel(row.unit, t)}
               </Typography>
-            </Stack>
-
-            {stockStatus !== StockStatus.UNLIMITED && row.minStock && (
-              <Box>
-                <LinearProgress
-                  variant='determinate'
-                  value={stockPercentage}
-                  color={getStockStatusColor(stockStatus)}
-                  sx={{ height: 6, borderRadius: 3 }}
-                />
-                <Typography variant='caption' color='text.secondary'>
-                  Min: {row.minStock}
-                </Typography>
-              </Box>
+            </Box>
+            {stockStatus !== StockStatus.UNLIMITED && (
+              <LinearProgress
+                variant='determinate'
+                value={stockPercentage}
+                color={getStockStatusColor(stockStatus)}
+                sx={{ mt: 0.5, height: 4, borderRadius: 2 }}
+              />
             )}
-
-            <Chip
-              label={getStockStatusLabel(stockStatus)}
-              size='small'
-              color={getStockStatusColor(stockStatus)}
-              variant='filled'
-              sx={{ mt: 0.5 }}
-            />
           </Box>
         );
       },
     },
     {
       key: 'unit',
-      label: 'Jednostka',
+      label: t('productUnit'),
       sortable: true,
       filterable: true,
       render: (value) => (
-        <Typography variant='body2'>
-          {unitTypes[value] || value || 'szt'}
-        </Typography>
+        <Chip
+          label={getUnitTypeLabel(value, t)}
+          size='small'
+          variant='outlined'
+        />
       ),
-    },
-    {
-      key: 'lastUpdated',
-      label: 'Ostatnia aktualizacja',
-      sortable: true,
-      filterable: false,
-      render: (value, row) => {
-        const date = value
-          ? new Date(value)
-          : new Date(row.createdAt || Date.now());
-        const now = new Date();
-        const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-
-        return (
-          <Box>
-            <Typography variant='body2'>
-              {date.toLocaleDateString('pl-PL')}
-            </Typography>
-            <Typography variant='caption' color='text.secondary'>
-              {diffDays === 0
-                ? 'Dzisiaj'
-                : diffDays === 1
-                ? 'Wczoraj'
-                : `${diffDays} dni temu`}
-            </Typography>
-          </Box>
-        );
-      },
     },
   ];
 
@@ -439,14 +418,14 @@ const EnhancedInventoryTable = ({ products = [] }) => {
     const rows = data.map((item) => [
       item.name || '',
       item.sku || '',
-      getCategoryLabel(item.category),
+      getCategoryLabel(item.category, t),
       item.netPrice || '',
-      vatRates[item.vat] || `${item.vat}%` || '',
+      getVatRateLabel(item.vat) || '',
       item.grossPrice ? item.grossPrice.toFixed(2) : '',
       item.quantity || '',
-      unitTypes[item.unit] || item.unit || '',
+      getUnitTypeLabel(item.unit, t) || item.unit || '',
       item.minStock || '',
-      getStockStatusLabel(item.stockStatus),
+      getStockStatusLabel(item.stockStatus, t),
     ]);
 
     return [headers, ...rows].map((row) => row.join(',')).join('\n');
@@ -530,7 +509,10 @@ const EnhancedInventoryTable = ({ products = [] }) => {
                             Kategoria
                           </Typography>
                           <Chip
-                            label={getCategoryLabel(selectedProduct.category)}
+                            label={getCategoryLabel(
+                              selectedProduct.category,
+                              t,
+                            )}
                             color={getCategoryColor(selectedProduct.category)}
                             size='small'
                           />
@@ -561,9 +543,7 @@ const EnhancedInventoryTable = ({ products = [] }) => {
                               VAT
                             </Typography>
                             <Typography variant='body1'>
-                              {vatRates[selectedProduct.vat] ||
-                                `${selectedProduct.vat}%` ||
-                                '0%'}
+                              {getVatRateLabel(selectedProduct.vat)}
                             </Typography>
                           </Box>
 
@@ -596,9 +576,7 @@ const EnhancedInventoryTable = ({ products = [] }) => {
                           >
                             <Typography variant='h6'>
                               {selectedProduct.quantity || 0}{' '}
-                              {unitTypes[selectedProduct.unit] ||
-                                selectedProduct.unit ||
-                                'szt'}
+                              {getUnitTypeLabel(selectedProduct.unit, t)}
                             </Typography>
                             <Chip
                               icon={getStockStatusIcon(
@@ -606,6 +584,7 @@ const EnhancedInventoryTable = ({ products = [] }) => {
                               )}
                               label={getStockStatusLabel(
                                 selectedProduct.stockStatus,
+                                t,
                               )}
                               color={getStockStatusColor(
                                 selectedProduct.stockStatus,

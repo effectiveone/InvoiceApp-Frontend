@@ -16,11 +16,11 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import FactoryInvoicePrinter from '../InvoicesTemplates/factoryInvoicePrinter';
 import { useInvoiceContext } from '../../../../entities/invoice/model/useInvoiceContext';
 import ReactToPrint from 'react-to-print';
 import InvoiceForm from './InvoiceForm';
-import { t } from 'i18next';
 
 const ActionBar = styled(Paper)(({ theme }) => ({
   position: 'fixed',
@@ -60,6 +60,7 @@ const PreviewContainer = styled(Box)(({ theme }) => ({
 }));
 
 const NewInvoice = () => {
+  const { t } = useTranslation();
   const { componentRef, handleSubmit } = useInvoiceContext();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -98,7 +99,7 @@ const NewInvoice = () => {
                 variant='h4'
                 sx={{ fontWeight: 'bold', color: '#374151' }}
               >
-                Podgląd faktury
+                {t('invoicePreviewTitle')}
               </Typography>
               <Box display='flex' gap={2}>
                 <ReactToPrint
