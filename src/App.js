@@ -7,14 +7,14 @@ import {
 } from 'react-router-dom';
 import LoginPage from './Auth/LoginPage/LoginPage.js';
 import RegisterPage from './Auth/RegisterPage/RegisterPage.js';
-import IssuedInvoicePage from './Pages/IssuedInvoicePage.js';
+import EnhancedIssuedInvoicePage from './Pages/EnhancedIssuedInvoicePage.js';
 import MyCompanyPage from './Pages/MyCompanyPage.js';
 import DashboardPage from './Pages/DashboardPage.js';
-
 import NewInvoicePage from './Pages/NewInvoicePage.js';
-import InventoryPage from './Pages/InventoryPage.js';
-import KontrahentPage from './Pages/KontrahentPage.js';
+import EnhancedInventoryPage from './Pages/EnhancedInventoryPage.js';
+import EnhancedKontrahentPage from './Pages/EnhancedKontrahentPage.js';
 import SettingsPage from './Pages/SettingsPage.js';
+import ExampleUsage from './Shared/Components/DataTable/ExampleUsage.js';
 import { useUser } from './Shared/Hook/useUser.js';
 import { useSelector } from 'react-redux';
 import AlertNotification from './Shared/Components/AlertNotification.js';
@@ -82,12 +82,16 @@ function App() {
           {currentUser ? (
             <>
               <Route path='/Dashboard' element={<DashboardPage />} />
-              <Route path='/Inventory' element={<InventoryPage />} />
-              <Route path='/InvoicesIssued' element={<IssuedInvoicePage />} />
+              <Route path='/Inventory' element={<EnhancedInventoryPage />} />
+              <Route
+                path='/InvoicesIssued'
+                element={<EnhancedIssuedInvoicePage />}
+              />
               <Route path='/NewInvoice' element={<NewInvoicePage />} />
-              <Route path='/Kontrahent' element={<KontrahentPage />} />
+              <Route path='/Kontrahent' element={<EnhancedKontrahentPage />} />
               <Route path='/SettingsPage' element={<SettingsPage />} />
               <Route path='/Mycompany' element={<MyCompanyPage />} />
+              <Route path='/DataTableExample' element={<ExampleUsage />} />
               <Route path='/' element={<Navigate to='/SettingsPage' />} />
             </>
           ) : (

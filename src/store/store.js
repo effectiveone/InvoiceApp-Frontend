@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { thunk } from 'redux-thunk';
 import authReducer from './Reducers/authReducer.js';
 import alertReducer from './Reducers/alertReducer.js';
 import { companyReducer } from './Reducers/mycompanyReducer.js';
@@ -24,7 +23,6 @@ const store = configureStore({
     auth: authReducer,
     alert: alertReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
