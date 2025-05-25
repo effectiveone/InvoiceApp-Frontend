@@ -1,34 +1,54 @@
-import React from "react";
-import { shallow } from "enzyme";
-import { FilterWrapper } from "./FilterWrapper";
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import FilterWrapper from './FilterWrapper';
 
-describe("<FilterWrapper />", () => {
+// Mock react-i18next
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+  }),
+}));
+
+// Mock ikon
+jest.mock('../Utils/Icons', () => ({
+  FilterListIcon: () => <div data-testid='filter-icon' />,
+  SearchIcon: () => <div data-testid='search-icon' />,
+}));
+
+describe('<FilterWrapper />', () => {
   const handleFilterChange = jest.fn();
 
-  it("renders without crashing", () => {
-    shallow(<FilterWrapper handleFilterChange={handleFilterChange} />);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("renders the search input", () => {
-    const wrapper = shallow(
-      <FilterWrapper handleFilterChange={handleFilterChange} />
-    );
-    expect(wrapper.find("input").length).toBe(1);
+  it('renders without crashing', () => {
+    render(<FilterWrapper handleFilterChange={handleFilterChange} />);
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it("calls handleFilterChange function on input change", () => {
-    const wrapper = shallow(
-      <FilterWrapper handleFilterChange={handleFilterChange} />
+  it('renders the search input', () => {
+    render(<FilterWrapper handleFilterChange={handleFilterChange} />);
+    const input = screen.getByPlaceholderText(
+      "Search by kontrahent's company name",
     );
-    const input = wrapper.find("input");
-    input.simulate("change", { target: { value: "example" } });
-    expect(handleFilterChange).toHaveBeenCalledWith("example");
+    expect(input).toBeInTheDocument();
   });
 
-  it("renders the filter button", () => {
-    const wrapper = shallow(
-      <FilterWrapper handleFilterChange={handleFilterChange} />
+  it('calls handleFilterChange function on input change', () => {
+    render(<FilterWrapper handleFilterChange={handleFilterChange} />);
+    const input = screen.getByPlaceholderText(
+      "Search by kontrahent's company name",
     );
-    expect(wrapper.find("Button").length).toBe(1);
+    fireEvent.change(input, { target: { value: 'example' } });
+    expect(handleFilterChange).toHaveBeenCalledWith('example');
+  });
+
+  it('renders the filter button', () => {
+    render(<FilterWrapper handleFilterChange={handleFilterChange} />);
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent('filter');
   });
 });

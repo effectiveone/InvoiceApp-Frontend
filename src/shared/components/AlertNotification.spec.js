@@ -1,44 +1,63 @@
-import React from "react";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
-import { connect } from "react-redux";
-import { getActions } from "../../Store/actions/alertActions";
-import { shallow } from "enzyme";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import '@testing-library/jest-dom';
+import AlertNotification from './AlertNotification';
 
-describe("AlertNotification", () => {
-  it("should render Snackbar with correct props", () => {
-    const mockShowAlertMessage = true;
-    const mockCloseAlertMessage = jest.fn();
-    const mockAlertMessageContent = "Test message";
-    const wrapper = shallow(
-      <AlertNotification
-        showAlertMessage={mockShowAlertMessage}
-        closeAlertMessage={mockCloseAlertMessage}
-        alertMessageContent={mockAlertMessageContent}
-      />
-    );
-    expect(wrapper.find(Snackbar).props()).toMatchObject({
-      anchorOrigin: { vertical: "bottom", horizontal: "center" },
-      open: mockShowAlertMessage,
-      onClose: mockCloseAlertMessage,
-      autoHideDuration: 6000,
+// Mock store dla Redux
+const mockStore = configureStore({
+  reducer: {
+    alert: (
+      state = {
+        showAlertMessage: false,
+        alertMessageContent: '',
+        closeAlertMessage: jest.fn(),
+      },
+    ) => state,
+  },
+});
+
+describe('AlertNotification', () => {
+  it('should render Snackbar when showAlertMessage is true', () => {
+    const storeWithAlert = configureStore({
+      reducer: {
+        alert: () => ({
+          showAlertMessage: true,
+          alertMessageContent: 'Test message',
+          closeAlertMessage: jest.fn(),
+        }),
+      },
     });
+
+    render(
+      <Provider store={storeWithAlert}>
+        <AlertNotification />
+      </Provider>,
+    );
+
+    // Sprawdź czy alert jest widoczny
+    expect(screen.getByText('Test message')).toBeInTheDocument();
   });
 
-  it("should render Alert with correct severity and content", () => {
-    const mockShowAlertMessage = true;
-    const mockCloseAlertMessage = jest.fn();
-    const mockAlertMessageContent = "Test message";
-    const wrapper = shallow(
-      <AlertNotification
-        showAlertMessage={mockShowAlertMessage}
-        closeAlertMessage={mockCloseAlertMessage}
-        alertMessageContent={mockAlertMessageContent}
-      />
-    );
-    expect(wrapper.find(Alert).props()).toMatchObject({
-      severity: "info",
-      children: mockAlertMessageContent,
+  it('should not render alert when showAlertMessage is false', () => {
+    const storeWithoutAlert = configureStore({
+      reducer: {
+        alert: () => ({
+          showAlertMessage: false,
+          alertMessageContent: 'Test message',
+          closeAlertMessage: jest.fn(),
+        }),
+      },
     });
+
+    render(
+      <Provider store={storeWithoutAlert}>
+        <AlertNotification />
+      </Provider>,
+    );
+
+    // Sprawdź czy alert nie jest widoczny
+    expect(screen.queryByText('Test message')).not.toBeInTheDocument();
   });
 });

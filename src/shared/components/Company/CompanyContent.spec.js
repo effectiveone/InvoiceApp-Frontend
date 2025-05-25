@@ -1,40 +1,65 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { useCompanyContext } from "../../Context/useCompanyContext";
-import CompanyContent from "./CompanyContent";
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { useCompanyContext } from '../../Context/useCompanyContext';
+import { CompanyContent } from './CompanyContent';
 
-jest.mock("../../Context/useCompanyContext");
+// Mock kontekstu
+jest.mock('../../Context/useCompanyContext', () => ({
+  useCompanyContext: jest.fn(),
+}));
 
-describe("CompanyContent component", () => {
+// Mock react-i18next
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+  }),
+}));
+
+// Mock CompanyForm
+jest.mock('./companyForm', () => {
+  return function MockCompanyForm(props) {
+    return <div data-testid='company-form'>Mock Company Form</div>;
+  };
+});
+
+describe('CompanyContent component', () => {
   beforeEach(() => {
     useCompanyContext.mockReturnValue({
       updatedCompanyData: {
-        name: "Test Company",
-        address: "123 Test Street",
-        city: "Test City",
-        state: "Test State",
-        zip: "12345",
+        name: 'Test Company',
+        address: '123 Test Street',
+        city: 'Test City',
+        state: 'Test State',
+        zip: '12345',
       },
       handleChange: jest.fn(),
       handleSubmit: jest.fn(),
     });
   });
 
-  it("renders company form", () => {
+  it('renders company form', () => {
     render(<CompanyContent />);
-    const companyForm = screen.getByTestId("company-form");
+    const companyForm = screen.getByTestId('company-form');
     expect(companyForm).toBeInTheDocument();
   });
 
-  it("renders submit button", () => {
+  it('renders submit button', () => {
     render(<CompanyContent />);
-    const submitButton = screen.getByText("Submit");
+    const submitButton = screen.getByText('submit');
     expect(submitButton).toBeInTheDocument();
   });
 
-  it("calls handleSubmit function when submit button is clicked", () => {
+  it('calls handleSubmit function when submit button is clicked', () => {
+    const mockHandleSubmit = jest.fn();
+    useCompanyContext.mockReturnValue({
+      updatedCompanyData: {},
+      handleChange: jest.fn(),
+      handleSubmit: mockHandleSubmit,
+    });
+
     render(<CompanyContent />);
-    const submitButton = screen.getByText("Submit");
+    const submitButton = screen.getByText('submit');
     fireEvent.click(submitButton);
-    expect(useCompanyContext().handleSubmit).toHaveBeenCalled();
+    expect(mockHandleSubmit).toHaveBeenCalled();
   });
 });
