@@ -1,10 +1,6 @@
 import React from 'react';
 import { Box, Container, Typography, Tabs, Tab } from '@mui/material';
-import {
-  EnhancedInvoicesTable,
-  EnhancedContrahentsTable,
-  EnhancedInventoryTable,
-} from './index';
+import { EnhancedInvoicesTable, EnhancedContrahentsTable } from './index';
 
 // Example usage of the enhanced table components
 const ExampleUsage = () => {
@@ -69,33 +65,6 @@ const ExampleUsage = () => {
     },
   ];
 
-  const sampleProducts = [
-    {
-      id: '1',
-      name: 'Laptop Dell XPS 13',
-      sku: 'DELL-XPS-13',
-      category: 'goods',
-      netPrice: 4500.0,
-      vat: 23,
-      quantity: 5,
-      unit: 'szt',
-      minStock: 2,
-      description: 'Nowoczesny laptop biznesowy',
-    },
-    {
-      id: '2',
-      name: 'Konsultacje IT',
-      sku: 'CONS-IT-001',
-      category: 'services',
-      netPrice: 250.0,
-      vat: 23,
-      quantity: 0,
-      unit: 'godz',
-      unlimited: true,
-      description: 'Profesjonalne doradztwo technologiczne',
-    },
-  ];
-
   const TabPanel = ({ children, value, index }) => (
     <div hidden={value !== index}>
       {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
@@ -118,7 +87,6 @@ const ExampleUsage = () => {
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label='Faktury' />
           <Tab label='Kontrahenci' />
-          <Tab label='Magazyn' />
         </Tabs>
       </Box>
 
@@ -128,10 +96,6 @@ const ExampleUsage = () => {
 
       <TabPanel value={tabValue} index={1}>
         <EnhancedContrahentsTable contrahents={sampleContrahents} />
-      </TabPanel>
-
-      <TabPanel value={tabValue} index={2}>
-        <EnhancedInventoryTable products={sampleProducts} />
       </TabPanel>
     </Container>
   );

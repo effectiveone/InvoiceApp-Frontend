@@ -16,12 +16,22 @@ import {
   AccordionDetails,
   Tooltip,
   IconButton,
+  Avatar,
+  Stack,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {
   ExpandMore as ExpandMoreIcon,
-  Palette as PaletteIcon,
   Check as CheckIcon,
   Visibility as VisibilityIcon,
+  Brush as BrushIcon,
+  ColorLens as ColorLensIcon,
+  Close as CloseIcon,
+  Add as AddIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';

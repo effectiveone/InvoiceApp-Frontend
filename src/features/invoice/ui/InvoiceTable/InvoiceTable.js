@@ -1,11 +1,24 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Chip, Box } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Tooltip,
+  Chip,
+  Box,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Receipt as ReceiptIcon,
   Visibility as VisibilityIcon,
 } from '@material-ui/icons';
 import { t } from 'i18next';

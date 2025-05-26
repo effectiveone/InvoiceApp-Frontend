@@ -11,24 +11,22 @@ import {
   CardContent,
   LinearProgress,
   Tooltip,
-  IconButton,
 } from '@mui/material';
 import {
   Inventory as InventoryIcon,
   Category as CategoryIcon,
   TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
   Warning as WarningIcon,
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
-  AllInclusive as UnlimitedIcon,
-  Close as CloseIcon,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import DataTableProvider from './DataTableProvider';
-import EnhancedProductForm from './EnhancedProductForm';
-import { useProductContext } from '../../../entities/product/model/useProductContext';
-import { useModal } from '../../lib/useModal';
+import {
+  DataTableProvider,
+  EnhancedProductForm,
+} from '../../../../shared/ui/DataTable';
+import { useProductContext } from '../../../../entities/product/model/useProductContext';
+import { useModal } from '../../../../shared/lib/useModal';
 
 // Domain Model for Product Categories
 const ProductCategory = {
@@ -155,8 +153,6 @@ const getUnitTypeLabel = (unit, t) => {
 
 // Styled Modal Content
 const ModalContent = ({ children, onClose, title }) => {
-  const { t } = useTranslation();
-
   return (
     <Box
       sx={{

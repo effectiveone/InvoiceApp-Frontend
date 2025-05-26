@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, no-undef, react/jsx-no-undef */
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -18,8 +19,6 @@ import {
   Alert,
   Chip,
   IconButton,
-  Slider,
-  TextField,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import {
@@ -27,7 +26,6 @@ import {
   Language,
   Palette,
   ArticleOutlined,
-  Edit,
   Upload,
   Check,
   Star,
@@ -126,23 +124,18 @@ const LogoUploadBox = styled(Box)(({ theme }) => ({
   },
 }));
 
+// Dodaję aliasy dla ikon
+const PaletteIcon = Palette;
+const LanguageIcon = Language;
+
 const Settings = () => {
   const { t } = useTranslation();
-  const { currentUser } = useUser();
   const { mySystemOfDesign } = useSettings();
   const dispatch = useDispatch();
+  const { currentUser } = useUser();
   const selectedTemplateType = useSelector(
     (state) => state?.settings?.settings?.templateInvoice,
   );
-
-  // Debug logging
-  useEffect(() => {
-    console.log('Settings component - debug info:', {
-      currentUser,
-      selectedTemplateType,
-      hasDispatch: !!dispatch,
-    });
-  }, [currentUser, selectedTemplateType, dispatch]);
 
   // Template configuration state
   const [configDialog, setConfigDialog] = useState(false);
@@ -388,7 +381,7 @@ const Settings = () => {
                 <Button
                   variant='outlined'
                   size='small'
-                  startIcon={<Palette />}
+                  startIcon={<PaletteIcon />}
                   onClick={() => setConfigDialog(true)}
                 >
                   {t('customize')}
@@ -517,7 +510,7 @@ const Settings = () => {
           <SettingsCard>
             <CardContent sx={{ p: 4 }}>
               <SectionTitle>
-                <Language sx={{ color: '#667eea' }} />
+                <LanguageIcon sx={{ color: '#667eea' }} />
                 {t('languageSettings')}
               </SectionTitle>
               <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
@@ -570,7 +563,7 @@ const Settings = () => {
             <CardContent sx={{ p: 4 }}>
               <Box sx={{ mb: 3 }}>
                 <SectionTitle>
-                  <Palette sx={{ color: '#667eea' }} />
+                  <PaletteIcon sx={{ color: '#667eea' }} />
                   {t('colorThemes')}
                 </SectionTitle>
                 <Typography
@@ -601,7 +594,7 @@ const Settings = () => {
       >
         <DialogTitle>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Palette sx={{ color: '#667eea' }} />
+            <PaletteIcon sx={{ color: '#667eea' }} />
             {t('customizeTemplate')}
           </Box>
         </DialogTitle>
@@ -612,7 +605,7 @@ const Settings = () => {
               variant='h6'
               sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}
             >
-              <Palette /> {t('colorPalette')}
+              <PaletteIcon /> {t('colorPalette')}
             </Typography>
             <Grid container spacing={2} sx={{ mb: 3 }}>
               {colorPalettes.map((palette) => (

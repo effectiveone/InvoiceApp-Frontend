@@ -1,37 +1,41 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import TemplateCheckbox from "./TemplateCheckbox";
+/* eslint-disable no-undef */
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import TemplateCheckbox from './TemplateCheckbox';
 
 const mockStore = configureMockStore();
 
-describe("TemplateCheckbox component", () => {
+// Mock function
+const selectOption = jest.fn();
+
+describe('TemplateCheckbox component', () => {
   let store;
 
   beforeEach(() => {
     store = mockStore({
       template: {
-        selectedOption: "basicInput",
+        selectedOption: 'basicInput',
       },
     });
   });
 
-  it("should render the component with basic input option selected", () => {
+  it('should render the component with basic input option selected', () => {
     render(
       <Provider store={store}>
         <TemplateCheckbox />
-      </Provider>
+      </Provider>,
     );
 
-    const basicInputRadio = screen.getByRole("radio", {
-      name: "Basic Input",
+    const basicInputRadio = screen.getByRole('radio', {
+      name: 'Basic Input',
     });
-    const mediumInputRadio = screen.getByRole("radio", {
-      name: "Medium Input",
+    const mediumInputRadio = screen.getByRole('radio', {
+      name: 'Medium Input',
     });
-    const printerInputRadio = screen.getByRole("radio", {
-      name: "Printer Input",
+    const printerInputRadio = screen.getByRole('radio', {
+      name: 'Printer Input',
     });
 
     expect(basicInputRadio.checked).toBe(true);
@@ -39,38 +43,38 @@ describe("TemplateCheckbox component", () => {
     expect(printerInputRadio.checked).toBe(false);
   });
 
-  it("should select a different option when a radio button is clicked", () => {
+  it('should select a different option when a radio button is clicked', () => {
     render(
       <Provider store={store}>
         <TemplateCheckbox />
-      </Provider>
+      </Provider>,
     );
 
-    const mediumInputRadio = screen.getByRole("radio", {
-      name: "Medium Input",
+    const mediumInputRadio = screen.getByRole('radio', {
+      name: 'Medium Input',
     });
 
     fireEvent.click(mediumInputRadio);
 
     expect(mediumInputRadio.checked).toBe(true);
-    expect(store.getActions()).toEqual([selectOption("mediumInput")]);
+    expect(store.getActions()).toEqual([selectOption('mediumInput')]);
   });
 
-  it("should dispatch toggleCheckbox action when radio button is clicked", () => {
+  it('should dispatch toggleCheckbox action when radio button is clicked', () => {
     store.dispatch = jest.fn();
 
     render(
       <Provider store={store}>
         <TemplateCheckbox />
-      </Provider>
+      </Provider>,
     );
 
-    const printerInputRadio = screen.getByRole("radio", {
-      name: "Printer Input",
+    const printerInputRadio = screen.getByRole('radio', {
+      name: 'Printer Input',
     });
 
     fireEvent.click(printerInputRadio);
 
-    expect(store.dispatch).toHaveBeenCalledWith(selectOption("printerInput"));
+    expect(store.dispatch).toHaveBeenCalledWith(selectOption('printerInput'));
   });
 });

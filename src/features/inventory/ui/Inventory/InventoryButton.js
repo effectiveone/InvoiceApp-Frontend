@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useProductContext } from '../../Context/useProductContext';
+import { useProductContext } from '../../../../entities/product/model/useProductContext';
 import { Button } from '@material-ui/core';
 
 const InventoryButton = () => {

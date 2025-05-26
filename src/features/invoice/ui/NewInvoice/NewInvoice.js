@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
+import { Box } from '@material-ui/core';
+import Layout from '../../../../shared/ui/Layout/layout';
+import InvoiceForm from './InvoiceForm';
 import {
-  Button,
-  Box,
-  Paper,
-  Typography,
-  Container,
-  Fab,
-  Zoom,
-} from '@mui/material';
+  InvoiceProvider,
+  useInvoiceContext,
+} from '../../../../entities/invoice/model/useInvoiceContext';
+import { ProductProvider } from '../../../../entities/product/model/useProductContext';
+import { KontrahentProvider } from '../../../../entities/kontrahent/model/useKontrahentContext';
+import { CompanyProvider } from '../../../../entities/user/model/useCompanyContext';
+import { Paper, Typography, Container, Fab } from '@mui/material';
 import { styled } from '@mui/system';
-import {
-  Preview,
-  Print,
-  Save,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { Preview, Print, Save, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import FactoryInvoicePrinter from '../InvoicesTemplates/factoryInvoicePrinter';
-import { useInvoiceContext } from '../../../../entities/invoice/model/useInvoiceContext';
 import ReactToPrint from 'react-to-print';
-import InvoiceForm from './InvoiceForm';
 
 const ActionBar = styled(Paper)(({ theme }) => ({
   position: 'fixed',

@@ -3,7 +3,6 @@ import { StoreProvider, RouterProvider, I18nProvider } from './providers';
 import { AppRoutes } from './routing';
 import { useUser } from '../shared/lib/useUser';
 import AlertNotification from '../shared/ui/AlertNotification';
-import './App.css';
 
 function AppContent() {
   const { currentUser } = useUser();

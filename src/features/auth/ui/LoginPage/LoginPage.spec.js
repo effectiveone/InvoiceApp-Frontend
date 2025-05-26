@@ -1,13 +1,19 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
-import LoginPage from "./LoginPage";
+/* eslint-disable no-undef */
+import React from 'react';
+import {
+  render,
+  screen,
+  fireEvent,
+  getByLabelText,
+} from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import LoginPage from './LoginPage';
 
 const mockStore = configureMockStore([thunk]);
 
-describe("LoginPage", () => {
+describe('LoginPage', () => {
   let store;
 
   beforeEach(() => {
@@ -21,70 +27,70 @@ describe("LoginPage", () => {
     });
   });
 
-  test("should render all input fields and a button", () => {
+  test('should render all input fields and a button', () => {
     const { getByLabelText, getByRole } = render(
       <Provider store={store}>
         <LoginPage />
-      </Provider>
+      </Provider>,
     );
 
-    expect(getByLabelText("Email")).toBeInTheDocument();
-    expect(getByLabelText("Password")).toBeInTheDocument();
-    expect(getByRole("button")).toBeInTheDocument();
+    expect(getByLabelText('Email')).toBeInTheDocument();
+    expect(getByLabelText('Password')).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
   });
 
-  test("should update email and password input value on change", () => {
+  test('should update email and password input value on change', () => {
     const { getByLabelText } = render(
       <Provider store={store}>
         <LoginPage />
-      </Provider>
+      </Provider>,
     );
 
-    const emailInput = getByLabelText("Email");
-    const passwordInput = getByLabelText("Password");
+    const emailInput = getByLabelText('Email');
+    const passwordInput = getByLabelText('Password');
 
-    fireEvent.change(emailInput, { target: { value: "test@test.com" } });
-    fireEvent.change(passwordInput, { target: { value: "password123" } });
+    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
-    expect(emailInput).toHaveValue("test@test.com");
-    expect(passwordInput).toHaveValue("password123");
+    expect(emailInput).toHaveValue('test@test.com');
+    expect(passwordInput).toHaveValue('password123');
   });
 
-  test("should show an error message if form fields are empty and button is clicked", () => {
+  test('should show an error message if form fields are empty and button is clicked', () => {
     const { getByRole, getByText } = render(
       <Provider store={store}>
         <LoginPage />
-      </Provider>
+      </Provider>,
     );
 
-    const loginButton = getByRole("button");
+    const loginButton = getByRole('button');
 
     fireEvent.click(loginButton);
 
     expect(
-      getByText("Please enter a valid email address.")
+      getByText('Please enter a valid email address.'),
     ).toBeInTheDocument();
-    expect(getByText("Please enter a valid password.")).toBeInTheDocument();
+    expect(getByText('Please enter a valid password.')).toBeInTheDocument();
   });
 
-  test("should dispatch login action on button click with valid form fields", () => {
+  test('should dispatch login action on button click with valid form fields', () => {
     const { getByRole } = render(
       <Provider store={store}>
         <LoginPage />
-      </Provider>
+      </Provider>,
     );
 
-    const loginButton = getByRole("button");
+    const loginButton = getByRole('button');
 
-    fireEvent.change(getByLabelText("Email"), {
-      target: { value: "test@test.com" },
+    fireEvent.change(getByLabelText('Email'), {
+      target: { value: 'test@test.com' },
     });
-    fireEvent.change(getByLabelText("Password"), {
-      target: { value: "password123" },
+    fireEvent.change(getByLabelText('Password'), {
+      target: { value: 'password123' },
     });
 
     fireEvent.click(loginButton);
 
-    expect(store.getActions()).toEqual([{ type: "LOGIN_REQUEST" }]);
+    expect(store.getActions()).toEqual([{ type: 'LOGIN_REQUEST' }]);
   });
 });

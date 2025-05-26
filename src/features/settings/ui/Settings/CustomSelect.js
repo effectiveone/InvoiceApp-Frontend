@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   IconButton,
   Paper,
   ClickAwayListener,
   Tooltip,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+  Chip,
+  Button,
+  Fade,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../../../shared/lib/useSettings';
-import { v4 as uuid } from 'uuid';
 
 const LanguageSelector = styled(Box)(({ theme }) => ({
   position: 'relative',

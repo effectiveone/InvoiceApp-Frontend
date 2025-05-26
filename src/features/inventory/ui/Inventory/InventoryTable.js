@@ -1,7 +1,7 @@
-import React from "react";
-import { useProductContext } from "../../Context/useProductContext";
-import { makeStyles } from "@material-ui/core/styles";
-import { v4 as uuidv4 } from "uuid";
+import React from 'react';
+import { useProductContext } from '../../../../entities/product/model/useProductContext';
+import { makeStyles } from '@material-ui/core/styles';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Table,
   TableBody,
@@ -13,44 +13,44 @@ import {
   Button,
   TableSortLabel,
   TablePagination,
-} from "@material-ui/core";
-import FilterWrapper from "../FilterWrapper";
-import { useInvoiceTable } from "../../Hook/useInvoiceTable";
-import { useModal } from "../../Hook/useModal";
-import { t } from "i18next";
+} from '@material-ui/core';
+import FilterWrapper from '../../../../shared/ui/FilterWrapper';
+import { useInvoiceTable } from '../../../../shared/lib/useInvoiceTable';
+import { useModal } from '../../../../shared/lib/useModal';
+import { t } from 'i18next';
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "150px",
-    marginLeft: "50px",
-    paddingBottom: "50px",
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '150px',
+    marginLeft: '50px',
+    paddingBottom: '50px',
   },
   boxFlex: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    justifyContent: 'space-between',
   },
 }));
 
 const productsName = [
   {
-    value: "name",
-    name: "Nazwa Produktu",
+    value: 'name',
+    name: 'Nazwa Produktu',
   },
   {
-    value: "netPrice",
-    name: "cena netto",
+    value: 'netPrice',
+    name: 'cena netto',
   },
   {
-    value: "vat",
-    name: "vat",
+    value: 'vat',
+    name: 'vat',
   },
   {
-    value: "unit",
-    name: "ilość",
+    value: 'unit',
+    name: 'ilość',
   },
 ];
 
@@ -74,7 +74,7 @@ const ContrahentTable = () => {
   const classes = useStyles();
   const handleEditChange = (id) => {
     handleEdit(id);
-    setButtonText("Zapisz zmiany");
+    setButtonText('Zapisz zmiany');
   };
 
   return (
@@ -84,8 +84,8 @@ const ContrahentTable = () => {
         // selected={selected}
       />
 
-      <TableContainer component={Paper} data-testid="inventory-table">
-        <Table className={classes.table} aria-label="invoices table">
+      <TableContainer component={Paper} data-testid='inventory-table'>
+        <Table className={classes.table} aria-label='invoices table'>
           <TableHead>
             <TableRow>
               {productsName?.map((k) => (
@@ -109,7 +109,7 @@ const ContrahentTable = () => {
               (rowsPerPage > 0
                 ? sortedProducts?.slice(
                     page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
+                    page * rowsPerPage + rowsPerPage,
                   )
                 : sortedProducts
               )?.map((invoice, index) => (
@@ -126,7 +126,7 @@ const ContrahentTable = () => {
           {sortedProducts.length > 10 && (
             <TablePagination
               rowsPerPageOptions={[10, 25, 50]}
-              component="div"
+              component='div'
               count={sortedProducts.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -157,7 +157,7 @@ const InvoiceComponent = ({
 
   return (
     <TableRow key={uuidv4()}>
-      <TableCell component="th" scope="row">
+      <TableCell component='th' scope='row'>
         {name}
       </TableCell>
       <TableCell>{netPrice}</TableCell>
@@ -165,23 +165,23 @@ const InvoiceComponent = ({
       <TableCell>{unit}</TableCell>
       <TableCell>
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           className={classes.button}
           onClick={() => handleEditChange(_id)}
         >
-          {t("edit")}
+          {t('edit')}
         </Button>
       </TableCell>
 
       <TableCell>
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           className={classes.button}
           onClick={() => handleDelete(_id)}
         >
-          {t("delete")}
+          {t('delete')}
         </Button>
       </TableCell>
     </TableRow>

@@ -24,7 +24,7 @@ import {
   AccountBalance as BankIcon,
 } from '@mui/icons-material';
 import { useKontrahentContext } from '../../../entities/kontrahent/model/useKontrahentContext';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 // Legal forms
 const legalForms = [

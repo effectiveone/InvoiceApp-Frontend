@@ -1,94 +1,117 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { useProductContext } from "../../Context/useProductContext";
-import InventoryModal from "./InventoryModal";
-import ProductForm from "./ProductForm";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { useProductContext } from '../../Context/useProductContext';
+import InventoryModal from './InventoryModal';
+import ProductForm from './ProductForm';
+import { Provider } from 'react-redux';
+import { store } from '../../../../app/store/store';
 
-jest.mock("../../Context/useProductContext");
+jest.mock('../../Context/useProductContext');
 
-describe("InventoryModal", () => {
-  test("renders correctly when open", () => {
+describe('InventoryModal', () => {
+  test('renders correctly when open', () => {
     useProductContext.mockReturnValue({
       open: true,
       handleClose: jest.fn(),
       updatedCompanyData: {},
       handleChange: jest.fn(),
-      button: <button data-testid="test-button">Test Button</button>,
+      button: <button data-testid='test-button'>Test Button</button>,
     });
 
     render(<InventoryModal />);
 
-    const modal = screen.getByTestId("inventory-modal");
+    const modal = screen.getByTestId('inventory-modal');
     expect(modal).toBeInTheDocument();
 
-    const cancelButton = screen.getByText("cancel");
+    const cancelButton = screen.getByText('cancel');
     expect(cancelButton).toBeInTheDocument();
 
-    const testButton = screen.getByTestId("test-button");
+    const testButton = screen.getByTestId('test-button');
     expect(testButton).toBeInTheDocument();
 
-    const productForm = screen.getByRole("form", { name: "product-form" });
+    const productForm = screen.getByRole('form', { name: 'product-form' });
     expect(productForm).toBeInTheDocument();
   });
 
-  test("renders correctly when closed", () => {
+  test('renders correctly when closed', () => {
     useProductContext.mockReturnValue({
       open: false,
       handleClose: jest.fn(),
       updatedCompanyData: {},
       handleChange: jest.fn(),
-      button: <button data-testid="test-button">Test Button</button>,
+      button: <button data-testid='test-button'>Test Button</button>,
     });
 
     render(<InventoryModal />);
 
-    const modal = screen.queryByTestId("inventory-modal");
+    const modal = screen.queryByTestId('inventory-modal');
     expect(modal).not.toBeInTheDocument();
 
-    const cancelButton = screen.queryByText("cancel");
+    const cancelButton = screen.queryByText('cancel');
     expect(cancelButton).not.toBeInTheDocument();
 
-    const testButton = screen.queryByTestId("test-button");
+    const testButton = screen.queryByTestId('test-button');
     expect(testButton).not.toBeInTheDocument();
 
-    const productForm = screen.queryByRole("form", { name: "product-form" });
+    const productForm = screen.queryByRole('form', { name: 'product-form' });
     expect(productForm).not.toBeInTheDocument();
   });
 
-  test("clicking cancel button calls handleClose function", () => {
+  test('clicking cancel button calls handleClose function', () => {
     const handleClose = jest.fn();
     useProductContext.mockReturnValue({
       open: true,
       handleClose,
       updatedCompanyData: {},
       handleChange: jest.fn(),
-      button: <button data-testid="test-button">Test Button</button>,
+      button: <button data-testid='test-button'>Test Button</button>,
     });
 
     render(<InventoryModal />);
 
-    const cancelButton = screen.getByText("cancel");
+    const cancelButton = screen.getByText('cancel');
     fireEvent.click(cancelButton);
     expect(handleClose).toHaveBeenCalled();
   });
 
-  test("should call handleClose when clicking the cancel button", () => {
+  test('should call handleClose when clicking the cancel button', () => {
     const handleClose = jest.fn();
     useProductContext.mockReturnValue({ open: true, handleClose });
 
-    const { getByText } = render(<InvenotryModal />);
-    const cancelButton = getByText("Cancel");
+    const { getByText } = render(<InventoryModal />);
+    const cancelButton = getByText('Cancel');
     fireEvent.click(cancelButton);
 
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
-  test("should render ProductForm component", () => {
+  test('should render ProductForm component', () => {
     useProductContext.mockReturnValue({ open: true });
 
-    const { getByTestId } = render(<InvenotryModal />);
-    const productForm = getByTestId("product-form");
+    const { getByTestId } = render(<InventoryModal />);
+    const productForm = getByTestId('product-form');
 
     expect(productForm).toBeInTheDocument();
+  });
+
+  test('renders modal with correct title', () => {
+    render(
+      <Provider store={store}>
+        <InventoryModal open={true} onClose={() => {}} />
+      </Provider>,
+    );
+    expect(screen.getByText('Add Product')).toBeInTheDocument();
+  });
+
+  test('calls onClose when close button is clicked', () => {
+    const mockOnClose = jest.fn();
+    render(
+      <Provider store={store}>
+        <InventoryModal open={true} onClose={mockOnClose} />
+      </Provider>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /close/i }));
+    expect(mockOnClose).toHaveBeenCalled();
   });
 });
