@@ -20,6 +20,7 @@ export const useProduct = () => {
 
   const productList = useSelector((state) => state.products?.products);
   const [buttonText, setButtonText] = useState();
+  const [paramsId, setParamsId] = useState();
 
   const [product, setProduct] = useState({
     name: '',
@@ -66,11 +67,15 @@ export const useProduct = () => {
     setProduct((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  useEffect(() => {
-    if (!productList?.length && currentUser) {
+  const loadProducts = () => {
+    console.log('loadProducts called, currentUser:', currentUser);
+    if (currentUser && currentUser.mail) {
+      console.log('Dispatching readProducts for user:', currentUser.mail);
       dispatch(readProducts(currentUser));
+    } else {
+      console.warn('Cannot load products: currentUser not available');
     }
-  }, [dispatch, productList, currentUser]);
+  };
 
   const handleSubmit = () => {
     validationSchema
@@ -87,9 +92,8 @@ export const useProduct = () => {
         setErrors(newErrors);
       });
   };
-  const [paramsId, setParamsId] = useState();
+
   const handleSubmitEdit = () => {
-    handleOpen();
     validationSchema
       .validate(product, { abortEarly: false })
       .then(() => {
@@ -134,27 +138,29 @@ export const useProduct = () => {
   const handleEdit = (id) => {
     setParamsId(id);
     const thisProduct = productList.find((product) => product._id === id);
-    setProduct({
-      name: thisProduct.name,
-      code: thisProduct.code,
-      netPrice: thisProduct.netPrice,
-      vat: thisProduct.vat,
-      grossPrice: thisProduct.grossPrice,
-      currency: thisProduct.currency,
-      description: thisProduct.description,
-      tags: thisProduct.tags,
-      quantity: thisProduct.quantity,
-      service: thisProduct.service,
-      purchaseNetPrice: thisProduct.purchaseNetPrice,
-      purchaseVat: thisProduct.purchaseVat,
-      purchaseGrossPrice: thisProduct.purchaseGrossPrice,
-      unit: thisProduct.unit,
-      defaultQuantity: thisProduct.defaultQuantity,
-      pkwiu: thisProduct.pkwiu,
-      supplierCode: thisProduct.supplierCode,
-      accountingCode: thisProduct.accountingCode,
-      userEmail: currentUser?.mail,
-    });
+    if (thisProduct) {
+      setProduct({
+        name: thisProduct.name || '',
+        code: thisProduct.code || '',
+        netPrice: thisProduct.netPrice || '',
+        vat: thisProduct.vat || '',
+        grossPrice: thisProduct.grossPrice || '',
+        currency: thisProduct.currency || '',
+        description: thisProduct.description || '',
+        tags: thisProduct.tags || '',
+        quantity: thisProduct.quantity || '',
+        service: thisProduct.service || '',
+        purchaseNetPrice: thisProduct.purchaseNetPrice || '',
+        purchaseVat: thisProduct.purchaseVat || '',
+        purchaseGrossPrice: thisProduct.purchaseGrossPrice || '',
+        unit: thisProduct.unit || '',
+        defaultQuantity: thisProduct.defaultQuantity || '',
+        pkwiu: thisProduct.pkwiu || '',
+        supplierCode: thisProduct.supplierCode || '',
+        accountingCode: thisProduct.accountingCode || '',
+        userEmail: currentUser?.mail,
+      });
+    }
   };
 
   const handleDelete = (id) => {
@@ -164,18 +170,11 @@ export const useProduct = () => {
   const button = useSubmitButton(handleSubmit, handleSubmitEdit, buttonText);
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && currentUser.mail && !productList?.length) {
+      console.log('Auto-loading products for user:', currentUser.mail);
       dispatch(readProducts(currentUser));
     }
-  }, [dispatch, currentUser]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setErrors({});
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [errors]);
+  }, [currentUser, dispatch, productList]);
 
   return {
     errors,
@@ -191,5 +190,6 @@ export const useProduct = () => {
     product,
     productList,
     handleSubmit,
+    loadProducts,
   };
 };

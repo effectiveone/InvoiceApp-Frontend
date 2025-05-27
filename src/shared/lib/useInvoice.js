@@ -120,6 +120,7 @@ export const useInvoice = () => {
     totalGrossValue,
     notes,
     invoiceType,
+    invoiceNumber: currentInvoiceNumber,
     userEmail: currentUser?.mail,
   };
 

@@ -135,7 +135,7 @@ export const getInvoiceAllNumber = async (data) => {
 // Company API functions
 export const createCompany = async (data) => {
   try {
-    return await apiClient.put('/auth/dane-firmy', data);
+    return await apiClient.post('/company', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -147,7 +147,7 @@ export const createCompany = async (data) => {
 
 export const getCompany = async (data) => {
   try {
-    return await apiClient.post('/auth/get-dane-firmy', data);
+    return await apiClient.post('/company/read', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -159,7 +159,7 @@ export const getCompany = async (data) => {
 
 export const editCompany = async (data) => {
   try {
-    return await apiClient.patch('/auth/dane-firmy', data);
+    return await apiClient.post('/company', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -172,7 +172,7 @@ export const editCompany = async (data) => {
 // Kontrahent API functions
 export const createKontrahent = async (data) => {
   try {
-    return await apiClient.post('/auth/kontrahenci', data);
+    return await apiClient.post('/kontrahent', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -184,7 +184,7 @@ export const createKontrahent = async (data) => {
 
 export const getKontrahent = async (data) => {
   try {
-    return await apiClient.post('/auth/get-kontrahenci', data);
+    return await apiClient.post('/kontrahent/list', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -196,7 +196,7 @@ export const getKontrahent = async (data) => {
 
 export const editKontrahent = async (data) => {
   try {
-    return await apiClient.patch(`/auth/kontrahenci/${data.id}`, data);
+    return await apiClient.put(`/kontrahent/${data.id}`, data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -208,7 +208,7 @@ export const editKontrahent = async (data) => {
 
 export const deleteKontrahent = async (id) => {
   try {
-    return await apiClient.delete(`/auth/kontrahenci/${id}`);
+    return await apiClient.delete(`/kontrahent/${id}`);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -221,7 +221,7 @@ export const deleteKontrahent = async (id) => {
 // Product API functions
 export const createProduct = async (data) => {
   try {
-    return await apiClient.post('/auth/product', data);
+    return await apiClient.post('/products', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -231,9 +231,9 @@ export const createProduct = async (data) => {
   }
 };
 
-export const getProducts = async () => {
+export const getProducts = async (data) => {
   try {
-    return await apiClient.get('/auth/products');
+    return await apiClient.post('/products/list', data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -245,7 +245,7 @@ export const getProducts = async () => {
 
 export const getProduct = async (data) => {
   try {
-    return await apiClient.post('/auth/product', data);
+    return await apiClient.get(`/products/${data.id}`);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -257,7 +257,7 @@ export const getProduct = async (data) => {
 
 export const editProduct = async (data) => {
   try {
-    return await apiClient.post(`/auth/product/${data.id}`, data);
+    return await apiClient.put(`/products/${data.id}`, data);
   } catch (exception) {
     checkResponseCode(exception);
     return {
@@ -269,7 +269,7 @@ export const editProduct = async (data) => {
 
 export const deleteProduct = async (id) => {
   try {
-    return await apiClient.delete(`/auth/product/${id}`);
+    return await apiClient.delete(`/products/${id}`);
   } catch (exception) {
     checkResponseCode(exception);
     return {

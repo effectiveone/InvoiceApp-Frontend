@@ -42,7 +42,10 @@ export const addContractorData = (newData, user) => async (dispatch) => {
   if (!user) return;
 
   try {
-    const response = await api.createKontrahent(newData);
+    const response = await api.createKontrahent({
+      ...newData,
+      userEmail: user.mail,
+    });
 
     if (response.error) {
       dispatch(
@@ -71,6 +74,7 @@ export const updateContractorData =
       const response = await api.editKontrahent({
         ...updatedData,
         id: paramsId,
+        userEmail: user.mail,
       });
 
       if (response.error) {
@@ -114,7 +118,10 @@ export const deleteContractor = (paramsId, user) => async (dispatch) => {
         ),
       );
     } else {
-      dispatch({ type: DELETE_CONTRACTOR_SUCCESS });
+      dispatch({
+        type: DELETE_CONTRACTOR_SUCCESS,
+        payload: paramsId,
+      });
       dispatch(openAlertMessage('Contractor deleted successfully!'));
     }
   } catch (err) {

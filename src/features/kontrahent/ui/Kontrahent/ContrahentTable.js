@@ -1,7 +1,7 @@
-import React from "react";
-import { useKontrahentContext } from "../../Context/useKontrahentContext";
-import { makeStyles } from "@material-ui/core/styles";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect } from 'react';
+import { useKontrahentContext } from '../../Context/useKontrahentContext';
+import { makeStyles } from '@material-ui/core/styles';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Table,
   TableBody,
@@ -13,52 +13,62 @@ import {
   Button,
   TableSortLabel,
   TablePagination,
-} from "@material-ui/core";
-import FilterWrapper from "../FilterWrapper";
-import { useInvoiceTable } from "../../Hook/useInvoiceTable";
-import { useModal } from "../../Hook/useModal";
-import { t } from "i18next";
+} from '@material-ui/core';
+import FilterWrapper from '../FilterWrapper';
+import { useInvoiceTable } from '../../Hook/useInvoiceTable';
+import { useModal } from '../../Hook/useModal';
+import { t } from 'i18next';
 
 const useStyles = makeStyles((theme) => ({
   gridFlex: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "150px",
-    marginLeft: "50px",
-    paddingBottom: "50px",
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '150px',
+    marginLeft: '50px',
+    paddingBottom: '50px',
   },
   boxFlex: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    justifyContent: 'space-between',
   },
 }));
 
 const kontrahentsDate = [
   {
-    value: "companyName",
-    name: "Nazwa fromy",
+    value: 'companyName',
+    name: 'Nazwa fromy',
   },
   {
-    value: "legalForm",
-    name: "Forma prawna",
+    value: 'legalForm',
+    name: 'Forma prawna',
   },
   {
-    value: "nip",
-    name: "NIP",
+    value: 'nip',
+    name: 'NIP',
   },
   {
-    value: "city",
-    name: "Miasto",
+    value: 'city',
+    name: 'Miasto',
   },
 ];
 
 function ContrahentTable(contractor) {
   const { handleOpen } = useModal();
 
-  const { handleEdit, handleDelete, setButtonText, kontrahent } =
-    useKontrahentContext();
+  const {
+    handleEdit,
+    handleDelete,
+    setButtonText,
+    kontrahent,
+    loadKontrahents,
+  } = useKontrahentContext();
+
+  // Załadowanie danych kontrahentów przy pierwszym renderze
+  useEffect(() => {
+    loadKontrahents();
+  }, []);
 
   const {
     order,
@@ -74,7 +84,7 @@ function ContrahentTable(contractor) {
   const classes = useStyles();
   const handleEditChange = (id) => {
     handleEdit(id);
-    setButtonText("Zapisz zmiany");
+    setButtonText('Zapisz zmiany');
   };
 
   return (
@@ -85,7 +95,7 @@ function ContrahentTable(contractor) {
       />
 
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="invoices table">
+        <Table className={classes.table} aria-label='invoices table'>
           <TableHead>
             <TableRow>
               {kontrahentsDate?.map((k) => (
@@ -109,7 +119,7 @@ function ContrahentTable(contractor) {
               (rowsPerPage > 0
                 ? sortedKontrahents?.slice(
                     page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
+                    page * rowsPerPage + rowsPerPage,
                   )
                 : sortedKontrahents
               )?.map((invoice, index) => (
@@ -126,7 +136,7 @@ function ContrahentTable(contractor) {
           {sortedKontrahents.length > 10 && (
             <TablePagination
               rowsPerPageOptions={[10, 25, 50]}
-              component="div"
+              component='div'
               count={sortedKontrahents.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -157,7 +167,7 @@ const InvoiceComponent = ({
 
   return (
     <TableRow key={uuidv4()}>
-      <TableCell component="th" scope="row">
+      <TableCell component='th' scope='row'>
         {companyName}
       </TableCell>
       <TableCell>{legalForm}</TableCell>
@@ -165,23 +175,23 @@ const InvoiceComponent = ({
       <TableCell>{city}</TableCell>
       <TableCell>
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           className={classes.button}
           onClick={() => handleEditChange(_id)}
         >
-          {t("edit")}
+          {t('edit')}
         </Button>
       </TableCell>
 
       <TableCell>
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           className={classes.button}
           onClick={() => handleDelete(_id)}
         >
-          {t("delete")}
+          {t('delete')}
         </Button>
       </TableCell>
     </TableRow>

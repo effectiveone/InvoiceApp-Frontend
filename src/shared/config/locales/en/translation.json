@@ -349,5 +349,11 @@
   "contractorFoundation": "Foundation",
   "contractorAssociation": "Association",
   "contact": "Contact",
-  "invoiceType": "Invoice type"
+  "invoiceType": "Invoice type",
+  "addFromInventory": "Add from inventory",
+  "selectProduct": "Select product from inventory",
+  "searchProducts": "Search products...",
+  "noProductsFound": "No products found",
+  "productCode": "Product code",
+  "noProductsAvailable": "No products available in inventory. Please try again in a moment."
 }

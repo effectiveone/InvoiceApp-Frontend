@@ -1,24 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../shared/ui/Layout/layout';
-import {
-  ProductProvider,
-  useProductContext,
-} from '../entities/product/model/useProductContext';
+import { useProduct } from '../shared/lib/useProduct';
 import { InventoryTable } from '../features/inventory';
 
-// Component that uses the product context
-const InventoryTableWithContext = () => {
-  const { productList } = useProductContext();
+const EnhancedInventoryPage = () => {
+  const { productList, loadProducts } = useProduct();
+
+  // Załadowanie danych produktów przy pierwszym renderze
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   return <InventoryTable products={productList || []} />;
-};
-
-const EnhancedInventoryPage = () => {
-  return (
-    <ProductProvider>
-      <InventoryTableWithContext />
-    </ProductProvider>
-  );
 };
 
 export default Layout(EnhancedInventoryPage);

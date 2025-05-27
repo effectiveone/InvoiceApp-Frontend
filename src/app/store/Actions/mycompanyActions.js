@@ -69,7 +69,7 @@ export const updateCompanyData = (updatedData, user) => {
   return async (dispatch) => {
     try {
       const response = await api.editCompany({
-        mail,
+        userEmail: mail,
         ...updatedData,
       });
 

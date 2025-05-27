@@ -9,6 +9,14 @@ const AlertNotification = ({
   closeAlertMessage,
   alertMessageContent,
 }) => {
+  // Zabezpieczenie - zawsze renderuj string
+  const messageText =
+    typeof alertMessageContent === 'string'
+      ? alertMessageContent
+      : alertMessageContent?.message ||
+        JSON.stringify(alertMessageContent) ||
+        'Wystąpił błąd';
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -16,7 +24,7 @@ const AlertNotification = ({
       onClose={closeAlertMessage}
       autoHideDuration={6000}
     >
-      <Alert severity='info'>{alertMessageContent}</Alert>
+      <Alert severity='info'>{messageText}</Alert>
     </Snackbar>
   );
 };

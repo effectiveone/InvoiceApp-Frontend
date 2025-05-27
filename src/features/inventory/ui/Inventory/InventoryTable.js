@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useProductContext } from '../../../../entities/product/model/useProductContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
@@ -57,7 +57,7 @@ const productsName = [
 const ContrahentTable = () => {
   const { handleOpen } = useModal();
 
-  const { handleDelete, handleEdit, setButtonText, productList } =
+  const { handleDelete, handleEdit, setButtonText, productList, loadProducts } =
     useProductContext();
 
   const {
@@ -72,6 +72,12 @@ const ContrahentTable = () => {
     sortedProducts,
   } = useInvoiceTable({ productList: productList });
   const classes = useStyles();
+
+  // Załadowanie danych produktów przy pierwszym renderze
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
   const handleEditChange = (id) => {
     handleEdit(id);
     setButtonText('Zapisz zmiany');

@@ -13,6 +13,12 @@ import {
   FormControl,
   InputLabel,
   Container,
+  Modal,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  Divider,
 } from '@mui/material';
 import {
   Delete,
@@ -22,10 +28,14 @@ import {
   Business,
   DateRange,
   AttachMoney,
+  ShoppingCart,
+  Search,
+  Close,
 } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { useInvoiceContext } from '../../../../entities/invoice/model/useInvoiceContext';
+import { useProduct } from '../../../../shared/lib/useProduct';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: '24px',
@@ -109,6 +119,146 @@ const TotalCard = styled(Card)(({ theme }) => ({
   border: '1px solid #0ea5e9',
 }));
 
+const ProductPickerModal = styled(Modal)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const ProductPickerContent = styled(Paper)(({ theme }) => ({
+  width: '90%',
+  maxWidth: '800px',
+  maxHeight: '80vh',
+  overflow: 'hidden',
+  borderRadius: '16px',
+  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const ProductPickerHeader = styled(Box)(({ theme }) => ({
+  padding: '24px',
+  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
+const ProductList = styled(List)(({ theme }) => ({
+  flex: 1,
+  overflow: 'auto',
+  padding: 0,
+}));
+
+const SearchBox = styled(Box)(({ theme }) => ({
+  padding: '16px',
+  borderBottom: '1px solid #e5e7eb',
+}));
+
+// Komponent do wyboru produktów z magazynu
+const ProductPicker = ({ open, onClose, onSelectProduct, products = [] }) => {
+  const { t } = useTranslation();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.code?.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  const handleSelectProduct = (product) => {
+    onSelectProduct(product);
+    onClose();
+  };
+
+  return (
+    <ProductPickerModal open={open} onClose={onClose}>
+      <ProductPickerContent>
+        <ProductPickerHeader>
+          <Typography
+            variant='h6'
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
+            <ShoppingCart />
+            {t('selectProduct', 'Wybierz produkt z magazynu')}
+          </Typography>
+          <Button
+            onClick={onClose}
+            sx={{ color: 'white', minWidth: 'auto', p: 1 }}
+          >
+            <Close />
+          </Button>
+        </ProductPickerHeader>
+
+        <SearchBox>
+          <StyledTextField
+            fullWidth
+            placeholder={t('searchProducts', 'Szukaj produktów...')}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <Search sx={{ mr: 1, color: 'text.secondary' }} />
+              ),
+            }}
+          />
+        </SearchBox>
+
+        <ProductList>
+          {filteredProducts.length === 0 ? (
+            <ListItem>
+              <ListItemText
+                primary={t('noProductsFound', 'Nie znaleziono produktów')}
+                sx={{ textAlign: 'center', color: 'text.secondary' }}
+              />
+            </ListItem>
+          ) : (
+            filteredProducts.map((product, index) => (
+              <React.Fragment key={product._id || product.id || index}>
+                <ListItemButton
+                  onClick={() => handleSelectProduct(product)}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={product.name || t('noData')}
+                    secondary={
+                      <Box>
+                        <Typography variant='caption' color='text.secondary'>
+                          {product.code && `Kod: ${product.code} | `}
+                          Cena netto: {Number(product.netPrice || 0).toFixed(
+                            2,
+                          )}{' '}
+                          PLN | VAT: {product.vat || 0}% | Jednostka:{' '}
+                          {product.unit || 'szt'}
+                        </Typography>
+                        {product.description && (
+                          <Typography
+                            variant='caption'
+                            display='block'
+                            color='text.secondary'
+                          >
+                            {product.description}
+                          </Typography>
+                        )}
+                      </Box>
+                    }
+                  />
+                </ListItemButton>
+                {index < filteredProducts.length - 1 && <Divider />}
+              </React.Fragment>
+            ))
+          )}
+        </ProductList>
+      </ProductPickerContent>
+    </ProductPickerModal>
+  );
+};
+
 const InvoiceForm = () => {
   const { t } = useTranslation();
   const {
@@ -135,10 +285,55 @@ const InvoiceForm = () => {
     notes,
   } = useInvoiceContext();
 
+  const { productList, loadProducts } = useProduct();
   const [isNotesVisibility, setIsNotesVisibility] = useState(false);
+  const [isProductPickerOpen, setIsProductPickerOpen] = useState(false);
+
+  // Produkty będą ładowane automatycznie przez useProduct hook
 
   const changeVisibility = () => {
     setIsNotesVisibility(!isNotesVisibility);
+  };
+
+  const handleSelectProductFromInventory = (product) => {
+    // Sprawdzamy czy VAT jest w procentach (np. 23) czy w ułamkach (np. 0.23)
+    const vatValue =
+      product.vat > 1 ? product.vat / 100 : product.vat || TAX_RATES[0].value;
+    const quantity = product.defaultQuantity || 1;
+    const netPrice = Number(product.netPrice) || 0;
+    const netValue = quantity * netPrice;
+    const grossValue = netValue * (1 + vatValue);
+
+    const newItem = {
+      name: product.name || '',
+      quantity,
+      unit: product.unit || 'szt',
+      vat: vatValue,
+      netPrice,
+      netValue,
+      grossValue,
+      // Dodatkowe dane produktu
+      productId: product._id || product.id,
+      code: product.code,
+      description: product.description,
+    };
+
+    // Sprawdzamy czy pierwszy element jest pusty (nowo dodana faktura ma domyślnie pusty element)
+    const isFirstItemEmpty =
+      items.length === 1 &&
+      (!items[0].name || items[0].name.trim() === '') &&
+      (items[0].netPrice === 0 || items[0].netPrice === '') &&
+      items[0].quantity === 1 &&
+      items[0].netValue === 0 &&
+      items[0].grossValue === 0;
+
+    if (isFirstItemEmpty) {
+      // Zastępujemy pusty element wybranym produktem
+      setItems([newItem]);
+    } else {
+      // Dodajemy nowy element do istniejącej listy
+      setItems([...items, newItem]);
+    }
   };
 
   useEffect(() => {
@@ -169,9 +364,45 @@ const InvoiceForm = () => {
     ]);
   };
 
+  const handleAddFromInventory = () => {
+    console.log('ProductList:', productList);
+    console.log('ProductList length:', productList?.length);
+
+    if (!productList || productList.length === 0) {
+      // Spróbuj załadować produkty ponownie
+      if (loadProducts) {
+        loadProducts();
+      }
+      // Pokaż informację użytkownikowi
+      alert(
+        t(
+          'noProductsAvailable',
+          'Brak dostępnych produktów w magazynie. Spróbuj ponownie za chwilę.',
+        ),
+      );
+      return;
+    }
+
+    setIsProductPickerOpen(true);
+  };
+
   const handleRemoveItem = (index) => {
     const newItems = [...items];
     newItems.splice(index, 1);
+
+    // Jeśli usuniemy wszystkie elementy, dodajemy jeden pusty element
+    if (newItems.length === 0) {
+      newItems.push({
+        name: '',
+        quantity: 1,
+        unit: 'szt',
+        vat: TAX_RATES[0].value,
+        netPrice: 0,
+        netValue: 0,
+        grossValue: 0,
+      });
+    }
+
     setItems(newItems);
   };
 
@@ -214,10 +445,7 @@ const InvoiceForm = () => {
             <StyledFormControl fullWidth>
               <InputLabel>{t('selectCustomer')}</InputLabel>
               <Select
-                value={
-                  selectedKontrahent?.kontrahent_companyName ??
-                  kontrahent[0]?.companyName
-                }
+                value={selectedKontrahent?.kontrahent_nip || ''}
                 onChange={handleSelectChange}
                 label={t('selectCustomer')}
               >
@@ -305,13 +533,30 @@ const InvoiceForm = () => {
             <AttachMoney />
             {t('productOrSerivce')}
           </SectionTitle>
-          <AddButton
-            variant='contained'
-            onClick={handleAddItem}
-            startIcon={<Add />}
-          >
-            {t('addProductOrService')}
-          </AddButton>
+          <Box display='flex' gap={2}>
+            <Button
+              variant='outlined'
+              onClick={handleAddFromInventory}
+              startIcon={<ShoppingCart />}
+              sx={{
+                borderColor: '#10b981',
+                color: '#10b981',
+                '&:hover': {
+                  borderColor: '#059669',
+                  backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                },
+              }}
+            >
+              {t('addFromInventory', 'Dodaj z magazynu')}
+            </Button>
+            <AddButton
+              variant='contained'
+              onClick={handleAddItem}
+              startIcon={<Add />}
+            >
+              {t('addProductOrService')}
+            </AddButton>
+          </Box>
         </Box>
 
         {items?.map((item, index) => (
@@ -319,6 +564,7 @@ const InvoiceForm = () => {
             key={index}
             index={index}
             item={item}
+            items={items}
             taxRates={TAX_RATES}
             onRemove={handleRemoveItem}
             onChange={handleItemChange}
@@ -401,11 +647,19 @@ const InvoiceForm = () => {
           </Grid>
         </CardContent>
       </TotalCard>
+
+      {/* Product Picker Modal */}
+      <ProductPicker
+        open={isProductPickerOpen}
+        onClose={() => setIsProductPickerOpen(false)}
+        onSelectProduct={handleSelectProductFromInventory}
+        products={productList || []}
+      />
     </Container>
   );
 };
 
-const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
+const InvoiceItem = ({ index, item, items, taxRates, onRemove, onChange }) => {
   const { t } = useTranslation();
 
   const handleFieldChange = (event) => {
@@ -437,7 +691,9 @@ const InvoiceItem = ({ index, item, taxRates, onRemove, onChange }) => {
         <Typography variant='h6' sx={{ fontWeight: '600', color: '#374151' }}>
           {t('productOrSerivce')} {index + 1}
         </Typography>
-        {index > 0 && (
+        {(index > 0 ||
+          (index === 0 && items.length > 1) ||
+          (index === 0 && (item.name?.trim() || item.netPrice > 0))) && (
           <RemoveButton
             variant='contained'
             onClick={() => onRemove(index)}

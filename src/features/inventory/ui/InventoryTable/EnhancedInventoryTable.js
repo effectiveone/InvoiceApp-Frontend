@@ -25,8 +25,14 @@ import {
   DataTableProvider,
   EnhancedProductForm,
 } from '../../../../shared/ui/DataTable';
-import { useProductContext } from '../../../../entities/product/model/useProductContext';
+import { useDispatch } from 'react-redux';
+import { useUser } from '../../../../shared/lib/useUser';
 import { useModal } from '../../../../shared/lib/useModal';
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from '../../../../app/store/Actions/productActions';
 
 // Domain Model for Product Categories
 const ProductCategory = {
@@ -182,11 +188,8 @@ const ModalContent = ({ children, onClose, title }) => {
 const EnhancedInventoryTable = ({ products = [] }) => {
   const { t } = useTranslation();
   const { open, handleOpen, handleClose } = useModal();
-  const {
-    handleEdit: handleEditProduct,
-    handleDelete: handleDeleteProduct,
-    setButtonText,
-  } = useProductContext();
+  const dispatch = useDispatch();
+  const { currentUser } = useUser();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [actionType, setActionType] = useState(null);
 
@@ -376,8 +379,6 @@ const EnhancedInventoryTable = ({ products = [] }) => {
   const handleEditProductAction = (product) => {
     setActionType('edit');
     setSelectedProduct(product);
-    handleEditProduct(product._id);
-    setButtonText('Zapisz zmiany');
     handleOpen();
   };
 
@@ -389,7 +390,7 @@ const EnhancedInventoryTable = ({ products = [] }) => {
 
   const handleDeleteProductAction = (product) => {
     if (window.confirm(`Czy na pewno chcesz usunąć produkt ${product.name}?`)) {
-      handleDeleteProduct(product._id);
+      dispatch(deleteProduct(product._id || product.id, currentUser));
     }
   };
 
@@ -447,6 +448,21 @@ const EnhancedInventoryTable = ({ products = [] }) => {
       onCancel={onCancel}
     />
   );
+
+  const handleFormSubmit = (formData) => {
+    if (actionType === 'add') {
+      dispatch(createProduct(formData, currentUser));
+    } else if (actionType === 'edit' && selectedProduct) {
+      dispatch(
+        updateProduct(
+          formData,
+          selectedProduct._id || selectedProduct.id,
+          currentUser,
+        ),
+      );
+    }
+    handleClose();
+  };
 
   return (
     <>
@@ -621,35 +637,22 @@ const EnhancedInventoryTable = ({ products = [] }) => {
           ) : (
             <ProductForm
               initialData={selectedProduct}
-              onSubmit={(updatedProduct) => {
-                // Implement save logic here
-                handleEditProduct(updatedProduct._id, updatedProduct);
-                handleClose();
-              }}
+              onSubmit={handleFormSubmit}
               onCancel={handleClose}
             />
           )}
 
-          <Stack
-            direction='row'
-            spacing={2}
-            sx={{ mt: 3, justifyContent: 'flex-end' }}
-          >
-            <Button variant='outlined' onClick={handleClose}>
-              {actionType === 'view' ? 'Zamknij' : 'Anuluj'}
-            </Button>
-            {actionType !== 'view' && (
-              <Button
-                variant='contained'
-                onClick={() => {
-                  // Implement save logic here
-                  handleClose();
-                }}
-              >
-                {actionType === 'add' ? 'Dodaj produkt' : 'Zapisz zmiany'}
+          {actionType === 'view' && (
+            <Stack
+              direction='row'
+              spacing={2}
+              sx={{ mt: 3, justifyContent: 'flex-end' }}
+            >
+              <Button variant='outlined' onClick={handleClose}>
+                Zamknij
               </Button>
-            )}
-          </Stack>
+            </Stack>
+          )}
         </ModalContent>
       </Modal>
     </>

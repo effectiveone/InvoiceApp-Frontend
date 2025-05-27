@@ -350,5 +350,10 @@
   "contractorFoundation": "Fundacja",
   "contractorAssociation": "Stowarzyszenie",
   "contact": "Kontakt",
-  "invoiceType": "Typ faktury"
+  "invoiceType": "Typ faktury",
+  "addFromInventory": "Dodaj z magazynu",
+  "selectProduct": "Wybierz produkt z magazynu",
+  "searchProducts": "Szukaj produktów...",
+  "noProductsFound": "Nie znaleziono produktów",
+  "noProductsAvailable": "Brak dostępnych produktów w magazynie. Spróbuj ponownie za chwilę."
 }

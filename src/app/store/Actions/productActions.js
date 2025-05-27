@@ -24,7 +24,10 @@ export const createProduct = (product, user) => async (dispatch) => {
 
   dispatch({ type: CREATE_PRODUCT_REQUEST });
   try {
-    const response = await api.createProduct(product);
+    const response = await api.createProduct({
+      ...product,
+      userEmail: user.mail,
+    });
 
     if (response.error) {
       dispatch({
@@ -57,7 +60,9 @@ export const readProducts = (user) => async (dispatch) => {
 
   dispatch({ type: READ_PRODUCTS_REQUEST });
   try {
-    const response = await api.getProducts();
+    const response = await api.getProducts({
+      userEmail: user.mail,
+    });
 
     if (response.error) {
       dispatch({
@@ -124,6 +129,7 @@ export const updateProduct = (product, id, user) => async (dispatch) => {
     const response = await api.editProduct({
       ...product,
       id,
+      userEmail: user.mail,
     });
 
     if (response.error) {

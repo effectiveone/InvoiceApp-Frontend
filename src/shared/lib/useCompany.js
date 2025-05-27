@@ -11,30 +11,34 @@ export const useCompany = () => {
   const dispatch = useDispatch();
   const companyData = useSelector((state) => state.myCompany.companyData);
 
+  // Prosty stan formularza - początkowo pusty
   const [updatedCompanyData, setCompanyData] = useState({});
 
   const handleChange = (event) => {
-    setCompanyData({
-      ...updatedCompanyData,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setCompanyData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = () => {
     dispatch(addCompanyData(updatedCompanyData, currentUser));
   };
 
-  useEffect(() => {
+  // Jedyna funkcja do załadowania danych z serwera (wywołana ręcznie)
+  const loadCompanyData = () => {
     if (currentUser) {
       dispatch(getCompanyData(currentUser));
     }
-  }, [dispatch, currentUser]);
+  };
 
-  useEffect(() => {
-    if (Object.keys(updatedCompanyData).length === 0) {
+  // Funkcja do załadowania danych do formularza (wywołana ręcznie)
+  const loadDataToForm = () => {
+    if (companyData) {
       setCompanyData(companyData);
     }
-  }, [dispatch, companyData, updatedCompanyData]);
+  };
 
   return {
     updatedCompanyData,
@@ -42,5 +46,7 @@ export const useCompany = () => {
     companyData,
     handleChange,
     handleSubmit,
+    loadCompanyData,
+    loadDataToForm,
   };
 };

@@ -42,7 +42,11 @@ const loginAction = (userDetails, history) => {
     const response = await api.login(userDetails);
     console.log(response);
     if (response.error) {
-      dispatch(openAlertMessage(response?.exception?.response?.data));
+      const errorMessage =
+        response?.exception?.response?.data?.message ||
+        response?.exception?.message ||
+        'Błąd logowania';
+      dispatch(openAlertMessage(errorMessage));
     } else {
       const { userDetails } = response?.data;
       localStorage.setItem('user', JSON.stringify(userDetails));
@@ -58,7 +62,11 @@ const register = (userDetails, history) => {
     const response = await api.register(userDetails);
     console.log(response);
     if (response.error) {
-      dispatch(openAlertMessage(response?.exception?.response?.data));
+      const errorMessage =
+        response?.exception?.response?.data?.message ||
+        response?.exception?.message ||
+        'Błąd rejestracji';
+      dispatch(openAlertMessage(errorMessage));
     } else {
       const { userDetails } = response?.data;
       localStorage.setItem('user', JSON.stringify(userDetails));

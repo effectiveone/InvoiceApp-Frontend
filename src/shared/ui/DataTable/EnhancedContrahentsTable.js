@@ -20,7 +20,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import DataTableProvider from './DataTableProvider';
 import EnhancedContrahentForm from './EnhancedContrahentForm';
-import { useKontrahentContext } from '../../../entities/kontrahent/model/useKontrahentContext';
+import { useKontrahent } from '../../lib/useKontrahent';
 import { useModal } from '../../lib/useModal';
 
 // Domain Model for Contrahent Types
@@ -112,8 +112,8 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
   const {
     handleEdit: handleEditContrahent,
     handleDelete: handleDeleteContrahent,
-    setButtonText,
-  } = useKontrahentContext();
+    handleSubmit,
+  } = useKontrahent();
   const [selectedContrahent, setSelectedContrahent] = useState(null);
   const [actionType, setActionType] = useState(null);
 
@@ -234,7 +234,9 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
   ];
 
   // Enhanced data processing
-  const processedContrahents = contrahents.map((contrahent) => ({
+  const processedContrahents = (
+    contrahents && Array.isArray(contrahents) ? contrahents : []
+  ).map((contrahent) => ({
     ...contrahent,
     id: contrahent._id || contrahent.id || Math.random().toString(36),
     type: contrahent.type || determineContrahentType(contrahent),
@@ -265,8 +267,6 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
   const handleEditContrahentAction = (contrahent) => {
     setActionType('edit');
     setSelectedContrahent(contrahent);
-    handleEditContrahent(contrahent._id);
-    setButtonText('Zapisz zmiany');
     handleOpen();
   };
 
@@ -284,6 +284,15 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     ) {
       handleDeleteContrahent(contrahent._id);
     }
+  };
+
+  const handleFormSubmit = (formData) => {
+    if (actionType === 'edit' && selectedContrahent) {
+      handleEditContrahent(selectedContrahent._id, formData);
+    } else {
+      handleSubmit(formData);
+    }
+    handleClose();
   };
 
   const handleExportContrahents = (data) => {
@@ -324,15 +333,6 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
     a.click();
     document.body.removeChild(a);
   };
-
-  // Contrahent Form Component
-  const ContrahentForm = ({ initialData, onSubmit, onCancel }) => (
-    <EnhancedContrahentForm
-      initialData={initialData}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    />
-  );
 
   return (
     <>
@@ -479,39 +479,19 @@ const EnhancedContrahentsTable = ({ contrahents = [] }) => {
                   </Stack>
                 </CardContent>
               </Card>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button variant='outlined' onClick={handleClose}>
+                  Zamknij
+                </Button>
+              </Box>
             </Box>
           ) : (
-            <ContrahentForm
+            <EnhancedContrahentForm
               initialData={selectedContrahent}
-              onSubmit={(updatedContrahent) => {
-                // Implement save logic here
-                handleEditContrahent(updatedContrahent._id, updatedContrahent);
-                handleClose();
-              }}
+              onSubmit={handleFormSubmit}
               onCancel={handleClose}
             />
           )}
-
-          <Stack
-            direction='row'
-            spacing={2}
-            sx={{ mt: 3, justifyContent: 'flex-end' }}
-          >
-            <Button variant='outlined' onClick={handleClose}>
-              {actionType === 'view' ? 'Zamknij' : 'Anuluj'}
-            </Button>
-            {actionType !== 'view' && (
-              <Button
-                variant='contained'
-                onClick={() => {
-                  // Implement save logic here
-                  handleClose();
-                }}
-              >
-                {actionType === 'add' ? 'Dodaj kontrahenta' : 'Zapisz zmiany'}
-              </Button>
-            )}
-          </Stack>
         </ModalContent>
       </Modal>
     </>

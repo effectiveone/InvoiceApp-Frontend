@@ -1,22 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../shared/ui/Layout/layout';
-import { KontrahentProvider } from '../entities/kontrahent/model/useKontrahentContext';
 import { EnhancedContrahentsTable } from '../shared/ui/DataTable';
-import { useKontrahentContext } from '../entities/kontrahent/model/useKontrahentContext';
-
-// Component that uses the kontrahent context
-const ContrahentsTableWithContext = () => {
-  const { kontrahent } = useKontrahentContext();
-
-  return <EnhancedContrahentsTable contrahents={kontrahent || []} />;
-};
+import { useKontrahent } from '../shared/lib/useKontrahent';
 
 const EnhancedKontrahentPage = () => {
-  return (
-    <KontrahentProvider>
-      <ContrahentsTableWithContext />
-    </KontrahentProvider>
-  );
+  const { kontrahent, loadKontrahents } = useKontrahent();
+
+  // Załadowanie danych kontrahentów przy pierwszym renderze
+  useEffect(() => {
+    loadKontrahents();
+  }, []);
+
+  return <EnhancedContrahentsTable contrahents={kontrahent || []} />;
 };
 
 export default Layout(EnhancedKontrahentPage);

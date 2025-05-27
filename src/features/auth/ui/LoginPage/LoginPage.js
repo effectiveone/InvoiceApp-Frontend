@@ -5,7 +5,7 @@ import LoginPageHeader from './LoginPageHeader';
 import LoginPageInputs from './LoginPageInputs';
 import { validateLoginForm } from '../../../../shared/utils/validators';
 import { connect } from 'react-redux';
-import { getActions } from '../../../../app/store/Actions/alertActions';
+import { getActions } from '../../../../app/store/Actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ loginAction }) => {

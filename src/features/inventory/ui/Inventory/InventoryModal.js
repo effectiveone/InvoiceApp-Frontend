@@ -32,9 +32,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
 }));
+
 const InvenotryModal = () => {
   const classes = useStyles();
-  const { button, open, handleClose } = useProductContext();
+  const { button, open, handleClose, product, handleChange, errors } =
+    useProductContext();
+
   return (
     <>
       <Modal
@@ -44,7 +47,11 @@ const InvenotryModal = () => {
         data-testid='inventory-modal'
       >
         <div className={classes.paper}>
-          <ProductForm />
+          <ProductForm
+            product={product}
+            handleChange={handleChange}
+            errors={errors}
+          />
           <Box sx={{ mt: 3 }}>
             {button}
             <Button sx={{ ml: 2 }} onClick={handleClose}>

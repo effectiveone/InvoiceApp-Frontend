@@ -25,12 +25,18 @@ const contractorReducer = (state = initialState, action) => {
     case ADD_CONTRACTOR_DATA:
       return {
         ...state,
-        contractorData: action.payload,
+        contractorData: [...state.contractorData, action.payload],
       };
     case UPDATE_CONTRACTOR_DATA:
       return { ...state, loading: true };
     case UPDATE_CONTRACTOR_DATA_SUCCESS:
-      return { ...state, contractorData: action.payload, loading: false };
+      return {
+        ...state,
+        contractorData: state.contractorData.map((contractor) =>
+          contractor._id === action.payload._id ? action.payload : contractor,
+        ),
+        loading: false,
+      };
     case UPDATE_CONTRACTOR_DATA_FAILURE:
       return { ...state, error: action.payload, loading: false };
     case DELETE_CONTRACTOR_REQUEST:
@@ -43,6 +49,9 @@ const contractorReducer = (state = initialState, action) => {
     case DELETE_CONTRACTOR_SUCCESS:
       return {
         ...state,
+        contractorData: state.contractorData.filter(
+          (contractor) => contractor._id !== action.payload,
+        ),
         isLoading: false,
         isError: false,
         errorMessage: '',

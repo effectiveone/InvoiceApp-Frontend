@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   TextField,
   Grid,
@@ -11,13 +11,8 @@ import {
 import { legalForms } from '../../../../shared/utils/forms';
 import { useTranslation } from 'react-i18next';
 
-function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
-  const [updatedProps, setUpdatedProps] = useState(updatedCompanyData);
+function CompanyForm({ whichInputs, updatedCompanyData = {}, handleChange }) {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setUpdatedProps(updatedCompanyData);
-  }, [updatedCompanyData]);
 
   return (
     <>
@@ -34,7 +29,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
               labelId='legalFormLabel'
               id='legalForm'
               name='legalForm'
-              value={updatedProps?.legalForm}
+              value={updatedCompanyData.legalForm || ''}
               onChange={handleChange}
               label={t('legalForm')}
             >
@@ -53,7 +48,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='companyName'
             label={t('companyName')}
             variant='outlined'
-            value={updatedProps?.companyName}
+            value={updatedCompanyData.companyName || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -64,7 +59,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='nip'
             label='NIP'
             variant='outlined'
-            value={updatedProps?.nip}
+            value={updatedCompanyData.nip || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -75,7 +70,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='regon'
             label='REGON'
             variant='outlined'
-            value={updatedProps?.regon}
+            value={updatedCompanyData.regon || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -86,7 +81,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='street'
             label={t('street')}
             variant='outlined'
-            value={updatedProps?.street}
+            value={updatedCompanyData.street || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -97,7 +92,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='city'
             label={t('city')}
             variant='outlined'
-            value={updatedProps?.city}
+            value={updatedCompanyData.city || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -108,7 +103,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
             name='zipCode'
             label={t('zipCode')}
             variant='outlined'
-            value={updatedProps?.zipCode}
+            value={updatedCompanyData.zipCode || ''}
             onChange={handleChange}
           />
         </Grid>
@@ -121,7 +116,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
                 name='bankName'
                 label={t('bankName')}
                 variant='outlined'
-                value={updatedProps?.bankName}
+                value={updatedCompanyData.bankName || ''}
                 onChange={handleChange}
               />
             </Grid>
@@ -132,7 +127,7 @@ function CompanyForm({ whichInputs, updatedCompanyData, handleChange }) {
                 name='bankAccount'
                 label={t('bankAccount')}
                 variant='outlined'
-                value={updatedProps?.bankAccount}
+                value={updatedCompanyData.bankAccount || ''}
                 onChange={handleChange}
               />
             </Grid>

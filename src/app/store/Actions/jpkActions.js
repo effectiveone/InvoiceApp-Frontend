@@ -26,11 +26,11 @@ export const getJPK = (user) => async (dispatch) => {
         type: GET_JPK_FAILURE,
         error: response.exception?.message || 'Error getting JPK data',
       });
-      dispatch(
-        openAlertMessage(
-          response.exception?.response?.data || 'Error getting JPK data',
-        ),
-      );
+      const errorMessage =
+        response.exception?.response?.data?.message ||
+        response.exception?.message ||
+        'Error getting JPK data';
+      dispatch(openAlertMessage(errorMessage));
     } else {
       dispatch({
         type: GET_JPK_SUCCESS,
@@ -64,17 +64,25 @@ export const sendJPK =
           type: SEND_JPK_FAILURE,
           error: response.exception?.message || 'Error sending JPK',
         });
-        dispatch(
-          openAlertMessage(
-            response.exception?.response?.data || 'Error sending JPK',
-          ),
-        );
+        const errorMessage =
+          response.exception?.response?.data?.message ||
+          response.exception?.message ||
+          'Error sending JPK';
+        dispatch(openAlertMessage(errorMessage));
       } else {
         dispatch({
           type: SEND_JPK_SUCCESS,
           payload: response.data,
         });
-        dispatch(openAlertMessage(response.data));
+        const successMessage =
+          response.data?.message || response.data || 'JPK sent successfully';
+        dispatch(
+          openAlertMessage(
+            typeof successMessage === 'string'
+              ? successMessage
+              : 'JPK sent successfully',
+          ),
+        );
       }
     } catch (err) {
       dispatch({
