@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { updateSettings } from '../../../Store/Actions/settingsActions';
+import { updateSettings } from '../../../../app/store/Actions/settingsActions';
 import { useUser } from '../../Hook/useUser';
 
 const TemplateOption = styled(Paper)(({ theme, selected }) => ({

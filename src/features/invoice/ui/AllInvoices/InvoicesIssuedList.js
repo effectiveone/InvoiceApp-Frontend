@@ -1,6 +1,6 @@
 import React from 'react';
 import { useModal } from '../../../../shared/lib/useModal';
-import { useInvoiceContext } from '../../../entities/invoice/model/useInvoiceContext';
+import { useInvoiceContext } from '../../../../entities/invoice/model/useInvoiceContext';
 import { useInvoiceTable } from '../../../../shared/lib/useInvoiceTable';
 import { styled } from '@mui/system';
 import {
@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { List as ListIcon } from '@mui/icons-material';
 import InvoiceForm from '../NewInvoice/InvoiceForm';
-import FilterWrapper from '../FilterWrapper';
+import FilterWrapper from '../../../../shared/ui/FilterWrapper';
 import { InvoiceComponent } from './invoiceComponent';
 import { t } from 'i18next';
 

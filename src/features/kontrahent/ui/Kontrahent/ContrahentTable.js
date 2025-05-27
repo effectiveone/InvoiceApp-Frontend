@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useKontrahentContext } from '../../Context/useKontrahentContext';
+import { useKontrahentContext } from '../../../../entities/kontrahent/model/useKontrahentContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 import {
